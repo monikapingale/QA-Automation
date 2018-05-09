@@ -1,10 +1,8 @@
 require "json"
 require "selenium-webdriver"
 require "rspec"
-require_relative File.expand_path('../',Dir.pwd )+"/specHelper.rb"
+require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
 include RSpec::Expectations
-puts "helllooo"
-
 describe "LeadGenerete" do
 
   before(:all) do    
@@ -77,7 +75,7 @@ describe "LeadGenerete" do
     end
   end
 
-  it "test_c2146" do
+  it "test_c2146", :'2146'=> 'true' do
     @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
     !60.times{ break if (@driver.find_element(:id, "tourFormContactNameField").displayed? rescue false); sleep 1 }
     @driver.find_element(:id, "tourFormContactNameField").clear
