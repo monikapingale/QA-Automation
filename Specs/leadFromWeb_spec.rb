@@ -45,10 +45,15 @@ describe "LeadGenerete" do
         @driver.get "https://wework--staging.cs96.my.salesforce.com/?un=kishor.shinde@wework.com.staging&pw=Anujgagare@525255"
         @helper.addLogs('Success')
         
+        @helper.addLogs('Search for created Lead')
         @driver.find_element(:id, "phSearchInput").clear
         @driver.find_element(:id, "phSearchInput").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Email']
         @driver.find_element(:id, "phSearchButton").click
+
+        @helper.addLogs('Go to detail page of created lead')
         @driver.find_element(:link, "john.sparrow [not provided]").click
+
+        @helper.addLogs('Checking Fields of lead')
         (@driver.find_element(:id, "lea2_ileinner").text).should == "john.sparrow [not provided]"
         @driver.find_element(:id, "lea11_ileinner").click
         (@driver.find_element(:id, "lea11_ileinner").text).should == @testDataJSON['CreateLeadFromWeb'][0]['Email'] + " [Gmail]"
@@ -57,20 +62,19 @@ describe "LeadGenerete" do
         @driver.find_element(:id, "lea13_ileinner").click
         (@driver.find_element(:id, "lea13_ileinner").text).should == "Open"
         (@driver.find_element(:id, "lea3_ileinner").text).should == @testDataJSON['CreateLeadFromWeb'][0]['Name']
-        puts "1"
         (@driver.find_element(:id, "lea8_ileinner").text).should == "+91-"+ @testDataJSON['CreateLeadFromWeb'][0]['Phone']
         (@driver.find_element(:id, "lea5_ileinner").text).should == "WeWork.com"
         (@driver.find_element(:id, "00NF0000008jx4n_ileinner").text).should == "Book A Tour Availability"
         #(@driver.find_element(:id, "00N0G00000BjVWH_ileinner").text).should == Date.today().to_s
-        puts "2"
         (@driver.find_element(:id, "CF00NF000000DW8Sn_ileinner").text).should == "MUM-BKC"
         (@driver.find_element(:id, "00NF0000008jx61_ileinner").text).should == "MUM-BKC"
         (@driver.find_element(:id, "00N0G00000DKsrf_ileinner").text).should == "1"
         (@driver.find_element(:id, "lookup0050G000008KcLFlea1").text).should == "Vidu Mangrulkar"
-        puts "3"
         (@driver.find_element(:id, "lea3_ileinner").text).should == @testDataJSON['CreateLeadFromWeb'][0]['Name']
         (@driver.find_element(:link, "Vidu Mangrulkar").text).should == "Vidu Mangrulkar"
+        @helper.addLogs('Go to details apage journey')
         @driver.find_element(:link, "john.sparrow [not provided]-Mumbai-WeWork.com").click
+        @helper.addLogs('Checking fields of journey')
         !60.times{ break if (@driver.find_element(:id, "Primary_Email__c").text == @testDataJSON['CreateLeadFromWeb'][0]['Email'] rescue false); sleep 1 }
         (@driver.find_element(:id, "Primary_Email__c").text).should == @testDataJSON['CreateLeadFromWeb'][0]['Email']
         (@driver.find_element(:id, "Primary_Phone__c").text).should == "+91-"+@testDataJSON['CreateLeadFromWeb'][0]['Phone']
