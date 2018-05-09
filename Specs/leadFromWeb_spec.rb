@@ -57,17 +57,19 @@ describe "LeadGenerete" do
         @driver.find_element(:id, "lea13_ileinner").click
         (@driver.find_element(:id, "lea13_ileinner").text).should == "Open"
         (@driver.find_element(:id, "lea3_ileinner").text).should == @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        puts "1"
         (@driver.find_element(:id, "lea8_ileinner").text).should == "+91-"+ @testDataJSON['CreateLeadFromWeb'][0]['Phone']
         (@driver.find_element(:id, "lea5_ileinner").text).should == "WeWork.com"
         (@driver.find_element(:id, "00NF0000008jx4n_ileinner").text).should == "Book A Tour Availability"
         #(@driver.find_element(:id, "00N0G00000BjVWH_ileinner").text).should == Date.today().to_s
+        puts "2"
         (@driver.find_element(:id, "CF00NF000000DW8Sn_ileinner").text).should == "MUM-BKC"
         (@driver.find_element(:id, "00NF0000008jx61_ileinner").text).should == "MUM-BKC"
         (@driver.find_element(:id, "00N0G00000DKsrf_ileinner").text).should == "1"
         (@driver.find_element(:id, "lookup0050G000008KcLFlea1").text).should == "Vidu Mangrulkar"
+        puts "3"
         (@driver.find_element(:id, "lea3_ileinner").text).should == @testDataJSON['CreateLeadFromWeb'][0]['Name']
         (@driver.find_element(:link, "Vidu Mangrulkar").text).should == "Vidu Mangrulkar"
-        @driver.find_element(:xpath, "//a[@id='00Q1g000002DK90_00NF000000DSUDp_link']/span").click
         @driver.find_element(:link, "john.sparrow [not provided]-Mumbai-WeWork.com").click
         !60.times{ break if (@driver.find_element(:id, "Primary_Email__c").text == @testDataJSON['CreateLeadFromWeb'][0]['Email'] rescue false); sleep 1 }
         (@driver.find_element(:id, "Primary_Email__c").text).should == @testDataJSON['CreateLeadFromWeb'][0]['Email']
