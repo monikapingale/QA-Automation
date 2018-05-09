@@ -39,6 +39,7 @@ describe "LeadGenerete" do
         @driver.find_element(:id, "tourFormPhoneField").clear
         @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
         @driver.find_element(:id, "tourFormStepOneSubmitButton").click
+        sleep(10)
         @helper.addLogs('Success')
         
         @helper.addLogs('Login To Salesforce')
