@@ -15,7 +15,7 @@ def initialize()
   @runId = ENV['RUN_ID']
   #@runId = '1698'
   @objRollbar = RollbarUtility.new()
-  @sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/QaAuto/testRecords.json"))
+  @sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
   puts "@sObjectRecords #{@sObjectRecords}"
   @timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
   @mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
