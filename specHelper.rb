@@ -35,7 +35,7 @@ def postFailResult(exception,caseId)
   @passedLogs = @objRollbar.addLog("[Result  ]  Failed")
   @objRollbar.postRollbarData(caseInfo['id'], caseInfo['title'], @passedLogs[caseInfo['id']])
   Rollbar.error(exception)
-  @testRailUtility.postResult(149,"Result for case 149 is #{exception}",5,@runId)
+  @testRailUtility.postResult(caseId,"Result for case #{caseId} is #{exception}",5,@runId)
   raise exception
 end
 
