@@ -60,12 +60,12 @@ describe "LeadGenerete" do
         (@driver.find_element(:id, "lea8_ileinner").text).should == "+91-"+ @testDataJSON['CreateLeadFromWeb'][0]['Phone']
         (@driver.find_element(:id, "lea5_ileinner").text).should == "WeWork.com"
         (@driver.find_element(:id, "00NF0000008jx4n_ileinner").text).should == "Book A Tour Availability"
-        (@driver.find_element(:id, "00N0G00000BjVWH_ileinner").text).should == Date.today()
+        (@driver.find_element(:id, "00N0G00000BjVWH_ileinner").text).should == Date.today().to_s
         (@driver.find_element(:id, "CF00NF000000DW8Sn_ileinner").text).should == "MUM-BKC"
         (@driver.find_element(:id, "00NF0000008jx61_ileinner").text).should == "MUM-BKC"
         (@driver.find_element(:id, "00N0G00000DKsrf_ileinner").text).should == "1"
         (@driver.find_element(:id, "lookup0050G000008KcLFlea1").text).should == "Vidu Mangrulkar"
-        (@driver.find_element(:id, "lea3_ileinner").text).should == "john.sparrow"
+        (@driver.find_element(:id, "lea3_ileinner").text).should == @testDataJSON['CreateLeadFromWeb'][0]['Name']
         (@driver.find_element(:link, "Vidu Mangrulkar").text).should == "Vidu Mangrulkar"
         @driver.find_element(:xpath, "//a[@id='00Q1g000002DK90_00NF000000DSUDp_link']/span").click
         @driver.find_element(:link, "john.sparrow [not provided]-Mumbai-WeWork.com").click
@@ -74,7 +74,7 @@ describe "LeadGenerete" do
         (@driver.find_element(:id, "Primary_Phone__c").text).should == "+91-"+@testDataJSON['CreateLeadFromWeb'][0]['Phone']
         (@driver.find_element(:link, "MUM-BKC").text).should == "MUM-BKC"
         @driver.find_element(:id, "NMD_Next_Contact_Date__c").click
-      @helper.postSuccessResult(2016)
+      @helper.postSuccessResult('2016')
     rescue Exception => e
       @helper.postFailResult(e,'2016')
     end
