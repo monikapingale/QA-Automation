@@ -15,7 +15,8 @@ def initialize()
   @runId = ENV['RUN_ID']
   #@runId = '1698'
   @objRollbar = RollbarUtility.new()
-  @sObjectRecords = JSON.parse(File.read("/Users/sachin.chavan/RubymineProjects/QaAuto/testRecords.json"))
+  @sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/QaAuto/testRecords.json"))
+  puts "@sObjectRecords #{@sObjectRecords}"
   @timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
   @mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
   @testRailUtility = EnziTestRailUtility::TestRailUtility.new(@mapCredentials['TestRail']['username'],@mapCredentials['TestRail']['password'])
@@ -47,8 +48,9 @@ def addLogs(logs,caseId = nil)
   end
 end
 
-def getRecordJSON(sObjectName)
-  return @sObjectRecords[sObjectName][0]
+def getRecordJSON()
+  puts @sObjectRecords
+  return @sObjectRecords
 end
 
 end

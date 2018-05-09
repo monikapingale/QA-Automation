@@ -10,6 +10,7 @@ describe "LeadGenerete" do
     @helper = Helper.new
     #@driver = Selenium::WebDriver.for :chrome
     @driver = ARGV[0]
+    @testDataJSON = @helper.getRecordJSON()
     #@base_url = "https://www.katalon.com/"
     @accept_next_alert = true
     @driver.manage.timeouts.implicit_wait = 30
@@ -26,13 +27,17 @@ describe "LeadGenerete" do
         @helper.addLogs('To check whether generation of lead from Website.','2016')
         @helper.addLogs('Go to Staging website and create lead')
 
+        recordJson = 
+
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
         @driver.find_element(:id, "tourFormContactNameField").clear
-        @driver.find_element(:id, "tourFormContactNameField").send_keys "john.sparrow"
+        @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
         @driver.find_element(:id, "tourFormEmailField").clear
-        @driver.find_element(:id, "tourFormEmailField").send_keys "john.sparrow123451@example.com"
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com" 
+        puts @testDataJSON['CreateLeadFromWeb'][0]['Email']
+        @driver.find_element(:id, "tourFormEmailField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Email']
         @driver.find_element(:id, "tourFormPhoneField").clear
-        @driver.find_element(:id, "tourFormPhoneField").send_keys "123456789"
+        @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
         @driver.find_element(:id, "tourFormStepOneSubmitButton").click
         @helper.addLogs('Success')
         
@@ -41,7 +46,7 @@ describe "LeadGenerete" do
         @helper.addLogs('Success')
         
         @driver.find_element(:id, "phSearchInput").clear
-        @driver.find_element(:id, "phSearchInput").send_keys "john.sparrow123451@example.com"
+        @driver.find_element(:id, "phSearchInput").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Email']
         @driver.find_element(:id, "phSearchButton").click
         @driver.find_element(:link, "john.sparrow [not provided]").click
         (@driver.find_element(:id, "lea2_ileinner").text).should == "john.sparrow [not provided]"

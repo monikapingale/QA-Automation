@@ -1,0 +1,11 @@
+{    
+  "Lead":
+    [      
+      {"firstname":"Enzi_Spec_John","lastname":"Smith01","email":"enzi_spec01@example.com","Company":"Enzigma Software pvt. ltd.","LeadSource":"Broker","Lead_Source_Detail__c":"Book A Tour"},
+      {"firstname":"Enzi_Spec_John","lastname":"Smith02","email":"enzi_spec02@example.com","Company":"Enzigma Software pvt. ltd.","LeadSource":"Broker","Lead_Source_Detail__c":"Book A Tour"}
+    ],
+  "CreateLeadFromWeb" :
+    [
+      {"Name":"john.sparrow","Email":"","Phone":"123456789","MoveInDate":"Flexible","People":""}
+    ]
+}
