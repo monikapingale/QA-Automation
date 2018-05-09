@@ -1,0 +1,1516 @@
+[ N 2018-03-05 12:59:49.1216 3039/T1 age/Wat/WatchdogMain.cpp:1258 ]: Starting Passenger watchdog...
+[ N 2018-03-05 12:59:49.1937 3041/T1 age/Cor/CoreMain.cpp:1242 ]: Starting Passenger core...
+[ N 2018-03-05 12:59:49.2071 3041/T1 age/Cor/CoreMain.cpp:252 ]: Passenger core running in multi-application mode.
+[ N 2018-03-05 12:59:49.3250 3041/T1 age/Cor/CoreMain.cpp:977 ]: Passenger core online, PID 3041
+App 3056 stdout: 
+[ N 2018-03-05 12:59:54.3619 3041/T5 age/Cor/SecurityUpdateChecker.h:517 ]: Security update check: no update found (next check in 24 hours)
+App 3080 stdout: 
+
+[ N 2018-03-05 13:03:10.2252 3041/T7 age/Cor/CoreMain.cpp:616 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ N 2018-03-05 13:03:10.2253 3041/T1 age/Cor/CoreMain.cpp:1154 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ N 2018-03-05 13:03:10.2254 3041/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 3080, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-05 13:03:10.2255 3041/T7 Ser/Server.h:902 ]: [ServerThr.1] Freed 0 spare client objects
+[ N 2018-03-05 13:03:10.2256 3041/T9 Ser/Server.h:902 ]: [ServerThr.2] Freed 0 spare client objects
+[ N 2018-03-05 13:03:10.2256 3041/T9 Ser/Server.h:559 ]: [ServerThr.2] Shutdown finished
+[ N 2018-03-05 13:03:10.2257 3041/Tb Ser/Server.h:902 ]: [ServerThr.3] Freed 0 spare client objects
+[ N 2018-03-05 13:03:10.2257 3041/Tb Ser/Server.h:559 ]: [ServerThr.3] Shutdown finished
+[ N 2018-03-05 13:03:10.2257 3041/Td Ser/Server.h:902 ]: [ServerThr.4] Freed 0 spare client objects
+[ N 2018-03-05 13:03:10.2257 3041/Td Ser/Server.h:559 ]: [ServerThr.4] Shutdown finished
+[ N 2018-03-05 13:03:10.2256 3041/T7 Ser/Server.h:559 ]: [ServerThr.1] Shutdown finished
+[ N 2018-03-05 13:03:10.2260 3041/Tf Ser/Server.h:902 ]: [ApiServer] Freed 0 spare client objects
+[ N 2018-03-05 13:03:10.2260 3041/Tf Ser/Server.h:559 ]: [ApiServer] Shutdown finished
+[ N 2018-03-05 13:03:10.2262 3041/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 3080, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-05 13:03:10.5064 3041/T1 age/Cor/CoreMain.cpp:1227 ]: Passenger core shutdown finished
+[ N 2018-03-05 17:53:03.1509 11935/T1 age/Wat/WatchdogMain.cpp:1258 ]: Starting Passenger watchdog...
+[ N 2018-03-05 17:53:03.2127 11937/T1 age/Cor/CoreMain.cpp:1242 ]: Starting Passenger core...
+[ N 2018-03-05 17:53:03.2130 11937/T1 age/Cor/CoreMain.cpp:252 ]: Passenger core running in multi-application mode.
+[ N 2018-03-05 17:53:03.2369 11937/T1 age/Cor/CoreMain.cpp:977 ]: Passenger core online, PID 11937
+App 11951 stdout: 
+[ N 2018-03-05 17:53:08.6784 11937/T5 age/Cor/SecurityUpdateChecker.h:517 ]: Security update check: no update found (next check in 24 hours)
+App 11976 stdout: 
+App 11976 stdout: in Application controller
+App 11976 stdout: http://localhost:3000/application?PROJECT_ID=4&SUIT_ID=19&SECTION_ID=22&CASE_ID=149&BROWSERS=chrome
+App 11976 stdout: 19
+App 11976 stdout: 22
+App 11976 stdout: 149
+App 11976 stdout: 
+App 11976 stdout: chrome
+App 11976 stdout: getting spec loaction from case 149
+App 11976 stdout: spec to run :: {"path"=>"ManageTourPage/Specs/manageTours_spec.rb", "isBrowserDependent"=>true}
+App 11976 stdout: ManageTourPage/Specs/manageTours_spec.rb
+App 11976 stdout: Run options: include {:"149"=>true}
+App 11976 stdout: 
+App 11976 stdout: All examples were filtered out
+App 11976 stdout: 
+App 11976 stdout: 
+App 11976 stdout: Finished in 0.00037 seconds (files took 3.61 seconds to load)
+App 11976 stdout: 0 examples, 0 failures
+App 11976 stdout: 
+App 11976 stdout: in Application controller
+App 11976 stdout: http://localhost:3000/application?PROJECT_ID=4&SUIT_ID=19&SECTION_ID=22&BROWSERS=chrome
+App 11976 stdout: 19
+App 11976 stdout: 22
+App 11976 stdout: 
+App 11976 stdout: 
+App 11976 stdout: chrome
+App 11976 stdout: getting specs from section 22
+App 11976 stdout: spec to run :: {"path"=>"ManageTourPage/Specs/manageTours_spec.rb", "isBrowserDependent"=>true}
+App 11976 stdout: ManageTourPage/Specs/manageTours_spec.rb
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: Checking manage tour page opened
+App 11976 stdout: 
+App 11976 stdout: 
+App 11976 stdout: Manage Tours
+App 11976 stdout: Journey__c records :: #<SalesforceBulk::Job:0x007f9dfeb78240>
+App 11976 stdout: Journey__c created => a0j1g000000CxNeAAK
+App 11976 stdout: Successfully opened manage tour page C149 checked
+App 11976 stdout: 
+App 11976 stdout: add_result_for_case//149
+App 11976 stdout: add_result_for_case//149
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: F
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: 
+App 11976 stdout: C883 : to check that book tour button is disabled
+App 11976 stdout: 
+App 11976 stdout: C883 : successfully checked
+App 11976 stdout: add_result_for_case//883
+App 11976 stdout: add_result_for_case//883
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: F
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: C7 : to check that book tour button get enable
+App 11976 stdout: 
+App 11976 stdout: C7 : successfully checked
+App 11976 stdout: 
+App 11976 stdout: add_result_for_case//7
+App 11976 stdout: add_result_for_case//7
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: F
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: 
+App 11976 stdout: C885  : to check that user can select tour date without building name
+App 11976 stdout: 
+App 11976 stdout: 
+App 11976 stdout: C885 : successfully checked
+App 11976 stdout: 
+App 11976 stdout: add_result_for_case//885
+App 11976 stdout: 
+App 11976 stdout: add_result_for_case//885
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: F
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: 
+App 11976 stdout: C1016: to check that user can select previous date
+App 11976 stdout: successfully checked C1016
+App 11976 stdout: add_result_for_case//1016
+App 11976 stdout: 
+App 11976 stdout: add_result_for_case//1016
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: 
+App 11976 stdout: F
+App 11976 stdout: 
+App 11976 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 11976 stdout: C81 : to check that user can select start time
+App 11976 stdout: 
+App 11976 stdout: add_result_for_case//81
+
+[ N 2018-03-05 17:58:52.3802 11937/T7 age/Cor/CoreMain.cpp:616 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ N 2018-03-05 17:58:52.3803 11937/T1 age/Cor/CoreMain.cpp:1154 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ N 2018-03-05 17:58:52.3803 11937/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 11976, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-05 17:58:52.3945 11937/T7 Ser/Server.h:902 ]: [ServerThr.1] Freed 0 spare client objects
+[ N 2018-03-05 17:58:52.3946 11937/T9 Ser/Server.h:902 ]: [ServerThr.2] Freed 0 spare client objects
+[ N 2018-03-05 17:58:52.3946 11937/T7 Ser/Server.h:559 ]: [ServerThr.1] Shutdown finished
+[ N 2018-03-05 17:58:52.3947 11937/Td Ser/Server.h:902 ]: [ServerThr.4] Freed 0 spare client objects
+[ N 2018-03-05 17:58:52.3946 11937/Tb Ser/Server.h:902 ]: [ServerThr.3] Freed 0 spare client objects
+[ N 2018-03-05 17:58:52.3947 11937/Td Ser/Server.h:559 ]: [ServerThr.4] Shutdown finished
+[ N 2018-03-05 17:58:52.3948 11937/Tb Ser/Server.h:559 ]: [ServerThr.3] Shutdown finished
+[ N 2018-03-05 17:58:52.3948 11937/T9 Ser/Server.h:559 ]: [ServerThr.2] Shutdown finished
+[ N 2018-03-05 17:58:52.3950 11937/Tf Ser/Server.h:902 ]: [ApiServer] Freed 0 spare client objects
+[ N 2018-03-05 17:58:52.3950 11937/Tf Ser/Server.h:559 ]: [ApiServer] Shutdown finished
+[ N 2018-03-05 17:58:52.3951 11937/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 11976, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-05 17:58:53.0591 11937/T1 age/Cor/CoreMain.cpp:1227 ]: Passenger core shutdown finished
+[ W 2018-03-05 17:58:53.1412 12265/T1 age/Wat/WatchdogMain.cpp:369 ]: Cannot open cleanup PID file temp_dir_toucher.pid (/var/folders/pm/mkn_0v2955q13nmnw33d_yrh0000gp/T/passenger-standalone.19zfhij/temp_dir_toucher.pid)
+[ N 2018-03-05 18:12:43.3050 12736/T1 age/Wat/WatchdogMain.cpp:1258 ]: Starting Passenger watchdog...
+[ N 2018-03-05 18:12:43.3872 12738/T1 age/Cor/CoreMain.cpp:1242 ]: Starting Passenger core...
+[ N 2018-03-05 18:12:43.3877 12738/T1 age/Cor/CoreMain.cpp:252 ]: Passenger core running in multi-application mode.
+[ N 2018-03-05 18:12:43.4286 12738/T1 age/Cor/CoreMain.cpp:977 ]: Passenger core online, PID 12738
+App 12753 stdout: 
+[ N 2018-03-05 18:12:48.6363 12738/T5 age/Cor/SecurityUpdateChecker.h:517 ]: Security update check: no update found (next check in 24 hours)
+App 12776 stdout: 
+App 12776 stdout: in Application controller
+App 12776 stdout: http://localhost:3000/application
+App 12776 stdout: in Application controller
+App 12776 stdout: http://localhost:3000/application?PROJECT_ID=4&SUIT_ID=19&SECTION_ID=22&BROWSERS=chrome
+App 12776 stdout: 19
+App 12776 stdout: 22
+App 12776 stdout: 
+App 12776 stdout: 
+App 12776 stdout: chrome
+App 12776 stdout: getting specs from section 22
+App 12776 stdout: spec to run :: {"path"=>"ManageTourPage/Specs/manageTours_spec.rb", "isBrowserDependent"=>true}
+App 12776 stdout: ManageTourPage/Specs/manageTours_spec.rb
+App 12776 stdout: in Application controller
+App 12776 stdout: http://localhost:3000/application?PROJECT_ID=4&SUIT_ID=19&SECTION_ID=22&BROWSERS=chrome
+App 12776 stdout: 19
+App 12776 stdout: 22
+App 12776 stdout: 
+App 12776 stdout: 
+App 12776 stdout: chrome
+App 12776 stdout: 
+App 12776 stdout: getting specs from section 22
+App 12776 stdout: spec to run :: {"path"=>"ManageTourPage/Specs/manageTours_spec.rb", "isBrowserDependent"=>true}
+App 12776 stdout: ManageTourPage/Specs/manageTours_spec.rb
+App 12776 stdout: FFFFFFFRecords to delete :: {}
+App 12776 stdout: FF
+App 12776 stdout: F
+App 12776 stdout: FFFFFFFFFFFFFFRecords to delete :: {}
+App 12776 stdout: 
+App 12776 stdout: 
+App 12776 stdout: Failures:
+App 12776 stdout: 
+App 12776 stdout:   1) ManageTours C149 : to check manage tour page is displayed
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   2) ManageTours C883 : to check that book tour button is disabled
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   3) ManageTours C7 : to check that book tour button get enable
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   4) ManageTours C885 : to check that user can select tour date without building name
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   5) ManageTours C1016: to check that user can select previous date
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   6) ManageTours C81 : to check that user can select start time
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   7) ManageTours C887 : to check that user can get end time automatically after entering start time
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   8) ManageTours C92 : to check that proper error message is displayed when user enter single character in building field
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   9) ManageTours C91 : to check that proper lead information is displayed on manage tour page
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   10) ManageTours C85,C171 : to check that user can view duplicate account selector page while booking a tour
+App 12776 stdout:       Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:       EOFError:
+App 12776 stdout:         end of file reached
+App 12776 stdout: 
+App 12776 stdout:   11) ManageTours should test duplicate account selector functionality C86 : to check that tour is booked, when user clicks on 'create account and don't merge' button
+App 12776 stdout:       Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:       EOFError:
+App 12776 stdout:         end of file reached
+App 12776 stdout: 
+App 12776 stdout:   12) ManageTours should test duplicate account selector functionality C89 : to check that user can view booked tours information
+App 12776 stdout:       Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:       EOFError:
+App 12776 stdout:         end of file reached
+App 12776 stdout: 
+App 12776 stdout:   13) ManageTours should test duplicate account selector functionality C94,C362 : to check that tour is booked, when user clicks on 'create account and merge' button
+App 12776 stdout:       Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:       EOFError:
+App 12776 stdout:         end of file reached
+App 12776 stdout: 
+App 12776 stdout:   14) ManageTours should test duplicate account selector functionality C129 : to check user can cancel a tour
+App 12776 stdout:       Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:       EOFError:
+App 12776 stdout:         end of file reached
+App 12776 stdout: 
+App 12776 stdout:   15) ManageTours should test duplicate account selector functionality C102 : to check that tour is booked, when user clicks on 'Use Selector Account' button
+App 12776 stdout:       Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:       EOFError:
+App 12776 stdout:         end of file reached
+App 12776 stdout: 
+App 12776 stdout:   16) ManageTours should test duplicate account selector functionality check multiple tour booking C96 : to check that user can book multiple tour
+App 12776 stdout:       Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:       EOFError:
+App 12776 stdout:         end of file reached
+App 12776 stdout: 
+App 12776 stdout:   17) ManageTours should check reschedule functionality C115 : to check that user can reschedule a tour
+App 12776 stdout:       Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:       EOFError:
+App 12776 stdout:         end of file reached
+App 12776 stdout: 
+App 12776 stdout: Finished in 12.88 seconds (files took 6.27 seconds to load)
+App 12776 stdout: 17 examples, 17 failures, 1 error occurred outside of examples
+App 12776 stdout: 
+App 12776 stdout: Failed examples:
+App 12776 stdout: 
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:62 # ManageTours C149 : to check manage tour page is displayed
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:82 # ManageTours C883 : to check that book tour button is disabled
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:96 # ManageTours C7 : to check that book tour button get enable
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:112 # ManageTours C885 : to check that user can select tour date without building name
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:126 # ManageTours C1016: to check that user can select previous date
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:140 # ManageTours C81 : to check that user can select start time
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:161 # ManageTours C887 : to check that user can get end time automatically after entering start time
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:176 # ManageTours C92 : to check that proper error message is displayed when user enter single character in building field
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:196 # ManageTours C91 : to check that proper lead information is displayed on manage tour page
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:219 # ManageTours C85,C171 : to check that user can view duplicate account selector page while booking a tour
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:241 # ManageTours should test duplicate account selector functionality C86 : to check that tour is booked, when user clicks on 'create account and don't merge' button
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:300 # ManageTours should test duplicate account selector functionality C89 : to check that user can view booked tours information
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:347 # ManageTours should test duplicate account selector functionality C94,C362 : to check that tour is booked, when user clicks on 'create account and merge' button
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:417 # ManageTours should test duplicate account selector functionality C129 : to check user can cancel a tour
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:439 # ManageTours should test duplicate account selector functionality C102 : to check that tour is booked, when user clicks on 'Use Selector Account' button
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:314 # ManageTours should test duplicate account selector functionality check multiple tour booking C96 : to check that user can book multiple tour
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:496 # ManageTours should check reschedule functionality C115 : to check that user can reschedule a tour
+App 12776 stdout: 
+App 12776 stdout: 
+App 12776 stdout: An error occurred in an `after(:context)` hook.
+App 12776 stdout: Failure/Error: Salesforce.deleteRecords(@objManageTours.instance_variable_get(:@salesforceBulk),"Lead",allRecordIds['Lead'].uniq)
+App 12776 stdout: 
+App 12776 stdout: NoMethodError:
+App 12776 stdout:   undefined method `uniq' for nil:NilClass
+App 12776 stdout: # ./ManageTourPage/Specs/manageTours_spec.rb:56:in `block (2 levels) in <top (required)>'
+App 12776 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 12776 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 12776 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 12776 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 12776 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 12776 stdout: # ------------------
+App 12776 stdout: # --- Caused by: ---
+App 12776 stdout: # EOFError:
+App 12776 stdout: #   end of file reached
+App 12776 stdout: #   
+App 12776 stdout: 
+App 12776 stdout: 
+App 12776 stdout: Failures:
+App 12776 stdout: 
+App 12776 stdout:   1) ManageTours C149 : to check manage tour page is displayed
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   2) ManageTours C883 : to check that book tour button is disabled
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   3) ManageTours C7 : to check that book tour button get enable
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   4) ManageTours C885 : to check that user can select tour date without building name
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   5) ManageTours C1016: to check that user can select previous date
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   6) ManageTours C81 : to check that user can select start time
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   7) ManageTours C887 : to check that user can get end time automatically after entering start time
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout:   8) ManageTours C92 : to check that proper error message is displayed when user enter single character in building field
+App 12776 stdout:      Failure/Error: Unable to find matching line from backtrace
+App 12776 stdout: 
+App 12776 stdout:      EOFError:
+App 12776 stdout:        end of file reached
+App 12776 stdout: 
+App 12776 stdout: Finished in 22.5 seconds (files took 7 seconds to load)
+App 12776 stdout: 8 examples, 8 failures, 1 error occurred outside of examples
+App 12776 stdout: 
+App 12776 stdout: Failed examples:
+App 12776 stdout: 
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:62 # ManageTours C149 : to check manage tour page is displayed
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:82 # ManageTours C883 : to check that book tour button is disabled
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:96 # ManageTours C7 : to check that book tour button get enable
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:112 # ManageTours C885 : to check that user can select tour date without building name
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:126 # ManageTours C1016: to check that user can select previous date
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:140 # ManageTours C81 : to check that user can select start time
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:161 # ManageTours C887 : to check that user can get end time automatically after entering start time
+App 12776 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:176 # ManageTours C92 : to check that proper error message is displayed when user enter single character in building field
+App 12776 stdout: 
+
+[ N 2018-03-05 18:28:34.0916 12738/T7 age/Cor/CoreMain.cpp:616 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ N 2018-03-05 18:28:34.0918 12738/T1 age/Cor/CoreMain.cpp:1154 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ N 2018-03-05 18:28:34.0918 12738/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 12776, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-05 18:28:34.0921 12738/T7 Ser/Server.h:902 ]: [ServerThr.1] Freed 0 spare client objects
+[ N 2018-03-05 18:28:34.0921 12738/T7 Ser/Server.h:559 ]: [ServerThr.1] Shutdown finished
+[ N 2018-03-05 18:28:34.0922 12738/T9 Ser/Server.h:902 ]: [ServerThr.2] Freed 0 spare client objects
+[ N 2018-03-05 18:28:34.0922 12738/T9 Ser/Server.h:559 ]: [ServerThr.2] Shutdown finished
+[ N 2018-03-05 18:28:34.0923 12738/Tb Ser/Server.h:902 ]: [ServerThr.3] Freed 0 spare client objects
+[ N 2018-03-05 18:28:34.0923 12738/Tb Ser/Server.h:559 ]: [ServerThr.3] Shutdown finished
+[ N 2018-03-05 18:28:34.0924 12738/Td Ser/Server.h:902 ]: [ServerThr.4] Freed 0 spare client objects
+[ N 2018-03-05 18:28:34.0924 12738/Td Ser/Server.h:559 ]: [ServerThr.4] Shutdown finished
+[ N 2018-03-05 18:28:34.0927 12738/Tf Ser/Server.h:902 ]: [ApiServer] Freed 0 spare client objects
+[ N 2018-03-05 18:28:34.0927 12738/Tf Ser/Server.h:559 ]: [ApiServer] Shutdown finished
+[ N 2018-03-05 18:28:34.0928 12738/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 12776, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-05 18:28:34.4700 12738/T1 age/Cor/CoreMain.cpp:1227 ]: Passenger core shutdown finished
+[ W 2018-03-05 18:28:34.6650 13611/T1 age/Wat/WatchdogMain.cpp:369 ]: Cannot open cleanup PID file temp_dir_toucher.pid (/var/folders/pm/mkn_0v2955q13nmnw33d_yrh0000gp/T/passenger-standalone.v9r9zp/temp_dir_toucher.pid)
+[ N 2018-03-06 10:27:32.3756 913/T1 age/Wat/WatchdogMain.cpp:1258 ]: Starting Passenger watchdog...
+[ N 2018-03-06 10:27:32.4399 915/T1 age/Cor/CoreMain.cpp:1242 ]: Starting Passenger core...
+[ N 2018-03-06 10:27:32.4405 915/T1 age/Cor/CoreMain.cpp:252 ]: Passenger core running in multi-application mode.
+[ N 2018-03-06 10:27:32.4649 915/T1 age/Cor/CoreMain.cpp:977 ]: Passenger core online, PID 915
+App 929 stdout: 
+App 952 stdout: 
+[ N 2018-03-06 10:27:37.9651 915/T5 age/Cor/SecurityUpdateChecker.h:517 ]: Security update check: no update found (next check in 24 hours)
+
+[ N 2018-03-06 10:28:59.3905 915/T7 age/Cor/CoreMain.cpp:616 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ N 2018-03-06 10:28:59.3906 915/T1 age/Cor/CoreMain.cpp:1154 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ N 2018-03-06 10:28:59.3906 915/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 952, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-06 10:28:59.3908 915/Tb Ser/Server.h:902 ]: [ServerThr.3] Freed 0 spare client objects
+[ N 2018-03-06 10:28:59.3909 915/Tb Ser/Server.h:559 ]: [ServerThr.3] Shutdown finished
+[ N 2018-03-06 10:28:59.3909 915/T7 Ser/Server.h:902 ]: [ServerThr.1] Freed 0 spare client objects
+[ N 2018-03-06 10:28:59.3910 915/T9 Ser/Server.h:902 ]: [ServerThr.2] Freed 0 spare client objects
+[ N 2018-03-06 10:28:59.3910 915/T9 Ser/Server.h:559 ]: [ServerThr.2] Shutdown finished
+[ N 2018-03-06 10:28:59.3909 915/Td Ser/Server.h:902 ]: [ServerThr.4] Freed 0 spare client objects
+[ N 2018-03-06 10:28:59.3911 915/Td Ser/Server.h:559 ]: [ServerThr.4] Shutdown finished
+[ N 2018-03-06 10:28:59.3912 915/T7 Ser/Server.h:559 ]: [ServerThr.1] Shutdown finished
+[ N 2018-03-06 10:28:59.3914 915/Tf Ser/Server.h:902 ]: [ApiServer] Freed 0 spare client objects
+[ N 2018-03-06 10:28:59.3914 915/Tf Ser/Server.h:559 ]: [ApiServer] Shutdown finished
+[ N 2018-03-06 10:28:59.3915 915/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 952, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-06 10:28:59.6745 915/T1 age/Cor/CoreMain.cpp:1227 ]: Passenger core shutdown finished
+[ N 2018-03-06 10:32:02.9172 1050/T1 age/Wat/WatchdogMain.cpp:1258 ]: Starting Passenger watchdog...
+[ N 2018-03-06 10:32:02.9697 1052/T1 age/Cor/CoreMain.cpp:1242 ]: Starting Passenger core...
+[ N 2018-03-06 10:32:02.9702 1052/T1 age/Cor/CoreMain.cpp:252 ]: Passenger core running in multi-application mode.
+[ N 2018-03-06 10:32:02.9987 1052/T1 age/Cor/CoreMain.cpp:977 ]: Passenger core online, PID 1052
+App 1066 stdout: 
+[ N 2018-03-06 10:32:07.4855 1052/T5 age/Cor/SecurityUpdateChecker.h:517 ]: Security update check: no update found (next check in 24 hours)
+App 1089 stdout: 
+
+[ N 2018-03-06 10:32:20.2580 1052/T7 age/Cor/CoreMain.cpp:616 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ N 2018-03-06 10:32:20.2581 1052/T1 age/Cor/CoreMain.cpp:1154 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ N 2018-03-06 10:32:20.2581 1052/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 1089, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-06 10:32:20.2583 1052/T7 Ser/Server.h:902 ]: [ServerThr.1] Freed 0 spare client objects
+[ N 2018-03-06 10:32:20.2585 1052/T7 Ser/Server.h:559 ]: [ServerThr.1] Shutdown finished
+[ N 2018-03-06 10:32:20.2586 1052/T9 Ser/Server.h:902 ]: [ServerThr.2] Freed 0 spare client objects
+[ N 2018-03-06 10:32:20.2586 1052/T9 Ser/Server.h:559 ]: [ServerThr.2] Shutdown finished
+[ N 2018-03-06 10:32:20.2587 1052/Tb Ser/Server.h:902 ]: [ServerThr.3] Freed 0 spare client objects
+[ N 2018-03-06 10:32:20.2587 1052/Tb Ser/Server.h:559 ]: [ServerThr.3] Shutdown finished
+[ N 2018-03-06 10:32:20.2588 1052/Td Ser/Server.h:902 ]: [ServerThr.4] Freed 0 spare client objects
+[ N 2018-03-06 10:32:20.2588 1052/Td Ser/Server.h:559 ]: [ServerThr.4] Shutdown finished
+[ N 2018-03-06 10:32:20.2590 1052/Tf Ser/Server.h:902 ]: [ApiServer] Freed 0 spare client objects
+[ N 2018-03-06 10:32:20.2590 1052/Tf Ser/Server.h:559 ]: [ApiServer] Shutdown finished
+[ N 2018-03-06 10:32:20.2591 1052/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 1089, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-06 10:32:20.5414 1052/T1 age/Cor/CoreMain.cpp:1227 ]: Passenger core shutdown finished
+[ N 2018-03-06 12:31:54.4001 2925/T1 age/Wat/WatchdogMain.cpp:1258 ]: Starting Passenger watchdog...
+[ N 2018-03-06 12:31:54.5114 2927/T1 age/Cor/CoreMain.cpp:1242 ]: Starting Passenger core...
+[ N 2018-03-06 12:31:54.5336 2927/T1 age/Cor/CoreMain.cpp:252 ]: Passenger core running in multi-application mode.
+[ N 2018-03-06 12:31:54.6073 2927/T1 age/Cor/CoreMain.cpp:977 ]: Passenger core online, PID 2927
+App 2941 stdout: 
+[ N 2018-03-06 12:31:59.5197 2927/T5 age/Cor/SecurityUpdateChecker.h:517 ]: Security update check: no update found (next check in 24 hours)
+App 2964 stdout: 
+App 2964 stdout: in Application controller
+App 2964 stdout: http://localhost:3000/application?PROJECT_ID=4&SUIT_ID=19&SECTION_ID=22&CASE_ID=149&BROWSERS=chrome
+App 2964 stdout: 19
+App 2964 stdout: 22
+App 2964 stdout: 149
+App 2964 stdout: 
+App 2964 stdout: chrome
+App 3062 stdout: 
+App 2964 stdout: getting spec loaction from case 149
+App 2964 stdout: spec to run :: {"path"=>"ManageTourPage/Specs/manageTours_spec.rb", "isBrowserDependent"=>true}
+App 2964 stdout: ManageTourPage/Specs/manageTours_spec.rb
+App 2964 stdout: Run options: include {:"149"=>true}
+App 2964 stdout: 
+App 2964 stdout: All examples were filtered out
+App 2964 stdout: 
+App 2964 stdout: 
+App 2964 stdout: Finished in 0.00038 seconds (files took 2.7 seconds to load)
+App 2964 stdout: 0 examples, 0 failures
+App 2964 stdout: 
+App 2964 stdout: in Application controller
+App 2964 stdout: http://localhost:3000/application?PROJECT_ID=4&SUIT_ID=19&SECTION_ID=22&RUN_ID=&BROWSERS=chrome
+App 2964 stdout: 19
+App 2964 stdout: 22
+App 2964 stdout: 
+App 2964 stdout: 
+App 2964 stdout: chrome
+App 2964 stdout: getting specs from section 22
+App 2964 stdout: spec to run :: {"path"=>"ManageTourPage/Specs/manageTours_spec.rb", "isBrowserDependent"=>true}
+App 2964 stdout: ManageTourPage/Specs/manageTours_spec.rb
+App 2964 stdout: F
+App 2964 stdout: F
+App 2964 stdout: F
+App 2964 stdout: F
+App 2964 stdout: F
+App 2964 stdout: F
+App 2964 stdout: F
+App 2964 stdout: F
+App 2964 stdout: FFFFFFFFFRecords to delete :: {}
+App 2964 stdout: 
+App 2964 stdout: An error occurred in an `after(:context)` hook.
+App 2964 stdout: Failure/Error: Salesforce.deleteRecords(@objManageTours.instance_variable_get(:@salesforceBulk),"Lead",allRecordIds['Lead'].uniq)
+App 2964 stdout: 
+App 2964 stdout: NoMethodError:
+App 2964 stdout:   undefined method `uniq' for nil:NilClass
+App 2964 stdout: # ./ManageTourPage/Specs/manageTours_spec.rb:56:in `block (2 levels) in <top (required)>'
+App 2964 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout: # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout: 
+App 2964 stdout: Failures:
+App 2964 stdout: 
+App 2964 stdout:   1) ManageTours C149 : to check manage tour page is displayed
+App 2964 stdout:      Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:      NoMethodError:
+App 2964 stdout:        undefined method `[]' for nil:NilClass
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:      # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   2) ManageTours C883 : to check that book tour button is disabled
+App 2964 stdout:      Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:      NoMethodError:
+App 2964 stdout:        undefined method `[]' for nil:NilClass
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:      # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   3) ManageTours C7 : to check that book tour button get enable
+App 2964 stdout:      Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:      NoMethodError:
+App 2964 stdout:        undefined method `[]' for nil:NilClass
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:      # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   4) ManageTours C885 : to check that user can select tour date without building name
+App 2964 stdout:      Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:      NoMethodError:
+App 2964 stdout:        undefined method `[]' for nil:NilClass
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:      # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   5) ManageTours C1016: to check that user can select previous date
+App 2964 stdout:      Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:      NoMethodError:
+App 2964 stdout:        undefined method `[]' for nil:NilClass
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `
+App 2964 stdout: until'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:      # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   6) ManageTours C81 : to check that user can select start time
+App 2964 stdout:      Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:      NoMethodError:
+App 2964 stdout:        undefined method `[]' for nil:NilClass
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:      # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   7) ManageTours C887 : to check that user can get end time automatically after entering start time
+App 2964 stdout:      Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:      NoMethodError:
+App 2964 stdout:        undefined method `[]' for nil:NilClass
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:      # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   8) ManageTours C92 : to check that proper error message is displayed when user enter single character in building field
+App 2964 stdout:      Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:      NoMethodError:
+App 2964 stdout:        undefined method `[]' for nil:NilClass
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:      # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   9) ManageTours C91 : to check that proper lead information is displayed on manage tour page
+App 2964 stdout:      Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:      NoMethodError:
+App 2964 stdout:        undefined method `[]' for nil:NilClass
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:      # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:      # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `e
+App 2964 stdout: ach'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   10) ManageTours C85,C171 : to check that user can view duplicate account selector page while booking a tour
+App 2964 stdout:       Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:       NoMethodError:
+App 2964 stdout:         undefined method `[]' for nil:NilClass
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:       # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   11) ManageTours should test duplicate account selector functionality C86 : to check that tour is booked, when user clicks on 'create account and don't merge' button
+App 2964 stdout:       Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:       NoMethodError:
+App 2964 stdout:         undefined method `[]' for nil:NilClass
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:       # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   12) ManageTours should test duplicate account selector functionality C89 : to check that user can view booked tours information
+App 2964 stdout:       Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:       NoMethodError:
+App 2964 stdout:         undefined method `[]' for nil:NilClass
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:       # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   13) ManageTours should test duplicate account selector functionality C94,C362 : to check that tour is booked, when user clicks on 'create account and merge' button
+App 2964 stdout:       Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:       NoMethodError:
+App 2964 stdout:         undefined method `[]' for nil:NilClass
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:       # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   14) ManageTours should test duplicate account selector functionality C129 : to check user can cancel a tour
+App 2964 stdout:       Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:       NoMethodError:
+App 2964 stdout:         undefined method `[]' for nil:NilClass
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:       # /Users/sachin.chavan
+App 2964 stdout: /.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:       # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   15) ManageTours should test duplicate account selector functionality C102 : to check that tour is booked, when user clicks on 'Use Selector Account' button
+App 2964 stdout:       Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:       NoMethodError:
+App 2964 stdout:         undefined method `[]' for nil:NilClass
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:       # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   16) ManageTours should test duplicate account selector functionality check multiple tour booking C96 : to check that user can book multiple tour
+App 2964 stdout:       Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:       NoMethodError:
+App 2964 stdout:         undefined method `[]' for nil:NilClass
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:       # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout:   17) ManageTours should check reschedule functionality C115 : to check that user can reschedule a tour
+App 2964 stdout:       Failure/Error: @objManageTours = ManageTours.new(@driver,"Staging")
+App 2964 stdout: 
+App 2964 stdout:       NoMethodError:
+App 2964 stdout:         undefined method `[]' for nil:NilClass
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/bridge_helper.rb:41:in `element_id_from'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/oss/bridge.rb:550:in `find_element_by'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/search_context.rb:60:in `find_element'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `block in wait'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/common/wait.rb:54:in `until'
+App 2964 stdout:       # /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/enziUIUtility-0.0.1/lib/enziUIUtility.rb:109:in `wait'
+App 2964 stdout:       # ./ManageTourPage/PageObjects/manageTours(Staging).rb:25:in `initialize'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `new'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:16:in `block (2 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout: 
+App 2964 stdout: Finished in 22.3 seconds (files took 3.95 seconds to load)
+App 2964 stdout: 17 examples, 17 failures, 1 error occurred outside of examples
+App 2964 stdout: 
+App 2964 stdout: Failed examples:
+App 2964 stdout: 
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:62 # ManageTours C149 : to check manage tour page is displayed
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:82 # ManageTours C883 : to check that book tour button is disabled
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:96 # ManageTours C7 : to check that book tour button get enable
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:112 # ManageTours C885 : to check that user can select tour date without building name
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:126 # ManageTours C1016: to check that user can select previous date
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:140 # ManageTours C81 : to check that user can select start time
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:161 # ManageTours C887 : to check that user can get end time automatically after entering start time
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:176 # ManageTours C92 : to check that proper error message is displayed when user enter single character in building field
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:196 # ManageTours C91 : to check that proper lead information is displayed on manage tour page
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:219 # ManageTours C85,C171 : to check that user can view duplicate account selector page while booking a tour
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:241 # ManageTours should test duplicate account selector functionality C86 : to check that tour is booked, when user clicks on 'create account and don't merge' button
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:300 # ManageTours should test duplicate account selector functionality C89 : to check that user can view booked tours information
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:347 # ManageTours should test duplicate account selector functionality C94,C362 : to check that tour is booked, when user clicks on 'create account and merge' button
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:417 # ManageTours should test duplicate account selector functionality C129 : to check user can cancel a tour
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:439 # ManageTours should test duplicate account selector functionality C102 : to check that tour is booked, when user clicks on 'Use Selector Account' button
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:314 # ManageTours should test duplicate account selector functionality check multiple tour booking C96 : to check that user can book multiple tour
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:496 # ManageTours should check reschedule functionality C115 : to check that user can reschedule a tour
+App 2964 stdout: 
+App 2964 stdout: in Application controller
+App 2964 stdout: http://localhost:3000/application?PROJECT_ID=4&SUIT_ID=19&SECTION_ID=22&RUN_ID=&BROWSERS=chrome
+App 2964 stdout: 19
+App 2964 stdout: 22
+App 2964 stdout: 
+App 2964 stdout: 
+App 2964 stdout: chrome
+App 2964 stdout: getting specs from section 22
+App 2964 stdout: spec to run :: {"path"=>"ManageTourPage/Specs/manageTours_spec.rb", "isBrowserDependent"=>true}
+App 2964 stdout: ManageTourPage/Specs/manageTours_spec.rb
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: Checking manage tour page opened
+App 2964 stdout: 
+[ N 2018-03-06 12:39:38.3609 2927/T4 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 3062, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+App 2964 stdout: Manage Tours
+App 2964 stdout: Journey__c records :: #<SalesforceBulk::Job:0x007fd45e17e438>
+App 2964 stdout: Journey__c created => a0j1g000000CzuWAAS
+App 2964 stdout: Successfully opened manage tour page C149 checked
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//149
+App 2964 stdout: add_result_for_case//149
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: C883 : to check that book tour button is disabled
+App 2964 stdout: 
+App 2964 stdout: C883 : successfully checked
+App 2964 stdout: add_result_for_case//883
+App 2964 stdout: add_result_for_case//883
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: C7 : to check that book tour button get enable
+App 2964 stdout: 
+App 2964 stdout: C7 : successfully checked
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//7
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//7
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: C885  : to check that user can select tour date without building name
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//885
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: C1016: to check that user can select previous date
+App 2964 stdout: add_result_for_case//1016
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: C81 : to check that user can select start time
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//81
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: C887 : to check that user can get end time automatically after entering start time
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//887
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: C92 : to check that proper error message is displayed when user enter single character in building field
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//92
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: C91 : to check that proper lead information is displayed on manage tour page
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//91
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: C85,C171 : to check that user can view duplicate account selector page while booking a tour and user can book a tour
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//85
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: C86 : to check that tour is booked, when user clicks on 'create account and don't merge' button
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//86
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: C89 : to check that user can view booked tours information
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//89
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: C94,C362 : to check that tour is booked, when user clicks on 'create account and merge' button
+App 2964 stdout: 
+App 2964 stdout: 
+App 2964 stdout: opening page for id = 00Q1g000001YLtCEAW
+App 2964 stdout: add_result_for_case//94
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: C129 : to check user can cancel a tour
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//129
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: C102 : to check that tour is booked, when user clicks on 'Use Selector Account' button
+App 2964 stdout: 
+App 2964 stdout: opening page for id = 00Q1g000001YLtWEAW
+App 2964 stdout: add_result_for_case//102
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: C96 : to check that user can book multiple tour
+App 2964 stdout: 
+App 2964 stdout: add_result_for_case//96
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: F
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: 
+App 2964 stdout: C115 : to check that user can reschedule a tour
+App 2964 stdout: 
+App 2964 stdout: opening page for id = 00Q1g000001YLtvEAG
+App 2964 stdout: add_result_for_case//115
+App 2964 stdout: 
+App 2964 stdout: ---------------------------------------------------------------------------------------------------------------------------
+App 2964 stdout: F
+App 2964 stdout: Records to delete :: {"Lead"=>[{"Id"=>"00Q1g000001YLsdEAG"}, {"Id"=>"00Q1g000001YLtCEAW"}, {"Id"=>"00Q1g000001YLtWEAW"}, {"Id"=>"00Q1g000001YLtvEAG"}], "Journey__c"=>[{"Id"=>"a0j1g000000CzuWAAS"}]}
+App 2964 stdout: deletedRecords==>
+App 2964 stdout: #<SalesforceBulk::Job:0x007fd45e16d4f8 @result=#<SalesforceBulk::JobResult:0x007fd45e16d4a8 @errors=[], @success=true, @records=[#<CSV::Row "Id":"a0j1g000000CzuWAAS" "Success":true "Created":false "Error":"">], @raw="\"a0j1g000000CzuWAAS\",\"true\",\"false\",\"\"\n", @message="The job has been closed.">>
+App 2964 stdout: 
+App 2964 stdout: deletedRecords==>
+App 2964 stdout: #<SalesforceBulk::Job:0x007fd45e04f800 @result=#<SalesforceBulk::JobResult:0x007fd45e04f788 @errors=[{"1"=>"FIELD_CUSTOM_VALIDATION_EXCEPTION:You cannot delete the Lead associated with one or more Journeys.:Email --"}, {"2"=>"FIELD_CUSTOM_VALIDATION_EXCEPTION:You cannot delete the Lead associated with one or more Journeys.:Email --"}, {"3"=>"FIELD_CUSTOM_VALIDATION_EXCEPTION:You cannot delete the Lead associated with one or more Journeys.:Email --"}], @success=false, @records=[#<CSV::Row "Id":"00Q1g000001YLsdEAG" "Success":true "Created":false "Error":"">, #<CSV::Row "Id":"" "Success":false "Created":false "Error":"FIELD_CUSTOM_VALIDATION_EXCEPTION:You cannot delete the Lead associated with one or more Journeys.:Email --">, #<CSV::Row "Id":"" "Success":false "Created":false "Error":"FIELD_CUSTOM_VALIDATION_EXCEPTION:You cannot delete the Lead associated with one or more Journeys.:Email --">, #<CSV::Row "Id":"" "Success":false "Created":false "Error":"FIELD_CUSTOM_VALIDATION_EXCEPTION:You cannot delete the Lead associated with one or more Journeys.:Email --">], @raw="\"00Q1g000001YLsdEAG\",\"true\",\"false\",\"\"\n\"\",\"false\",\"false\",\"FIELD_CUSTOM_VALIDATION_EXCEPTION:You cannot delete the Lead associated with one or more Journeys.:Email --\"\n\"\",\"false\",\"false\",\"FIELD_CUSTOM_VALIDATION_EXCEPTION:You cannot delete the Lead associated with one or more Journeys.:Email --\"\n\"\",\"false\",\"false\",\"FIELD_CUSTOM_VALIDATION_EXCEPTION:You cannot delete the Lead associated with one or more Journeys.:Email --\"\n", @message="The job has been closed.">>
+App 2964 stdout: 
+App 2964 stdout: 
+App 2964 stdout: Failures:
+App 2964 stdout: 
+App 2964 stdout:   1) ManageTours C149 : to check manage tour page is displayed
+App 2964 stdout:      Failure/Error: @testRailUtility.postResult(149,"Result for case 149 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:      TestRail::APIError:
+App 2964 stdout:        TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:77:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:63:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:      # ------------------
+App 2964 stdout:      # --- Caused by: ---
+App 2964 stdout:      # TestRail::APIError:
+App 2964 stdout:      #   TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      #   ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout: 
+App 2964 stdout:   2) ManageTours C883 : to check that book tour button is disabled
+App 2964 stdout:      Failure/Error: @testRailUtility.postResult(883,"Result for case 883 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:      TestRail::APIError:
+App 2964 stdout:        TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:90:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:84:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:      # ------------------
+App 2964 stdout:      # --- Caused by: ---
+App 2964 stdout:      # TestRail::APIError:
+App 2964 stdout:      #   TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      #   ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout: 
+App 2964 stdout:   3) ManageTours C7 : to check that book tour button get enable
+App 2964 stdout:      Failure/Error: @testRailUtility.postResult(7,"Result for case 7 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:      TestRail::APIError:
+App 2964 stdout:        TestRail API returned HTTP 400 ("Field :case_id is a required field.")
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:107:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:99:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:      # ------------------
+App 2964 stdout:      # --- Caused by: ---
+App 2964 stdout:      # TestRail::APIError:
+App 2964 stdout:      #   TestRail API returned HTTP 400 ("Field :case_id is a required field.")
+App 2964 stdout:      #   ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout: 
+App 2964 stdout:   4) ManageTours C885 : to check that user can select tour date without building name
+App 2964 stdout:      Failure/Error: @testRailUtility.postResult(885 ,"Result for case 885  is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:      TestRail::APIError:
+App 2964 stdout:        TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:122:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:115:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:      # ------------------
+App 2964 stdout:      # --- Caused by: ---
+App 2964 stdout:      # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:      #   no such window: window was already closed
+App 2964 stdout:      #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:      #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:      #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   5) ManageTours C1016: to check that user can select previous date
+App 2964 stdout:      Failure/Error: @testRailUtility.postResult(1016 ,"Result for case 1016  is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:      TestRail::APIError:
+App 2964 stdout:        TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:136:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:128:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:      # ------------------
+App 2964 stdout:      # --- Caused by: ---
+App 2964 stdout:      # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:      #   no such window: window was already closed
+App 2964 stdout:      #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:      #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:      #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/seleni
+App 2964 stdout: um-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   6) ManageTours C81 : to check that user can select start time
+App 2964 stdout:      Failure/Error: @testRailUtility.postResult(81,"Result for case 81 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:      TestRail::APIError:
+App 2964 stdout:        TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:157:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:143:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:      # ------------------
+App 2964 stdout:      # --- Caused by: ---
+App 2964 stdout:      # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:      #   no such window: window was already closed
+App 2964 stdout:      #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:      #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:      #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   7) ManageTours C887 : to check that user can get end time automatically after entering start time
+App 2964 stdout:      Failure/Error: @testRailUtility.postResult(887,"Result for case 887 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:      TestRail::APIError:
+App 2964 stdout:        TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:172:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:164:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:      # ------------------
+App 2964 stdout:      # --- Caused by: ---
+App 2964 stdout:      # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:      #   no such window: window was already closed
+App 2964 stdout:      #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:      #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:      #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   8) ManageTours C92 : to check that proper error message is displayed when user enter single character in building field
+App 2964 stdout:      Failure/Error: @testRailUtility.postResult(92,"Result for case 92 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:      TestRail::APIError:
+App 2964 stdout:        TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:191:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:179:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:      # ------------------
+App 2964 stdout:      # --- Caused by: ---
+App 2964 stdout:      # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:      #   no such window: window was already closed
+App 2964 stdout:      #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:      #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:      #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   9) ManageTours C91 : to check that proper lead information is displayed on manage tour page
+App 2964 stdout:      Failure/Error: @testRailUtility.postResult(91,"Result for case 91 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:      TestRail::APIError:
+App 2964 stdout:        TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:      # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:215:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:      # ./ManageTourPage/Specs/manageTours_spec.rb:199:in `block (2 levels) in <top (required)>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:      # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:      # ------------------
+App 2964 stdout:      # --- Caused by: ---
+App 2964 stdout:      # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:      #   no such window: window was already closed
+App 2964 stdout:      #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:      #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:      #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   10) ManageTours C85,C171 : to check that user can view duplicate account selector page while booking a tour
+App 2964 stdout:       Failure/Error: @testRailUtility.postResult(85,"Result for case 85 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:       TestRail::APIError:
+App 2964 stdout:         TestRail API returned HTTP 400 ("Field :case_id is a required field.")
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:235:in `rescue in block (2 levels) in <top (required)>'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:222:in `block (2 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:
+App 2964 stdout: 133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:       # ------------------
+App 2964 stdout:       # --- Caused by: ---
+App 2964 stdout:       # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:       #   no such window: window was already closed
+App 2964 stdout:       #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:       #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:       #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   11) ManageTours should test duplicate account selector functionality C86 : to check that tour is booked, when user clicks on 'create account and don't merge' button
+App 2964 stdout:       Failure/Error: @testRailUtility.postResult(86,"Result for case 86 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:       TestRail::APIError:
+App 2964 stdout:         TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:296:in `rescue in block (3 levels) in <top (required)>'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:244:in `block (3 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:       # ------------------
+App 2964 stdout:       # --- Caused by: ---
+App 2964 stdout:       # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:       #   no such window: window was already closed
+App 2964 stdout:       #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:       #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:       #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   12) ManageTours should test duplicate account selector functionality C89 : to check that user can view booked tours information
+App 2964 stdout:       Failure/Error: @testRailUtility.postResult(89,"Result for case 89 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:       TestRail::APIError:
+App 2964 stdout:         TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:309:in `rescue in block (3 levels) in <top (required)>'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:303:in `block (3 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:       # ------------------
+App 2964 stdout:       # --- Caused by: ---
+App 2964 stdout:       # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:       #   no such window: window was already closed
+App 2964 stdout:       #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:       #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:       #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   13) ManageTours should test duplicate account selector functionality C94,C362 : to check that tour is booked, when user clicks on 'create account and merge' button
+App 2964 stdout:       Failure/Error: @testRailUtility.postResult(94,"Result for case 94 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:       TestRail::APIError:
+App 2964 stdout:         TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:412:in `rescue in block (3 levels) in <top (required)>'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:350:in `block (3 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:       # ------------------
+App 2964 stdout:       # --- Caused by: ---
+App 2964 stdout:       # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:       #   no such window: window was already closed
+App 2964 stdout:       #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:       #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:       #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   14) ManageTours should test duplicate account selector functionality C129 : to check user can cancel a tour
+App 2964 stdout:       Failure/Error: @testRailUtility.postResult(129,"Result for case 129 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:       TestRail::APIError:
+App 2964 stdout:         TestRail API returned HTTP 400 ("Field :case_id is a required field.")
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:435:in `rescue in block (3 levels) in <top (required)>'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:420:in `block (3 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:       # ------------------
+App 2964 stdout:       # --- Caused by: ---
+App 2964 stdout:       # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:       #   no such window: window was already closed
+App 2964 stdout:       #     (Session info: chrome=64.0.3282.18
+App 2964 stdout: 6)
+App 2964 stdout:       #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:       #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   15) ManageTours should test duplicate account selector functionality C102 : to check that tour is booked, when user clicks on 'Use Selector Account' button
+App 2964 stdout:       Failure/Error: @testRailUtility.postResult(102,"Result for case 102 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:       TestRail::APIError:
+App 2964 stdout:         TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:489:in `rescue in block (3 levels) in <top (required)>'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:442:in `block (3 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:       # ------------------
+App 2964 stdout:       # --- Caused by: ---
+App 2964 stdout:       # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:       #   no such window: window was already closed
+App 2964 stdout:       #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:       #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:       #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   16) ManageTours should test duplicate account selector functionality check multiple tour booking C96 : to check that user can book multiple tour
+App 2964 stdout:       Failure/Error: @testRailUtility.postResult(96,"Result for case 96 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:       TestRail::APIError:
+App 2964 stdout:         TestRail API returned HTTP 400 ("Field :case_id is a required field.")
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:342:in `rescue in block (4 levels) in <top (required)>'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:317:in `block (4 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:       # ------------------
+App 2964 stdout:       # --- Caused by: ---
+App 2964 stdout:       # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:       #   no such window: window was already closed
+App 2964 stdout:       #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:       #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:       #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout:   17) ManageTours should check reschedule functionality C115 : to check that user can reschedule a tour
+App 2964 stdout:       Failure/Error: @testRailUtility.postResult(115,"Result for case 115 is #{excp}",5,@runId)
+App 2964 stdout: 
+App 2964 stdout:       TestRail::APIError:
+App 2964 stdout:         TestRail API returned HTTP 400 ("Field :run_id is not a valid test run.")
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:96:in `_send_request'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/testrail/api_client.rb:51:in `send_post'
+App 2964 stdout:       # ./GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb:132:in `postResult'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:519:in `rescue in block (3 levels) in <top (required)>'
+App 2964 stdout:       # ./ManageTourPage/Specs/manageTours_spec.rb:499:in `block (3 levels) in <top (required)>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:133:in `block (2 levels) in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:130:in `block in <main>'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `each'
+App 2964 stdout:       # /Users/sachin.chavan/.jenkins/workspace/TeamQA-BuildRubyScriptManually/specManager.rb:117:in `<main>'
+App 2964 stdout:       # ------------------
+App 2964 stdout:       # --- Caused by: ---
+App 2964 stdout:       # Selenium::WebDriver::Error::NoSuchWindowError:
+App 2964 stdout:       #   no such window: window was already closed
+App 2964 stdout:       #     (Session info: chrome=64.0.3282.186)
+App 2964 stdout:       #     (Driver info: chromedriver=2.35.528157 (4429ca2590d6988c0745c24c8858745aaaec01ef),platform=Mac OS X 10.12.1 x86_64)
+App 2964 stdout:       #   /Users/sachin.chavan/.rvm/gems/ruby-2.4.0/gems/selenium-webdriver-3.9.0/lib/selenium/webdriver/remote/response.rb:69:in `assert_ok'
+App 2964 stdout: 
+App 2964 stdout: Finished in 4 minutes 17.5 seconds (files took 4.84 seconds to load)
+App 2964 stdout: 17 examples, 17 failures
+App 2964 stdout: 
+App 2964 stdout: Failed examples:
+App 2964 stdout: 
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:62 # ManageTours C149 : to check manage tour page is displayed
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:82 # ManageTours C883 : to check that book tour button is disabled
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:96 # ManageTours C7 : to check that book tour button get enable
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:112 # ManageTours C885 : to check that user can select tour date without building name
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:126 # ManageTours C1016: to check that user can select previous date
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:140 # ManageTours C81 : to check that user can select start time
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:161 # ManageTours C887 : to check that user can get end time automatically after entering start time
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:176 # ManageTours C92 : to check that proper error message is displayed when user enter single character in building field
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:196 # ManageTours C91 : to check that proper lead information is displayed on manage tour page
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:219 # ManageTours C85,C171 : to check that user can view duplicate account selector page while booking a tour
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:241 # ManageTours should test duplicate account selector functionality C86 : to check that tour is booked, when user clicks on 'create account and don't merge' button
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:300 # ManageTours should test duplicate account selector functionality C89 : to check that user can view booked tours information
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:347 # ManageTours should test duplicate account selector functionality C94,C362 : to check that tour is booked, when user clicks on 'create account and merge' button
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:417 # ManageTours should test duplicate account selector functionality C129 : to check user can cancel a tour
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:439 # ManageTours should test duplicate account selector functionality C102 : to check that tour is booked, when user clicks on 'Use Selector Account' button
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:314 # ManageTours should test duplicate account selector functionality check multiple tour booking C96 : to check that user can book multiple tour
+App 2964 stdout: rspec ./ManageTourPage/Specs/manageTours_spec.rb:496 # ManageTours should check reschedule functionality C115 : to check that user can reschedule a tour
+App 2964 stdout: 
+
+[ N 2018-03-06 12:45:13.8059 2927/T7 age/Cor/CoreMain.cpp:616 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ N 2018-03-06 12:45:13.8060 2927/T1 age/Cor/CoreMain.cpp:1154 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ N 2018-03-06 12:45:13.8060 2927/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 2964, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-06 12:45:13.8061 2927/T7 Ser/Server.h:902 ]: [ServerThr.1] Freed 0 spare client objects
+[ N 2018-03-06 12:45:13.8062 2927/T9 Ser/Server.h:902 ]: [ServerThr.2] Freed 0 spare client objects
+[ N 2018-03-06 12:45:13.8062 2927/Tb Ser/Server.h:902 ]: [ServerThr.3] Freed 0 spare client objects
+[ N 2018-03-06 12:45:13.8062 2927/T9 Ser/Server.h:559 ]: [ServerThr.2] Shutdown finished
+[ N 2018-03-06 12:45:13.8062 2927/T7 Ser/Server.h:559 ]: [ServerThr.1] Shutdown finished
+[ N 2018-03-06 12:45:13.8062 2927/Td Ser/Server.h:902 ]: [ServerThr.4] Freed 0 spare client objects
+[ N 2018-03-06 12:45:13.8063 2927/Tb Ser/Server.h:559 ]: [ServerThr.3] Shutdown finished
+[ N 2018-03-06 12:45:13.8063 2927/Td Ser/Server.h:559 ]: [ServerThr.4] Shutdown finished
+[ N 2018-03-06 12:45:13.8064 2927/Tf Ser/Server.h:902 ]: [ApiServer] Freed 0 spare client objects
+[ N 2018-03-06 12:45:13.8064 2927/Tf Ser/Server.h:559 ]: [ApiServer] Shutdown finished
+[ N 2018-03-06 12:45:13.8065 2927/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 2964, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-06 12:45:14.2231 2927/T1 age/Cor/CoreMain.cpp:1227 ]: Passenger core shutdown finished
+[ W 2018-03-06 12:45:14.2615 3677/T1 age/Wat/WatchdogMain.cpp:369 ]: Cannot open cleanup PID file temp_dir_toucher.pid (/var/folders/pm/mkn_0v2955q13nmnw33d_yrh0000gp/T/passenger-standalone.15btus3/temp_dir_toucher.pid)
+[ N 2018-03-06 12:45:21.7957 3703/T1 age/Wat/WatchdogMain.cpp:1258 ]: Starting Passenger watchdog...
+[ N 2018-03-06 12:45:21.8477 3705/T1 age/Cor/CoreMain.cpp:1242 ]: Starting Passenger core...
+[ N 2018-03-06 12:45:21.8481 3705/T1 age/Cor/CoreMain.cpp:252 ]: Passenger core running in multi-application mode.
+[ N 2018-03-06 12:45:21.8712 3705/T1 age/Cor/CoreMain.cpp:977 ]: Passenger core online, PID 3705
+App 3719 stdout: 
+App 3742 stdout: 
+[ N 2018-03-06 12:45:29.7318 3705/T5 age/Cor/SecurityUpdateChecker.h:517 ]: Security update check: no update found (next check in 24 hours)
+
+[ N 2018-03-06 12:45:41.9082 3705/T7 age/Cor/CoreMain.cpp:616 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ N 2018-03-06 12:45:41.9083 3705/T1 age/Cor/CoreMain.cpp:1154 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ N 2018-03-06 12:45:41.9083 3705/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 3742, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-06 12:45:41.9084 3705/T9 Ser/Server.h:902 ]: [ServerThr.2] Freed 0 spare client objects
+[ N 2018-03-06 12:45:41.9085 3705/T9 Ser/Server.h:559 ]: [ServerThr.2] Shutdown finished
+[ N 2018-03-06 12:45:41.9085 3705/Tb Ser/Server.h:902 ]: [ServerThr.3] Freed 0 spare client objects
+[ N 2018-03-06 12:45:41.9085 3705/Tb Ser/Server.h:559 ]: [ServerThr.3] Shutdown finished
+[ N 2018-03-06 12:45:41.9085 3705/Td Ser/Server.h:902 ]: [ServerThr.4] Freed 0 spare client objects
+[ N 2018-03-06 12:45:41.9085 3705/Td Ser/Server.h:559 ]: [ServerThr.4] Shutdown finished
+[ N 2018-03-06 12:45:41.9085 3705/T7 Ser/Server.h:902 ]: [ServerThr.1] Freed 0 spare client objects
+[ N 2018-03-06 12:45:41.9086 3705/T7 Ser/Server.h:559 ]: [ServerThr.1] Shutdown finished
+[ N 2018-03-06 12:45:41.9087 3705/Tf Ser/Server.h:902 ]: [ApiServer] Freed 0 spare client objects
+[ N 2018-03-06 12:45:41.9088 3705/Tf Ser/Server.h:559 ]: [ApiServer] Shutdown finished
+[ N 2018-03-06 12:45:41.9089 3705/T1 age/Cor/CoreMain.cpp:1068 ]: Checking whether to disconnect long-running connections for process 3742, application /Users/sachin.chavan/.jenkins/workspace/StartRailsServer (development)
+[ N 2018-03-06 12:45:42.1884 3705/T1 age/Cor/CoreMain.cpp:1227 ]: Passenger core shutdown finished

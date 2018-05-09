@@ -1,12 +1,14 @@
 require "json"
 require "selenium-webdriver"
 require "rspec"
-require_relative "/Users/sachin.chavan/RubymineProjects/QaAuto/specHelper.rb"
+require_relative File.expand_path('../',Dir.pwd )+"/specHelper.rb"
 include RSpec::Expectations
+puts "helllooo"
 
 describe "LeadGenerete" do
 
-  before(:each) do
+  before(:all) do    
+    puts "helllooooo"
     @helper = Helper.new
     #@driver = Selenium::WebDriver.for :chrome
     @driver = ARGV[0]
@@ -73,6 +75,18 @@ describe "LeadGenerete" do
     rescue Exception => e
       @helper.postFailResult(e,'2016')
     end
+  end
+
+  it "test_c2146" do
+    @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+    !60.times{ break if (@driver.find_element(:id, "tourFormContactNameField").displayed? rescue false); sleep 1 }
+    @driver.find_element(:id, "tourFormContactNameField").clear
+    @driver.find_element(:id, "tourFormContactNameField").send_keys "john.sparrow"
+    @driver.find_element(:id, "tourFormEmailField").clear
+    @driver.find_element(:id, "tourFormEmailField").send_keys "john.sparrow123451@example.com"
+    @driver.find_element(:id, "tourFormPhoneField").clear
+    @driver.find_element(:id, "tourFormPhoneField").send_keys "123456789"
+    @driver.find_element(:id, "tourFormStepOneSubmitButton").click
   end
 
   def element_present?(how, what)
