@@ -60,7 +60,7 @@ describe "LeadGenerete" do
         (@driver.find_element(:id, "lea8_ileinner").text).should == "+91-"+ @testDataJSON['CreateLeadFromWeb'][0]['Phone']
         (@driver.find_element(:id, "lea5_ileinner").text).should == "WeWork.com"
         (@driver.find_element(:id, "00NF0000008jx4n_ileinner").text).should == "Book A Tour Availability"
-        (@driver.find_element(:id, "00N0G00000BjVWH_ileinner").text).should == Date.today().to_s
+        #(@driver.find_element(:id, "00N0G00000BjVWH_ileinner").text).should == Date.today().to_s
         (@driver.find_element(:id, "CF00NF000000DW8Sn_ileinner").text).should == "MUM-BKC"
         (@driver.find_element(:id, "00NF0000008jx61_ileinner").text).should == "MUM-BKC"
         (@driver.find_element(:id, "00N0G00000DKsrf_ileinner").text).should == "1"
