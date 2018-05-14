@@ -4,22 +4,35 @@ require 'json'
 require 'selenium-webdriver'
 require 'enziUIUtility'
 require 'enziSalesforce'
-require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+puts "123"
+#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+
+require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+
 #require_relative File.expand_path('',Dir.pwd )+ "/credentials.yaml"
 #require_relative File.expand_path(Dir.pwd+"/GemUtilities/testRecords.json")
-
+puts '321'
 class Helper
 def initialize()
   #@testRailUtility = EnziTestRailUtility::TestRailUtility.new('team-qa@enzigma.com','7O^dv0mi$IZHf4Cn')
-  @runId = ENV['RUN_ID']
-  #@runId = '1698'
+  #@runId = ENV['RUN_ID']
+  @runId = '1698'
   @objRollbar = RollbarUtility.new()
-  @sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
-  puts "@sObjectRecords #{@sObjectRecords}"
-  @timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
-  @mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
+  
+  #@sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
+  #@timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
+  #@mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
+
+  @sObjectRecords = JSON.parse(File.read(File.expand_path('..',Dir.pwd ) + "/testRecords.json"))
+  @timeSettingMap = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/timeSettings.yaml')
+  @mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
+  
+
   @testRailUtility = EnziTestRailUtility::TestRailUtility.new(@mapCredentials['TestRail']['username'],@mapCredentials['TestRail']['password'])
+  @salesforceBulk = Salesforce.login(@mapCredentials['Staging']['WeWork System Administrator']['username'], @mapCredentials['Staging']['WeWork System Administrator']['password'], true)
+  puts "heellooooo"
 end
 
 
@@ -51,6 +64,18 @@ end
 def getRecordJSON()
   puts @sObjectRecords
   return @sObjectRecords
+end
+
+def getSalesforceRecord(sObject,query)
+  puts query
+    result = Salesforce.getRecords(@salesforceBulk, "#{sObject}", "#{query}", nil)
+    
+    puts "#{sObject} created => #{result.result.records}"
+    return result.result.records
+  rescue Exception => e 
+    puts e
+    puts "No record found111111"
+    return nil
 end
 
 end
