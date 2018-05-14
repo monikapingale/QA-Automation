@@ -650,19 +650,66 @@ puts "2222"
         @helper.addLogs('To Check New Journey creation if duplicate lead submission happens for existing contact which is created within 30 days from today when the existing contact has permission to create a journey.','2149')
 
 
-        passedLogs = @helper.addLogs("[Step    ] get details of 30 days ago Contact")
-        contact = @helper.getSalesforceRecord('Contact',"SELECT Id,Name,Email,Owner.Name,CreatedDate FROM Contact WHERE Email LIKE '%@example.com' AND CreatedDate > N_DAYS_AGO: 30 LIMIT 1")
-        puts contact
-        
-        if (contact[0].fetch('Id') == nil ) then
-          @helper.addLogs("Lead not present")
+        users = @helper.getSalesforceRecord('Setting__c',"select Data__c from Setting__c Where Name = 'User/Queue Journey Creation'")
+
+        puts users
+        puts users[0].fetch('Data__c')
+        userIds = JSON.parse(users[0].fetch('Data__c'))
+        puts userIds['allowedUsers']
+
+        arrayOfUsers = []
+        userIds['allowedUsers'].each do |user|
+            puts user
+            arrayOfUsers.push(user['Id'])
         end
-        expect(contact.size == 1).to eq true
-        expect(contact[0]).to_not eq nil
-        expect(contact[0].fetch('Id')).to_not eq nil
+
+
+        puts arrayOfUsers
+
+=begin
+        if users[0].fetch('Data__c') != nil then
+            puts 'accQueue present'
+            members = []
+            i = 0
+
+
+            users[0].fetch('Data__c').each do |item|
+              
+            end
+          until users[0]ecords[i] == nil do
+            members.push(accQueue.result.records[i].fetch('Member__c'))
+            i = i + 1
+          end
+      return members
+
+=end        
+
+        passedLogs = @helper.addLogs("[Step    ] get details of 30 days ago Contact")
+        contacts = @helper.getSalesforceRecord('Contact',"select id,Name,createdDate,Account.Id,Looking_For_Number_Of_Desk__c,Owner.Id,Owner.Name,RecordType.Name,Number_of_Full_Time_Employees__c,Email,Interested_in_Number_of_Desks__c from Contact where Email like  '%@example.com%' AND createdDate = LAST_N_DAYS:30")
+        puts contacts
+
+        contactToTest = nil
+        contacts.each do |contact|
+            if arrayOfUsers.include? contact.fetch('Owner.Id') then
+                puts "User has permission #{contact}"
+                puts contact
+                contactToTest = contact
+                break;
+            else
+                puts "No users having permission to create journey"
+                raise e "No Users found"
+            end
+        end
+
+        
+        if (contactToTest.fetch('Id') == nil ) then
+          @helper.addLogs("Contact not present")
+        end
+        expect(contactToTest).to_not eq nil
+        expect(contactToTest.fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
+=begin
         @helper.addLogs('Go to Staging website and create lead with email id of existing contact created within 30 days.')
 
         
@@ -707,6 +754,7 @@ puts "2222"
         expect(activity[0]).to_not eq nil
         expect(activity[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
+=end
 
 =begin
         
