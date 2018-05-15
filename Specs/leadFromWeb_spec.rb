@@ -17,7 +17,7 @@ describe "LeadGenerete" do
     @verification_errors = []
   end
 
-  after(:each) do
+  after(:all) do
     @driver.quit
     @verification_errors.should == []
   end
