@@ -18,6 +18,7 @@ describe "LeadGenerete" do
   end
 
   before(:each) do
+    puts ""
     puts "----------------------------------------------------------------------------------"
   end
 
@@ -67,6 +68,7 @@ describe "LeadGenerete" do
         expect(lead.size == 1).to eq true
         expect(lead[0]).to_not eq nil
         expect(lead[0].fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
         journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name FROM Journey__c WHERE Primary_Email__c = '#{emailLead}'")
@@ -74,6 +76,7 @@ describe "LeadGenerete" do
         expect(journey.size == 1).to eq true
         expect(journey[0]).to_not eq nil
         expect(journey[0].fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
@@ -83,6 +86,7 @@ describe "LeadGenerete" do
         expect(activity.size == 1).to eq true
         expect(activity[0]).to_not eq nil
         expect(activity[0].fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
 
         puts "****************************"
 
