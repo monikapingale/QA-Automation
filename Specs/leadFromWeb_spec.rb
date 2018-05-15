@@ -813,7 +813,6 @@ describe "LeadGenerete" do
 
 =end
         @helper.addLogs('Go to Staging website and book a tour')
-
         
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
         sleep(5)
@@ -837,8 +836,7 @@ describe "LeadGenerete" do
         sleep(2)
         @driver.find_element(:id, "tourFormStepTwoSubmitButton").click
         sleep(5)
-        @helper.addLogs('Success')
-  
+        @helper.addLogs('Success')  
         sleep(20)
 
         passedLogs = @helper.addLogs("[Step    ] get building details of #{@testDataJSON['CreateLeadFromWeb'][0]["Building"]}")
@@ -846,7 +844,6 @@ describe "LeadGenerete" do
         building = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
         expect(building).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
-
         
         passedLogs = @helper.addLogs("[Step    ] get details of Contact")
         contact= @helper.getSalesforceRecord('Contact',"select id,Name,createdDate,Account.Id,Looking_For_Number_Of_Desk__c,Owner.Id,Owner.Name,RecordType.Name,Number_of_Full_Time_Employees__c,Email,Interested_in_Number_of_Desks__c from Contact where Email = '#{emailId}'")
@@ -862,7 +859,6 @@ describe "LeadGenerete" do
         expect(oldJourney[0]).to_not eq nil
         expect(oldJourney[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
-
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         contactId  =contact[0].fetch('Id')
@@ -884,8 +880,6 @@ describe "LeadGenerete" do
         @driver.find_element(:id, "tourFormStepOneSubmitButton").click
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
-
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
         newJourney  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailId}'")
         puts newJourney
@@ -894,7 +888,6 @@ describe "LeadGenerete" do
         expect(newJourney[0]).to_not eq nil
         expect(newJourney[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
-
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         leadId  =contact[0].fetch('Id')
@@ -906,11 +899,10 @@ describe "LeadGenerete" do
         expect(activity[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        #@helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate FROM #{sObject} WHERE Email LIKE '%@example.com' AND CreatedDate = N_DAYS_AGO: 4 AND IsConverted = False LIMIT 1")
-
+        @helper.postSuccessResult('2150')
     rescue Exception => e
       raise e
-        #@helper.postFailResult(e,'2016')
+        @helper.postFailResult(e,'2150')
     end
   end
 
