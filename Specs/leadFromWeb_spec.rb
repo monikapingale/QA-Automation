@@ -32,7 +32,7 @@ describe "LeadGenerete" do
 
   it "C:2016 To check whether generation of lead from Website.", :'2016'=> 'true' do
     begin
-        @helper.addLogs('To check whether generation of lead from Website.','2016')
+        @helper.addLogs('C:2016 To check whether generation of lead from Website.','2016')
 
 
         @helper.addLogs('Go to Staging website and create lead')
@@ -230,7 +230,7 @@ describe "LeadGenerete" do
 
   it "C:2145 To Check of journey updation on duplicate lead submission, if an open journey already exist in system with created date within 4 days from today.", :'2145'=> 'true' do
     begin
-        @helper.addLogs('To check whether generation of lead from Website.','2145')
+        @helper.addLogs('C:2145 To check whether generation of lead from Website.','2145')
         @helper.addLogs('Go to Staging website and create lead')
         
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
@@ -347,7 +347,7 @@ describe "LeadGenerete" do
 
   it "C:2146 To check new journey creation if duplicate lead submission happens for existing lead which is created before 4 days and within 30 days from today.", :'2146'=> 'true' do
     begin
-        @helper.addLogs('To check new journey creation if duplicate lead submission happens for existing lead which is created after 4 days and within 30 days from today.','2146')
+        @helper.addLogs('C:2146 To check new journey creation if duplicate lead submission happens for existing lead which is created after 4 days and within 30 days from today.','2146')
 
 
         passedLogs = @helper.addLogs("[Step    ] get details of 4 days ago lead")
@@ -461,7 +461,7 @@ describe "LeadGenerete" do
 
   it "C:2147 To check new journey creation if duplicate lead submission happens for existing lead which is created after 4 days and within 30 days from today.", :'2147'=> 'true' do
     begin
-        @helper.addLogs('To check new journey creation if duplicate lead submission happens for existing lead which is created after 30 days from today.','2147')
+        @helper.addLogs('C:2147 To check new journey creation if duplicate lead submission happens for existing lead which is created after 30 days from today.','2147')
 
 
         passedLogs = @helper.addLogs("[Step    ] get details of 30 days ago lead")
@@ -576,7 +576,7 @@ describe "LeadGenerete" do
 
   it "C:2149 To Check New Journey creation if duplicate lead submission happens for existing contact which is created within 30 days from today when the existing contact has permission to create a journey.", :'2149'=> 'true' do
     begin
-        @helper.addLogs('To Check New Journey creation if duplicate lead submission happens for existing contact which is created within 30 days from today when the existing contact has permission to create a journey.','2149')
+        @helper.addLogs('C:2149 To Check New Journey creation if duplicate lead submission happens for existing contact which is created within 30 days from today when the existing contact has permission to create a journey.','2149')
 
 
         #users = @helper.getSalesforceRecord('Setting__c',"select Data__c from Setting__c Where Name = 'User/Queue Journey Creation'")
@@ -746,7 +746,7 @@ describe "LeadGenerete" do
 
   it "C:2150 To Check New Journey Creation if dupicate lead submisison happens for existing contact which is created within 30 days from today when the existing contact does not have permission to create journey.", :'2150'=> 'true' do
     begin
-        @helper.addLogs('To Check New Journey Creation if dupicate lead submisison happens for existing contact which is created within 30 days from today when the existing contact does not have permission to create journey.','2150')
+        @helper.addLogs('C:2150 To Check New Journey Creation if dupicate lead submisison happens for existing contact which is created within 30 days from today when the existing contact does not have permission to create journey.','2150')
 
 
         users = @helper.getSalesforceRecord('Setting__c',"select Data__c from Setting__c Where Name = 'User/Queue Journey Creation'")
