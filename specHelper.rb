@@ -15,8 +15,8 @@ require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtilit
 class Helper
 def initialize()
   #@testRailUtility = EnziTestRailUtility::TestRailUtility.new('team-qa@enzigma.com','7O^dv0mi$IZHf4Cn')
-  #@runId = ENV['RUN_ID']
-  @runId = '1698'
+  @runId = ENV['RUN_ID']
+  #@runId = '1698'
   @objRollbar = RollbarUtility.new()
   
   @sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
