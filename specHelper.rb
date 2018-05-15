@@ -4,16 +4,14 @@ require 'json'
 require 'selenium-webdriver'
 require 'enziUIUtility'
 require 'enziSalesforce'
-puts "123"
-#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
 
-require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
 
 #require_relative File.expand_path('',Dir.pwd )+ "/credentials.yaml"
 #require_relative File.expand_path(Dir.pwd+"/GemUtilities/testRecords.json")
-puts '321'
 class Helper
 def initialize()
   #@testRailUtility = EnziTestRailUtility::TestRailUtility.new('team-qa@enzigma.com','7O^dv0mi$IZHf4Cn')
@@ -21,18 +19,17 @@ def initialize()
   @runId = '1698'
   @objRollbar = RollbarUtility.new()
   
-  #@sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
-  #@timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
-  #@mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
+  @sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
+  @timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
+  @mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
 
-  @sObjectRecords = JSON.parse(File.read(File.expand_path('..',Dir.pwd ) + "/testRecords.json"))
-  @timeSettingMap = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/timeSettings.yaml')
-  @mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
+  #@sObjectRecords = JSON.parse(File.read(File.expand_path('..',Dir.pwd ) + "/testRecords.json"))
+  #@timeSettingMap = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/timeSettings.yaml')
+  #@mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
   
 
   @testRailUtility = EnziTestRailUtility::TestRailUtility.new(@mapCredentials['TestRail']['username'],@mapCredentials['TestRail']['password'])
   @salesforceBulk = Salesforce.login(@mapCredentials['Staging']['WeWork System Administrator']['username'], @mapCredentials['Staging']['WeWork System Administrator']['password'], true)
-  puts "heellooooo"
 end
 
 
@@ -44,8 +41,6 @@ end
 
 def postFailResult(exception,caseId)
   caseInfo = @testRailUtility.getCase(caseId)
-  puts "caseInfo"
-  puts caseInfo
   @passedLogs = @objRollbar.addLog("[Result  ]  Failed")
   @objRollbar.postRollbarData(caseInfo['id'], caseInfo['title'], @passedLogs[caseInfo['id']])
   Rollbar.error(exception)
@@ -62,14 +57,12 @@ def addLogs(logs,caseId = nil)
 end
 
 def getRecordJSON()
-  puts @sObjectRecords
   return @sObjectRecords
 end
 
 def getSalesforceRecord(sObject,query)
   puts query
     result = Salesforce.getRecords(@salesforceBulk, "#{sObject}", "#{query}", nil)
-    
     puts "#{sObject} created => #{result.result.records}"
     return result.result.records
   rescue Exception => e 

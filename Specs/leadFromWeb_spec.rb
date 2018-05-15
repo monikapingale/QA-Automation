@@ -1,21 +1,17 @@
 require "json"
 require "selenium-webdriver"
 require "rspec"
-#require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
-require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
+require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
+#require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
 include RSpec::Expectations
-puts "1212"
 
 describe "LeadGenerete" do
 
-puts "2222"
   before(:all) do    
-    #puts "helllooooo"
     @helper = Helper.new
-    @driver = Selenium::WebDriver.for :chrome
-    #@driver = ARGV[0]
+    #@driver = Selenium::WebDriver.for :chrome
+    @driver = ARGV[0]
     @testDataJSON = @helper.getRecordJSON()
-    #@base_url = "https://www.katalon.com/"
     @accept_next_alert = true
     @driver.manage.timeouts.implicit_wait = 30
     @verification_errors = []
@@ -53,6 +49,7 @@ puts "2222"
         buildingName = @testDataJSON['CreateLeadFromWeb'][0]["Building"]
         building = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
         expect(building).to_not eq nil
+        puts building.size
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
@@ -64,25 +61,26 @@ puts "2222"
         expect(lead[0].fetch('Id')).to_not eq nil
 
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
-        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailLead}'")
+        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name FROM Journey__c WHERE Primary_Email__c = '#{emailLead}'")
         puts journey
-        #expect(journey.size == 1).to eq true
+        expect(journey.size == 1).to eq true
         expect(journey[0]).to_not eq nil
         expect(journey[0].fetch('Id')).to_not eq nil
 
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         leadId  =lead[0].fetch('Id')
-        activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{leadId}'")
+        activity  = @helper.getSalesforceRecord('Task',"Select Id,Status,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{leadId}'")
         puts activity
-        #expect(activity.size == 1).to eq true
+        expect(activity.size == 1).to eq true
         expect(activity[0]).to_not eq nil
         expect(activity[0].fetch('Id')).to_not eq nil
 
+puts "****************************"
 
         passedLogs = @helper.addLogs("[Validate] lead:.Name")
         puts lead[0].fetch('Name')
-        #expect(lead[0].fetch('Name')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        expect(lead[0].fetch('Name')).to match("#{@testDataJSON['CreateLeadFromWeb'][0]['Name']}") 
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] lead:Email")
@@ -94,7 +92,7 @@ puts "2222"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] lead:Phone")
-        expect(lead[0].fetch('Phone')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Phone']
+        expect(lead[0].fetch('Phone')).to match("#{@testDataJSON['CreateLeadFromWeb'][0]['Phone']}") 
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] lead:LeadSource")
@@ -102,26 +100,26 @@ puts "2222"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] lead:Company_Size__c")
-        puts lead[0].fetch('Company_Size__c').to_i
-        #expect(lead[0].fetch('Company_Size__c').to_i).to eq @testDataJSON['CreateLeadFromWeb'][0]["NumberOfPeople"]}".split(' ')[0].to_i
+        expect(lead[0].fetch('Company_Size__c').to_i).to eq @testDataJSON['CreateLeadFromWeb'][0]["NumberOfPeople"].split(' ')[0].to_i
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] lead:Lead_Source_Detail__c")
-        expect(lead[0].fetch('Lead_Source_Detail__c').to_i).to eq "Book A Tour Availability"
+        expect(lead[0].fetch('Lead_Source_Detail__c')).to eq "Book A Tour Availability"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] lead:Status")
-        expect(lead[0].fetch('Status').to_i).to eq "Open"
+        expect(lead[0].fetch('Status')).to eq "Open"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         
         passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_In__c")
-        expect(lead[0].fetch('Building_Interested_In__c')).to eq "#{building.fetch('Id')}"
+        puts lead[0].fetch('Building_Interested_In__c')
+        #expect(lead[0].fetch('Building_Interested_In__c')).to eq "#{building.fetch('Id')}"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_Name__c")
         puts lead[0].fetch('Building_Interested_Name__c')
-        #expect(lead[0].fetch('Building_Interested_Name__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
+        expect(lead[0].fetch('Building_Interested_Name__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] lead:Locations_Interested__c")
@@ -130,61 +128,45 @@ puts "2222"
 
 
 
-=begin
-        passedLogs = @helper.addLogs("[Validate] lead:.Name")
-        expect(journey[0].fetch('Name')).to eq "Consumer"
+puts "*******************************"
+
+        passedLogs = @helper.addLogs("[Validate] journey:.Name")
+        expect(journey[0].fetch('Name')).to match("#{@testDataJSON['CreateLeadFromWeb'][0]['Name']}")
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Email")
-        expect(lead[0].fetch('Email')).to eq "#{building.fetch('Community_Lead__c')}"
+        passedLogs = @helper.addLogs("[Validate] journey:NMD_Next_Contact_Date__c")
+        puts journey[0].fetch('NMD_Next_Contact_Date__c')
+        puts Date.today
+        expect(journey[0].fetch('NMD_Next_Contact_Date__c')).to eq Date.today.to_s
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Company")
-        expect(lead[0].fetch('Company').to_i).to eq "#{@objAccAssignmentFromLead.instance_variable_get(:@sObjectRecords)["AssignmentRules"]["tour"][0]["companySize"]}".to_i
+        passedLogs = @helper.addLogs("[Validate] journey:Status__c")
+        expect(journey[0].fetch('Status__c')).to eq "Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Phone")
-        expect(lead[0].fetch('Phone').to_i).to eq "#{@objAccAssignmentFromLead.instance_variable_get(:@sObjectRecords)["AssignmentRules"]["tour"][0]["numberOfDesks"]}".to_i
+    
+puts "******************************"
+        passedLogs = @helper.addLogs("[Validate] Activity:Subject")
+        expect(activity[0].fetch('Subject')).to eq "Inbound Lead submission"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:LeadSource")
-        expect(lead[0].fetch('LeadSource')).to eq "Consumer"
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source__c")
+        expect(activity[0].fetch('Lead_Source__c')).to eq "WeWork.com"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Company_Size__c")
-        expect(lead[0].fetch('Company_Size__c')).to eq "#{building.fetch('Community_Lead__c')}"
+        passedLogs = @helper.addLogs("[Validate] Activity:Type")
+        expect(activity[0].fetch('Type')).to eq "Website"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Lead_Source_Detail__c")
-        expect(lead[0].fetch('Lead_Source_Detail__c').to_i).to eq "#{@objAccAssignmentFromLead.instance_variable_get(:@sObjectRecords)["AssignmentRules"]["tour"][0]["companySize"]}".to_i
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source_Detail__c")
+        expect(activity[0].fetch('Lead_Source_Detail__c')).to eq "Book A Tour Availability"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Status")
-        expect(lead[0].fetch('Status').to_i).to eq "#{@objAccAssignmentFromLead.instance_variable_get(:@sObjectRecords)["AssignmentRules"]["tour"][0]["numberOfDesks"]}".to_i
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_In__c")
-        expect(lead[0].fetch('Building_Interested_In__c')).to eq "#{building.fetch('Community_Lead__c')}"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_Name__c")
-        expect(lead[0].fetch('Building_Interested_Name__c').to_i).to eq "#{@objAccAssignmentFromLead.instance_variable_get(:@sObjectRecords)["AssignmentRules"]["tour"][0]["companySize"]}".to_i
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Locations_Interested__c")
-        expect(lead[0].fetch('Locations_Interested__c').to_i).to eq "#{@objAccAssignmentFromLead.instance_variable_get(:@sObjectRecords)["AssignmentRules"]["tour"][0]["numberOfDesks"]}".to_i
+        passedLogs = @helper.addLogs("[Validate] Activity:Status")
+        expect(activity[0].fetch('Status')).to eq "Not Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
-        puts 'Task details: '
-        taskDetails = @objLeadGeneration.fetchTaskDetails(lead.fetch("Id"))
-        puts "Task Details: #{taskDetails}"
-        expect(taskDetails.fetch("Lead_Source__c")).to eq "WeWork.com"
-        #[Select Id, Subject, WhoId FROM Task WHERE WhoId=:lead.id AND SUBJECT ="unreach"];
-        expect(taskDetails.fetch("Lead_Source_Detail__c")).to eq "Book A Tour Availability"
-        expect(taskDetails.fetch("Locations_Interested__c")).to eq lead.fetch("Locations_Interested__c")
-=end
 
         #@helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate FROM #{sObject} WHERE Email LIKE '%@example.com' AND CreatedDate = N_DAYS_AGO: 4 AND IsConverted = False LIMIT 1")
 =begin       
@@ -228,10 +210,10 @@ puts "2222"
         (@driver.find_element(:link, "MUM-BKC").text).should == "MUM-BKC"
         @driver.find_element(:id, "NMD_Next_Contact_Date__c").click
 =end
-        #@helper.postSuccessResult('2016')
+        @helper.postSuccessResult('2016')
     rescue Exception => e
-      raise e
-        #@helper.postFailResult(e,'2016')
+        puts e
+        @helper.postFailResult(e,'2016')
     end
   end
 
@@ -247,6 +229,7 @@ puts "2222"
 
         
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+        sleep(5)
         @driver.find_element(:id, "tourFormContactNameField").clear
         @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
         @driver.find_element(:id, "tourFormEmailField").clear
@@ -256,13 +239,14 @@ puts "2222"
         @driver.find_element(:id, "tourFormPhoneField").clear
         @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
         @driver.find_element(:id, "tourFormStepOneSubmitButton").click
-        
+        sleep(5)
         @helper.addLogs('Success')
 
 
         @helper.addLogs('Go to Staging website and Again create lead with same email Id')
-        sleep(10)
+        
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+        sleep(5)
         @driver.find_element(:id, "tourFormContactNameField").clear
         @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
         @driver.find_element(:id, "tourFormEmailField").clear
@@ -270,8 +254,9 @@ puts "2222"
         @driver.find_element(:id, "tourFormEmailField").send_keys emailLead
         @driver.find_element(:id, "tourFormPhoneField").clear
         @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
-        @driver.find_element(:id, "tourFormStepOneSubmitButton").click
         sleep(5)
+        @driver.find_element(:id, "tourFormStepOneSubmitButton").click
+        
         @helper.addLogs('Success')
   
         sleep(20)
@@ -291,19 +276,19 @@ puts "2222"
         expect(lead[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
-        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailLead}'")
+        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name,CreatedDate FROM Journey__c WHERE Primary_Email__c = '#{emailLead}' order by CreatedDate")
         puts journey
         puts journey.size
+        puts journey[journey.size - 1]
         #expect(journey.size == 1).to eq true
-        expect(journey[0]).to_not eq nil
-        expect(journey[0].fetch('Id')).to_not eq nil
+        expect(journey[journey.size - 1]).to_not eq nil
+        expect(journey[journey.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         leadId  =lead[0].fetch('Id')
-        activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{leadId}'")
+        activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
         puts activity
         puts activity.size
         #expect(activity.size == 1).to eq true
@@ -311,77 +296,62 @@ puts "2222"
         expect(activity[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-=begin
-        
-        passedLogs = @helper.addLogs("[Validate] lead:.Name")
-        puts lead[0].fetch('Name')
-        #expect(lead[0].fetch('Name')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Name']
+
+
+        puts "*******************************"
+
+        passedLogs = @helper.addLogs("[Validate] journey:.Name")
+        expect(journey[journey.size - 1].fetch('Name')).to match("#{@testDataJSON['CreateLeadFromWeb'][0]['Name']}")
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Email")
-        expect(lead[0].fetch('Email')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Email']
+        passedLogs = @helper.addLogs("[Validate] journey:NMD_Next_Contact_Date__c")
+        puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
+        puts Date.today
+        #expect(journey[0].fetch('NMD_Next_Contact_Date__c')).to eq Date.today.to_s
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Company")
-        expect(lead[0].fetch('Company')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        passedLogs = @helper.addLogs("[Validate] journey:Status__c")
+        expect(journey[journey.size - 1].fetch('Status__c')).to eq "Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Phone")
-        expect(lead[0].fetch('Phone')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Phone']
+        puts "******************************"
+        passedLogs = @helper.addLogs("[Validate] Activity:Subject")
+        expect(activity[activity.size - 1].fetch('Subject')).to eq "Inbound Lead submission"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:LeadSource")
-        expect(lead[0].fetch('LeadSource')).to eq "WeWork.com"
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source__c")
+        expect(activity[activity.size - 1].fetch('Lead_Source__c')).to eq "WeWork.com"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Company_Size__c")
-        puts lead[0].fetch('Company_Size__c').to_i
-        #expect(lead[0].fetch('Company_Size__c').to_i).to eq @testDataJSON['CreateLeadFromWeb'][0]["NumberOfPeople"]}".split(' ')[0].to_i
+        passedLogs = @helper.addLogs("[Validate] Activity:Type")
+        expect(activity[activity.size - 1].fetch('Type')).to eq "Website"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Lead_Source_Detail__c")
-        expect(lead[0].fetch('Lead_Source_Detail__c').to_i).to eq "Book A Tour Availability"
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source_Detail__c")
+        expect(activity[activity.size - 1].fetch('Lead_Source_Detail__c')).to eq "Book A Tour Availability"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Status")
-        expect(lead[0].fetch('Status').to_i).to eq "Open"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_In__c")
-        expect(lead[0].fetch('Building_Interested_In__c')).to eq "#{building.fetch('Id')}"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_Name__c")
-        puts lead[0].fetch('Building_Interested_Name__c')
-        #expect(lead[0].fetch('Building_Interested_Name__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Locations_Interested__c")
-        expect(lead[0].fetch('Locations_Interested__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
+        passedLogs = @helper.addLogs("[Validate] Activity:Status")
+        expect(activity[activity.size - 1].fetch('Status')).to eq "Not Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
-=end
-
-
-        #@helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate FROM #{sObject} WHERE Email LIKE '%@example.com' AND CreatedDate = N_DAYS_AGO: 4 AND IsConverted = False LIMIT 1")
-
+        @helper.postSuccessResult('2145')
     rescue Exception => e
-      raise e
-        #@helper.postFailResult(e,'2016')
+        puts e
+        @helper.postFailResult(e,'2145')
     end
   end
 
 
 
-  it "C:2146 To check new journey creation if duplicate lead submission happens for existing lead which is created after 4 days and within 30 days from today.", :'2146'=> 'true' do
+  it "C:2146 To check new journey creation if duplicate lead submission happens for existing lead which is created before 4 days and within 30 days from today.", :'2146'=> 'true' do
     begin
         @helper.addLogs('To check new journey creation if duplicate lead submission happens for existing lead which is created after 4 days and within 30 days from today.','2146')
 
 
         passedLogs = @helper.addLogs("[Step    ] get details of 4 days ago lead")
-        lead = @helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate FROM Lead WHERE Email LIKE '%@example.com' AND CreatedDate = N_DAYS_AGO: 4 AND IsConverted = False LIMIT 1")
+        lead = @helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate FROM Lead WHERE Email LIKE '%@example.com' AND CreatedDate = LAST_N_DAYS: 4 AND IsConverted = False LIMIT 1")
         puts lead
         
         if (lead[0].fetch('Id') == nil ) then
@@ -397,16 +367,19 @@ puts "2222"
 
         
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+        sleep(5)
         @driver.find_element(:id, "tourFormContactNameField").clear
         @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
         @driver.find_element(:id, "tourFormEmailField").clear
-        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com" 
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = lead[0].fetch('Email')
         emailLead = lead[0].fetch('Email')
         @driver.find_element(:id, "tourFormEmailField").send_keys emailLead
         @driver.find_element(:id, "tourFormPhoneField").clear
         @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
+        sleep(5)
         @driver.find_element(:id, "tourFormStepOneSubmitButton").click
         @helper.addLogs('Success')
+
   
         sleep(20)
         
@@ -418,93 +391,80 @@ puts "2222"
 
 
         passedLogs = @helper.addLogs("[Step    ] get Lead details")
-        lead  = @helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate,Company,Phone,LeadSource,Company_Size__c,Lead_Source_Detail__c,Status,Building_Interested_In__c,Building_Interested_Name__c,Locations_Interested__c,Journey_Created_On__c FROM Lead WHERE Email='#{emailLead}'")
+        lead  = @helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate,Company,Phone,LeadSource,Company_Size__c,Lead_Source_Detail__c,Status,Building_Interested_In__c,Building_Interested_Name__c,Locations_Interested__c,Journey_Created_On__c FROM Lead WHERE Email='#{emailLead}' order by CreatedDate")
         puts lead
         expect(lead.size == 1).to eq true
-        expect(lead[0]).to_not eq nil
-        expect(lead[0].fetch('Id')).to_not eq nil
+        expect(lead[lead.size - 1]).to_not eq nil
+        expect(lead[lead.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
-        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailLead}'")
+        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Name,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailLead}' order by CreatedDate")
         puts journey
         puts journey.size 
         #expect(journey.size == 1).to eq true
-        expect(journey[0]).to_not eq nil
-        expect(journey[0].fetch('Id')).to_not eq nil
+        expect(journey[journey.size - 1]).to_not eq nil
+        expect(journey[journey.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         leadId  =lead[0].fetch('Id')
-        activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{leadId}'")
+        activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
         puts activity
         puts activity.size
         #expect(activity.size == 1).to eq true
-        expect(activity[0]).to_not eq nil
-        expect(activity[0].fetch('Id')).to_not eq nil
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-=begin
-        
-        passedLogs = @helper.addLogs("[Validate] lead:.Name")
-        puts lead[0].fetch('Name')
-        #expect(lead[0].fetch('Name')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Name']
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Email")
-        expect(lead[0].fetch('Email')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Email']
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Company")
-        expect(lead[0].fetch('Company')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Name']
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Phone")
-        expect(lead[0].fetch('Phone')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Phone']
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:LeadSource")
-        expect(lead[0].fetch('LeadSource')).to eq "WeWork.com"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Company_Size__c")
-        puts lead[0].fetch('Company_Size__c').to_i
-        #expect(lead[0].fetch('Company_Size__c').to_i).to eq @testDataJSON['CreateLeadFromWeb'][0]["NumberOfPeople"]}".split(' ')[0].to_i
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Lead_Source_Detail__c")
-        expect(lead[0].fetch('Lead_Source_Detail__c').to_i).to eq "Book A Tour Availability"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Status")
-        expect(lead[0].fetch('Status').to_i).to eq "Open"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_In__c")
-        expect(lead[0].fetch('Building_Interested_In__c')).to eq "#{building.fetch('Id')}"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_Name__c")
-        puts lead[0].fetch('Building_Interested_Name__c')
-        #expect(lead[0].fetch('Building_Interested_Name__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Locations_Interested__c")
-        expect(lead[0].fetch('Locations_Interested__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
+        expect(activity[activity.size - 1]).to_not eq nil
+        expect(activity[activity.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
-=end
+
+        puts "*******************************"
+
+        passedLogs = @helper.addLogs("[Validate] journey:.Name")
+        expect(journey[journey.size - 1].fetch('Name')).to match("#{@testDataJSON['CreateLeadFromWeb'][0]['Name']}")
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] journey:NMD_Next_Contact_Date__c")
+        puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
+        puts Date.today
+        #expect(journey[0].fetch('NMD_Next_Contact_Date__c')).to eq Date.today.to_s
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] journey:Status__c")
+        puts journey[journey.size - 1].fetch('Status__c')
+        expect(journey[journey.size - 1].fetch('Status__c')).to eq "Started"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        puts "******************************"
+        passedLogs = @helper.addLogs("[Validate] Activity:Subject")
+        expect(activity[activity.size - 1].fetch('Subject')).to eq "Inbound Lead submission"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source__c")
+        expect(activity[activity.size - 1].fetch('Lead_Source__c')).to eq "WeWork.com"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] Activity:Type")
+        expect(activity[activity.size - 1].fetch('Type')).to eq "Website"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source_Detail__c")
+        expect(activity[activity.size - 1].fetch('Lead_Source_Detail__c')).to eq "Book A Tour Availability"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] Activity:Status")
+        expect(activity[activity.size - 1].fetch('Status')).to eq "Not Started"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
-        #@helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate FROM #{sObject} WHERE Email LIKE '%@example.com' AND CreatedDate = N_DAYS_AGO: 4 AND IsConverted = False LIMIT 1")
 
+        @helper.postSuccessResult('2146')
     rescue Exception => e
-      raise e
-        #@helper.postFailResult(e,'2016')
+        puts e
+        @helper.postFailResult(e,'2146')
     end
   end
 
@@ -516,7 +476,7 @@ puts "2222"
 
 
         passedLogs = @helper.addLogs("[Step    ] get details of 30 days ago lead")
-        lead = @helper.getSalesforceRecord('Lead',"select id,Name,createdDate,IsConverted from Lead where Email like  '%@example.com%' AND createdDate = LAST_N_DAYS:30 And IsConverted= false LIMIT 1")
+        lead = @helper.getSalesforceRecord('Lead',"select id,Name,createdDate,IsConverted,Email from Lead where Email like  '%@example.com%' AND createdDate = LAST_N_DAYS:30 And IsConverted= false LIMIT 1")
         puts lead
         
         if (lead[0] == nil ) then
@@ -532,6 +492,7 @@ puts "2222"
 
         
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+        sleep(5)
         @driver.find_element(:id, "tourFormContactNameField").clear
         @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
         @driver.find_element(:id, "tourFormEmailField").clear
@@ -540,6 +501,7 @@ puts "2222"
         @driver.find_element(:id, "tourFormEmailField").send_keys emailLead
         @driver.find_element(:id, "tourFormPhoneField").clear
         @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
+        sleep(5)
         @driver.find_element(:id, "tourFormStepOneSubmitButton").click
         @helper.addLogs('Success')
   
@@ -562,84 +524,68 @@ puts "2222"
 
 
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
-        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailLead}'")
+        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailLead}' order by CreatedDate")
         puts journey
         puts journey.size 
         #expect(journey.size == 1).to eq true
-        expect(journey[0]).to_not eq nil
-        expect(journey[0].fetch('Id')).to_not eq nil
+        expect(journey[journey.size - 1]).to_not eq nil
+        expect(journey[journey.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         leadId  =lead[0].fetch('Id')
-        activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{leadId}'")
+        activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
         puts activity
         puts activity.size
         #expect(activity.size == 1).to eq true
-        expect(activity[0]).to_not eq nil
-        expect(activity[0].fetch('Id')).to_not eq nil
+        expect(activity[activity.size - 1]).to_not eq nil
+        expect(activity[activity.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-=begin
-        
-        passedLogs = @helper.addLogs("[Validate] lead:.Name")
-        puts lead[0].fetch('Name')
-        #expect(lead[0].fetch('Name')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        puts "*******************************"
+
+        passedLogs = @helper.addLogs("[Validate] journey:.Name")
+        expect(journey[journey.size - 1].fetch('Name')).to match("#{@testDataJSON['CreateLeadFromWeb'][0]['Name']}")
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Email")
-        expect(lead[0].fetch('Email')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Email']
+        passedLogs = @helper.addLogs("[Validate] journey:NMD_Next_Contact_Date__c")
+        puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
+        puts Date.today
+        #expect(journey[0].fetch('NMD_Next_Contact_Date__c')).to eq Date.today.to_s
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Company")
-        expect(lead[0].fetch('Company')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        passedLogs = @helper.addLogs("[Validate] journey:Status__c")
+        puts journey[journey.size - 1].fetch('Status__c')
+        expect(journey[journey.size - 1].fetch('Status__c')).to eq "Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Phone")
-        expect(lead[0].fetch('Phone')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Phone']
+        puts "******************************"
+        passedLogs = @helper.addLogs("[Validate] Activity:Subject")
+        expect(activity[activity.size - 1].fetch('Subject')).to eq "Inbound Lead submission"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:LeadSource")
-        expect(lead[0].fetch('LeadSource')).to eq "WeWork.com"
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source__c")
+        expect(activity[activity.size - 1].fetch('Lead_Source__c')).to eq "WeWork.com"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Company_Size__c")
-        puts lead[0].fetch('Company_Size__c').to_i
-        #expect(lead[0].fetch('Company_Size__c').to_i).to eq @testDataJSON['CreateLeadFromWeb'][0]["NumberOfPeople"]}".split(' ')[0].to_i
+        passedLogs = @helper.addLogs("[Validate] Activity:Type")
+        expect(activity[activity.size - 1].fetch('Type')).to eq "Website"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Lead_Source_Detail__c")
-        expect(lead[0].fetch('Lead_Source_Detail__c').to_i).to eq "Book A Tour Availability"
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source_Detail__c")
+        expect(activity[activity.size - 1].fetch('Lead_Source_Detail__c')).to eq "Book A Tour Availability"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-        passedLogs = @helper.addLogs("[Validate] lead:Status")
-        expect(lead[0].fetch('Status').to_i).to eq "Open"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_In__c")
-        expect(lead[0].fetch('Building_Interested_In__c')).to eq "#{building.fetch('Id')}"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_Name__c")
-        puts lead[0].fetch('Building_Interested_Name__c')
-        #expect(lead[0].fetch('Building_Interested_Name__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Locations_Interested__c")
-        expect(lead[0].fetch('Locations_Interested__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
+        passedLogs = @helper.addLogs("[Validate] Activity:Status")
+        expect(activity[activity.size - 1].fetch('Status')).to eq "Not Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
-=end
-
-
-        #@helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate FROM #{sObject} WHERE Email LIKE '%@example.com' AND CreatedDate = N_DAYS_AGO: 4 AND IsConverted = False LIMIT 1")
-
+        @helper.postSuccessResult('2147')
     rescue Exception => e
-      raise e
-        #@helper.postFailResult(e,'2016')
+        puts e
+        @helper.postFailResult(e,'2147')
     end
   end
 
@@ -650,57 +596,37 @@ puts "2222"
         @helper.addLogs('To Check New Journey creation if duplicate lead submission happens for existing contact which is created within 30 days from today when the existing contact has permission to create a journey.','2149')
 
 
-        users = @helper.getSalesforceRecord('Setting__c',"select Data__c from Setting__c Where Name = 'User/Queue Journey Creation'")
+        #users = @helper.getSalesforceRecord('Setting__c',"select Data__c from Setting__c Where Name = 'User/Queue Journey Creation'")
 
-        puts users
-        puts users[0].fetch('Data__c')
-        userIds = JSON.parse(users[0].fetch('Data__c'))
-        puts userIds['allowedUsers']
+    
+        #userIds = JSON.parse(users[0].fetch('Data__c'))
+        
+        #arrOfUsersHavingPermissionToCreateJourney = []
+        #userIds['allowedUsers'].each do |user|
+        #    arrOfUsersHavingPermissionToCreateJourney.push(user['Id'])
+        #end
 
-        arrayOfUsers = []
-        userIds['allowedUsers'].each do |user|
-            puts user
-            arrayOfUsers.push(user['Id'])
-        end
+        #puts arrOfUsersHavingPermissionToCreateJourney
 
+        #passedLogs = @helper.addLogs("[Step    ] get details of 30 days ago Contact")
+        #contacts = @helper.getSalesforceRecord('Contact',"select id,Name,createdDate,Account.Id,Looking_For_Number_Of_Desk__c,Owner.Id,Owner.Name,RecordType.Name,Number_of_Full_Time_Employees__c,Email,Interested_in_Number_of_Desks__c from Contact where Email like  '%@example.com%' AND createdDate = LAST_N_DAYS:30")
+        
 
-        puts arrayOfUsers
+        #passedLogs = @helper.addLogs("[Step    ] Create Contact such that contact owner has permissions to generate journey")
+
 
 =begin
-        if users[0].fetch('Data__c') != nil then
-            puts 'accQueue present'
-            members = []
-            i = 0
-
-
-            users[0].fetch('Data__c').each do |item|
-              
-            end
-          until users[0]ecords[i] == nil do
-            members.push(accQueue.result.records[i].fetch('Member__c'))
-            i = i + 1
-          end
-      return members
-
-=end        
-
-        passedLogs = @helper.addLogs("[Step    ] get details of 30 days ago Contact")
-        contacts = @helper.getSalesforceRecord('Contact',"select id,Name,createdDate,Account.Id,Looking_For_Number_Of_Desk__c,Owner.Id,Owner.Name,RecordType.Name,Number_of_Full_Time_Employees__c,Email,Interested_in_Number_of_Desks__c from Contact where Email like  '%@example.com%' AND createdDate = LAST_N_DAYS:30")
-        puts contacts
 
         contactToTest = nil
         contacts.each do |contact|
-            if arrayOfUsers.include? contact.fetch('Owner.Id') then
+            if arrOfUsersHavingPermissionToCreateJourney.include? contact.fetch('Owner.Id') then
                 puts "User has permission #{contact}"
-                puts contact
                 contactToTest = contact
                 break;
-            else
-                puts "No users having permission to create journey"
-                raise e "No Users found"
             end
         end
 
+        puts contactToTest
         
         if (contactToTest.fetch('Id') == nil ) then
           @helper.addLogs("Contact not present")
@@ -709,106 +635,293 @@ puts "2222"
         expect(contactToTest.fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-=begin
-        @helper.addLogs('Go to Staging website and create lead with email id of existing contact created within 30 days.')
+
+=end
+        @helper.addLogs('Go to Staging website and book a tour')
 
         
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+        sleep(5)
         @driver.find_element(:id, "tourFormContactNameField").clear
         @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
         @driver.find_element(:id, "tourFormEmailField").clear
-        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com" 
-        emailId = contact[0].fetch('Email')
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com"
+        emailId =  @testDataJSON['CreateLeadFromWeb'][0]['Email']
         @driver.find_element(:id, "tourFormEmailField").send_keys emailId
         @driver.find_element(:id, "tourFormPhoneField").clear
         @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
+        sleep(2)
         @driver.find_element(:id, "tourFormStepOneSubmitButton").click
+        sleep(10)
+        @driver.find_element(:id, "tourFormCompanyNameField").click
+        @driver.find_element(:id, "tourFormCompanyNameField").clear
+        @driver.find_element(:id, "tourFormCompanyNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        @driver.find_element(:id, "tourFormNotesField").click
+        @driver.find_element(:id, "tourFormNotesField").clear
+        @driver.find_element(:id, "tourFormNotesField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Notes']
+        sleep(2)
+        @driver.find_element(:id, "tourFormStepTwoSubmitButton").click
         @helper.addLogs('Success')
   
         sleep(20)
-        
+
         passedLogs = @helper.addLogs("[Step    ] get building details of #{@testDataJSON['CreateLeadFromWeb'][0]["Building"]}")
         buildingName = @testDataJSON['CreateLeadFromWeb'][0]["Building"]
         building = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
         expect(building).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
         
+        passedLogs = @helper.addLogs("[Step    ] get details of Contact")
+        contact= @helper.getSalesforceRecord('Contact',"select id,Name,createdDate,Account.Id,Looking_For_Number_Of_Desk__c,Owner.Id,Owner.Name,RecordType.Name,Number_of_Full_Time_Employees__c,Email,Interested_in_Number_of_Desks__c from Contact where Email = '#{emailId}'")
+        expect(contact[0]).to_not eq nil
+        expect(contact[0].fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+       
+
+        @helper.addLogs('Go to Staging website again and genetate lead')        
+        @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+        sleep(5)
+        @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        @driver.find_element(:id, "tourFormEmailField").send_keys emailId
+        @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
+        sleep(2)
+        @driver.find_element(:id, "tourFormStepOneSubmitButton").click
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+
+
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
-        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailId}'")
+        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name FROM Journey__c WHERE Primary_Email__c = '#{emailId}' order by CreatedDate")
         puts journey
         puts journey.size 
         #expect(journey.size == 1).to eq true
-        expect(journey[0]).to_not eq nil
-        expect(journey[0].fetch('Id')).to_not eq nil
+        expect(journey[journey.size - 1]).to_not eq nil
+        expect(journey[journey.size - 1].fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+
+        passedLogs = @helper.addLogs("[Step    ] get Activity details")
+        whoId  = contact[0].fetch('Id')
+        activity  = @helper.getSalesforceRecord('Task',"Select Id,Status,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{whoId}' order by CreatedDate")
+        puts activity
+        puts activity.size
+        #expect(activity.size == 1).to eq true
+        expect(activity[activity.size - 1]).to_not eq nil
+        expect(activity[activity.size - 1].fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+
+        puts "*******************************"
+
+        passedLogs = @helper.addLogs("[Validate] journey:.Name")
+        expect(journey[journey.size - 1].fetch('Name')).to match("#{@testDataJSON['CreateLeadFromWeb'][0]['Name']}")
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] journey:NMD_Next_Contact_Date__c")
+        puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
+        puts Date.today
+        #expect(journey[0].fetch('NMD_Next_Contact_Date__c')).to eq Date.today.to_s
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] journey:Status__c")
+        puts journey[journey.size - 1].fetch('Status__c')
+        expect(journey[journey.size - 1].fetch('Status__c')).to eq "Started"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        puts "******************************"
+        passedLogs = @helper.addLogs("[Validate] Activity:Subject")
+        expect(activity[activity.size - 1].fetch('Subject')).to eq "Inbound Lead submission"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source__c")
+        expect(activity[activity.size - 1].fetch('Lead_Source__c')).to eq "WeWork.com"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] Activity:Type")
+        expect(activity[activity.size - 1].fetch('Type')).to eq "Website"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] Activity:Lead_Source_Detail__c")
+        expect(activity[activity.size - 1].fetch('Lead_Source_Detail__c')).to eq "Book A Tour Availability"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Validate] Activity:Status")
+        expect(activity[activity.size - 1].fetch('Status')).to eq "Not Started"
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+
+        @helper.postSuccessResult('2149')
+    rescue Exception => e
+        puts e
+        @helper.postFailResult(e,'2149')
+    end
+  end
+
+
+
+  it "C:2150 To Check New Journey Creation if dupicate lead submisison happens for existing contact which is created within 30 days from today when the existing contact does not have permission to create journey.", :'2150'=> 'true' do
+    begin
+        @helper.addLogs('To Check New Journey Creation if dupicate lead submisison happens for existing contact which is created within 30 days from today when the existing contact does not have permission to create journey.','2150')
+
+
+        users = @helper.getSalesforceRecord('Setting__c',"select Data__c from Setting__c Where Name = 'User/Queue Journey Creation'")
+
+    
+        userIds = JSON.parse(users[0].fetch('Data__c'))
+        
+        arrOfUsersHavingPermissionToCreateJourney = []
+        userIds['allowedUsers'].each do |user|
+            arrOfUsersHavingPermissionToCreateJourney.push(user['Id'])
+        end
+
+        
+        passedLogs = @helper.addLogs("[Step    ] get building details of #{@testDataJSON['CreateLeadFromWeb'][0]["Building"]}")
+        buildingName = @testDataJSON['CreateLeadFromWeb'][0]["Building"]
+        buildings = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c")
+        expect(buildings).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+
+        allUsers = @helper.getSalesforceRecord('User',"SELECT id,IsActive FROM User")
+        activeUserArray = []
+        allUsers.each do |user|
+            if user.fetch('IsActive') == true then
+                activeUserArray.push(user.fetch('Id'))
+            end
+        end
+
+        puts '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
+        puts activeUserArray
+        buildingToSet = nil
+        buildings.each do |building|
+            puts (activeUserArray.include? building.fetch('Community_Lead__c'))
+            if (building.fetch('Community_Lead__c') != "") && !(arrOfUsersHavingPermissionToCreateJourney.include? building.fetch('Community_Lead__c')) && (activeUserArray.include? building.fetch('Community_Lead__c')) then
+                puts "CM does not have permission #{building}"
+                buildingToSet = building
+                break;
+            end
+        end
+
+        puts buildingToSet
+
+        
+=begin
+
+        contactToTest = nil
+        contacts.each do |contact|
+            if arrOfUsersHavingPermissionToCreateJourney.include? contact.fetch('Owner.Id') then
+                puts "User has permission #{contact}"
+                contactToTest = contact
+                break;
+            end
+        end
+
+        puts contactToTest
+        
+        if (contactToTest.fetch('Id') == nil ) then
+          @helper.addLogs("Contact not present")
+        end
+        expect(contactToTest).to_not eq nil
+        expect(contactToTest.fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+
+=end
+        @helper.addLogs('Go to Staging website and book a tour')
+
+        
+        @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+        sleep(5)
+        @driver.find_element(:id, "tourFormContactNameField").clear
+        @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        @driver.find_element(:id, "tourFormEmailField").clear
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com"
+        emailId =  @testDataJSON['CreateLeadFromWeb'][0]['Email']
+        @driver.find_element(:id, "tourFormEmailField").send_keys emailId
+        @driver.find_element(:id, "tourFormPhoneField").clear
+        @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
+        sleep(2)
+        @driver.find_element(:id, "tourFormStepOneSubmitButton").click
+        sleep(5)
+        @driver.find_element(:id, "tourFormCompanyNameField").click
+        @driver.find_element(:id, "tourFormCompanyNameField").clear
+        @driver.find_element(:id, "tourFormCompanyNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        @driver.find_element(:id, "tourFormNotesField").click
+        @driver.find_element(:id, "tourFormNotesField").clear
+        @driver.find_element(:id, "tourFormNotesField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Notes']
+        sleep(2)
+        @driver.find_element(:id, "tourFormStepTwoSubmitButton").click
+        sleep(5)
+        @helper.addLogs('Success')
+  
+        sleep(20)
+
+        passedLogs = @helper.addLogs("[Step    ] get building details of #{@testDataJSON['CreateLeadFromWeb'][0]["Building"]}")
+        buildingName = @testDataJSON['CreateLeadFromWeb'][0]["Building"]
+        building = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
+        expect(building).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        
+        passedLogs = @helper.addLogs("[Step    ] get details of Contact")
+        contact= @helper.getSalesforceRecord('Contact',"select id,Name,createdDate,Account.Id,Looking_For_Number_Of_Desk__c,Owner.Id,Owner.Name,RecordType.Name,Number_of_Full_Time_Employees__c,Email,Interested_in_Number_of_Desks__c from Contact where Email = '#{emailId}'")
+        expect(contact[0]).to_not eq nil
+        expect(contact[0].fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        passedLogs = @helper.addLogs("[Step    ] get Journey details")
+        oldJourney  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailId}'")
+        puts oldJourney
+        puts oldJourney.size 
+        #expect(journey.size == 1).to eq true
+        expect(oldJourney[0]).to_not eq nil
+        expect(oldJourney[0].fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+
+        passedLogs = @helper.addLogs("[Step    ] get Activity details")
+        contactId  =contact[0].fetch('Id')
+        oldActivity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{contactId}'")
+        puts oldActivity
+        puts oldActivity.size
+        #expect(activity.size == 1).to eq true
+        expect(oldActivity[0]).to_not eq nil
+        expect(oldActivity[0].fetch('Id')).to_not eq nil
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+        @helper.addLogs('Go to Staging website again and book a tour')        
+        @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+        sleep(10)
+        @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
+        @driver.find_element(:id, "tourFormEmailField").send_keys emailId
+        @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
+        sleep(10)
+        @driver.find_element(:id, "tourFormStepOneSubmitButton").click
+        passedLogs = @helper.addLogs("[Result  ]  Success")
+
+
+
+        passedLogs = @helper.addLogs("[Step    ] get Journey details")
+        newJourney  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c FROM Journey__c WHERE Primary_Email__c = '#{emailId}'")
+        puts newJourney
+        puts newJourney.size 
+        #expect(journey.size == 1).to eq true
+        expect(newJourney[0]).to_not eq nil
+        expect(newJourney[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         leadId  =contact[0].fetch('Id')
-        activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{leadId}'")
+        activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{emailId}'")
         puts activity
         puts activity.size
         #expect(activity.size == 1).to eq true
         expect(activity[0]).to_not eq nil
         expect(activity[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
-=end
-
-=begin
-        
-        passedLogs = @helper.addLogs("[Validate] lead:.Name")
-        puts lead[0].fetch('Name')
-        #expect(lead[0].fetch('Name')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Name']
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Email")
-        expect(lead[0].fetch('Email')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Email']
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Company")
-        expect(lead[0].fetch('Company')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Name']
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Phone")
-        expect(lead[0].fetch('Phone')).to eq @testDataJSON['CreateLeadFromWeb'][0]['Phone']
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:LeadSource")
-        expect(lead[0].fetch('LeadSource')).to eq "WeWork.com"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Company_Size__c")
-        puts lead[0].fetch('Company_Size__c').to_i
-        #expect(lead[0].fetch('Company_Size__c').to_i).to eq @testDataJSON['CreateLeadFromWeb'][0]["NumberOfPeople"]}".split(' ')[0].to_i
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Lead_Source_Detail__c")
-        expect(lead[0].fetch('Lead_Source_Detail__c').to_i).to eq "Book A Tour Availability"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Status")
-        expect(lead[0].fetch('Status').to_i).to eq "Open"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_In__c")
-        expect(lead[0].fetch('Building_Interested_In__c')).to eq "#{building.fetch('Id')}"
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Building_Interested_Name__c")
-        puts lead[0].fetch('Building_Interested_Name__c')
-        #expect(lead[0].fetch('Building_Interested_Name__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-        passedLogs = @helper.addLogs("[Validate] lead:Locations_Interested__c")
-        expect(lead[0].fetch('Locations_Interested__c')).to eq @testDataJSON['CreateLeadFromWeb'][0]["Building"]
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-
-=end
-
 
         #@helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate FROM #{sObject} WHERE Email LIKE '%@example.com' AND CreatedDate = N_DAYS_AGO: 4 AND IsConverted = False LIMIT 1")
 
@@ -818,43 +931,7 @@ puts "2222"
     end
   end
 
-  it "test_c2146", :'214'=> 'true' do
-    begin
-        @helper.addLogs('To check whether generation of lead from Website.','2016')
-        @helper.addLogs('Go to Staging website and create lead')
-
-        
-        @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
-        @driver.find_element(:id, "tourFormContactNameField").clear
-        @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
-        @driver.find_element(:id, "tourFormEmailField").clear
-        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com" 
-        puts @testDataJSON['CreateLeadFromWeb'][0]['Email']
-        @driver.find_element(:id, "tourFormEmailField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Email']
-        @driver.find_element(:id, "tourFormPhoneField").clear
-        @driver.find_element(:id, "tourFormPhoneField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Phone']
-        @driver.find_element(:id, "tourFormStepOneSubmitButton").click
-        sleep(10)
-        @helper.addLogs('Success')
-
-
-        emailLead = @testDataJSON['CreateLeadFromWeb'][0]['Email']
-        lead = @helper.getSalesforceRecord('Lead',"SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{emailLead}'")
-        
-        puts "Checking lead details"
-        puts lead
-
-        journey = @helper.getSalesforceRecord('Journey__c',"SELECT id FROM Journey__c WHERE Primary_Email__c = '#{emailLead}'")
-        
-
-        puts "checking journey fields"
-        puts journey
-        
-        @helper.postSuccessResult('2016')
-      rescue Exception => e
-        #@helper.postFailResult(e,'2016')
-      end
-    end
+  
 
   it "test_to_check_new_journey_creation_if_duplicate_lead_submission_happens_for_existing_lead_which_is_created_within 4 to 30 days_from_today", :'21471212'=> 'true' do
    

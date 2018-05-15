@@ -6,6 +6,6 @@
     ],
   "CreateLeadFromWeb" :
     [
-      {"Name":"john.sparrow","Email":"","Phone":"123456789","Building":"MUM-BKC","MoveInDate":"Flexible","NumberOfPeople":"1 people"}
+      {"Name":"john.sparrow","Email":"","Phone":"123456789","Building":"MUM-BKC","MoveInDate":"Flexible","NumberOfPeople":"1 people","Notes":"Test Data"}
     ]
 }
