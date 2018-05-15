@@ -1,7 +1,7 @@
-require 'yaml'
-require 'rspec'
-require 'json'
-require 'selenium-webdriver'
+#require 'yaml'
+#require 'rspec'
+#require 'json'
+#require 'selenium-webdriver'
 require 'enziUIUtility'
 require 'enziSalesforce'
 require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
@@ -35,11 +35,13 @@ end
 
 
 def postSuccessResult(caseId)
+  puts "----------------------------------------------------------------------------------"
   @testRailUtility.postResult(caseId,"Pass",1,@runId)
   @passedLogs = @objRollbar.addLog("[Result  ]  Success")
 end
 
 def postFailResult(exception,caseId)
+  puts "----------------------------------------------------------------------------------"
   caseInfo = @testRailUtility.getCase(caseId)
   @passedLogs = @objRollbar.addLog("[Result  ]  Failed")
   @objRollbar.postRollbarData(caseInfo['id'], caseInfo['title'], @passedLogs[caseInfo['id']])
@@ -61,9 +63,9 @@ def getRecordJSON()
 end
 
 def getSalesforceRecord(sObject,query)
-  puts query
+    #puts query
     result = Salesforce.getRecords(@salesforceBulk, "#{sObject}", "#{query}", nil)
-    puts "#{sObject} created => #{result.result.records}"
+    #puts "#{sObject} created => #{result.result.records}"
     return result.result.records
   rescue Exception => e 
     puts e
