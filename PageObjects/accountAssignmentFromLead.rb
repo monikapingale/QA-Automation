@@ -4,90 +4,61 @@ require 'json'
 require 'yaml'
 require 'selenium-webdriver'
 require 'date'
-require_relative File.expand_path("",Dir.pwd)+"/sfRESTService.rb"
+#require_relative File.expand_path("",Dir.pwd)+"/sfRESTService.rb"
 
 class AccountAssignmentFromLead
   @mapRecordType = nil
   @salesforceBulk = nil
+  @sObjectRecords = nil
+  @timeSettingMap = nil
+  @mapCredentials = nil
 
-  def initialize(driver)
+  def initialize(driver,recordJSON,mapCredentials,timeSettingMap,salesforceBulk)
     puts "in AccountAssignment:initialize"
     @driver = driver
-    sObjectRecordsJson = File.read("/Users/sachin.chavan/RubymineProjects/QaAuto/Assignment/TestData/testRecords.json")
-    @sObjectRecords = JSON.parse(sObjectRecordsJson)
-    @timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
-    @mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
+    @sObjectRecords = recordJSON
+    @timeSettingMap = timeSettingMap
+    @mapCredentials = mapCredentials
+    @salesforceBulk = salesforceBulk
     puts @mapCredentials['Staging']['WeWork System Administrator']['username']
     puts @mapCredentials['Staging']['WeWork System Administrator']['password']
-    @selectorSettingMap = YAML.load_file(File.expand_path('..', Dir.pwd) + '/TestData/selectorSetting.yaml')
-    @selectorSettingMap['screenSize']['actual'] = @driver.manage.window.size.width
+    #@selectorSettingMap = YAML.load_file(File.expand_path('..', Dir.pwd) + '/TestData/selectorSetting.yaml')
+    #@selectorSettingMap['screenSize']['actual'] = @driver.manage.window.size.width
     @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
-    @salesforceBulk = Salesforce.login(@mapCredentials['Staging']['WeWork System Administrator']['username'], @mapCredentials['Staging']['WeWork System Administrator']['password'], true)
-    puts @salesforceBulk
-    sObjectRecordsJson = File.read("/Users/sachin.chavan/RubymineProjects/QaAuto/Assignment/TestData/records.json")
-    @records = JSON.parse(sObjectRecordsJson)
-
-    @objSFRest = SfRESTService.new(@mapCredentials['Staging']['WeWork System Administrator']['grant_type'],@mapCredentials['Staging']['WeWork System Administrator']['client_id'],@mapCredentials['Staging']['WeWork System Administrator']['client_secret'],@mapCredentials['Staging']['WeWork System Administrator']['username'],@mapCredentials['Staging']['WeWork System Administrator']['password'])
-
-    puts "???????"
-    puts @objSFRest
-    puts "???????"
+    
+    #@objSFRest = SfRESTService.new(@mapCredentials['Staging']['WeWork System Administrator']['grant_type'],@mapCredentials['Staging']['WeWork System Administrator']['client_id'],@mapCredentials['Staging']['WeWork System Administrator']['client_secret'],@mapCredentials['Staging']['WeWork System Administrator']['username'],@mapCredentials['Staging']['WeWork System Administrator']['password'])
   end
 
   def leadCreate()
-    Salesforce.createRecords(@salesforceBulk, 'Lead', @sObjectRecords["AssignmentRules"]["GenerateLeadFromWeb"][0]["BuildingName"])
+    Salesforce.createRecords(@salesforceBulk, 'Lead', @sObjectRecords["AccountAssignment"]["GenerateLeadFromWeb"][0]["BuildingName"])
   end
 
   def createLead()
-    emailId = "accountAssignment" + SecureRandom.random_number(10000000000).to_s + "@example.com"
-    @sObjectRecords['AssignmentRules']['tour'][0]['email'] = emailId
-    if false and (@mapCredentials['Staging']['WeWork System Administrator']['username'].include? "staging" or @mapCredentials['Staging']['WeWork System Administrator']['username'].include? 'preprod') and 0 then
+    puts "in create Lead"
+      emailId = @sObjectRecords["AccountAssignment"]["GenerateLeadFromWeb"][0]["Name"] + SecureRandom.random_number(10000000000).to_s + "@example.com"
+      @sObjectRecords['AccountAssignment']['tour'][0]['email'] = emailId
       puts "Create lead from website"
-      @driver.get "https://www-staging.wework.com/buildings/#{@sObjectRecords["AssignmentRules"]["GenerateLeadFromWeb"][0]["BuildingName"]}--#{@sObjectRecords["AssignmentRules"]["GenerateLeadFromWeb"][0]["City"]}"
+      @driver.get "https://www-staging.wework.com/buildings/#{@sObjectRecords["AccountAssignment"]["GenerateLeadFromWeb"][0]["BuildingName"]}--#{@sObjectRecords["AccountAssignment"]["GenerateLeadFromWeb"][0]["City"]}"
 
-        #puts @sObjectRecords["AssignmentRules"]["GenerateLeadFromWeb"][0]["BuildingName"]
+      EnziUIUtility.wait(@driver, :id, "tourFormContactNameField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
+      EnziUIUtility.setValue(@driver, :id, "tourFormContactNameField", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['Name']}")
 
-        EnziUIUtility.wait(@driver, :id, "tourFormContactNameField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
-        EnziUIUtility.setValue(@driver, :id, "tourFormContactNameField", "#{@sObjectRecords['AssignmentRules']['GenerateLeadFromWeb'][0]['Name']}")
+      EnziUIUtility.wait(@driver, :id, "tourFormEmailField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
+      EnziUIUtility.setValue(@driver, :id, "tourFormEmailField", "#{emailId}")
 
-        EnziUIUtility.wait(@driver, :id, "tourFormEmailField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
-        EnziUIUtility.setValue(@driver, :id, "tourFormEmailField", "#{emailId}")
+      EnziUIUtility.wait(@driver, :id, "tourFormPhoneField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
+      EnziUIUtility.setValue(@driver, :id, "tourFormPhoneField", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['PhoneNumber']}")
 
-        EnziUIUtility.wait(@driver, :id, "tourFormPhoneField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
-        EnziUIUtility.setValue(@driver, :id, "tourFormPhoneField", "#{@sObjectRecords['AssignmentRules']['GenerateLeadFromWeb'][0]['PhoneNumber']}")
+      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['MoveInDate']}").click
 
-        AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AssignmentRules']['GenerateLeadFromWeb'][0]['MoveInDate']}").click
+      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['NumberOfPeople']}").click
 
-        AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AssignmentRules']['GenerateLeadFromWeb'][0]['NumberOfPeople']}").click
+      EnziUIUtility.clickElement(@driver, :id, "tourFormStepOneSubmitButton")
+      puts "lead Created With email = >   #{emailId}"
 
-        EnziUIUtility.clickElement(@driver, :id, "tourFormStepOneSubmitButton")
-        puts "lead Created With email = >   #{emailId}"
-
-        #fetchLeadDetails(emailId).fetch('Id')
-        return emailId
-    else
-      # create lead from restAPI
-      # and return Id and email of lead
-      puts 'Create lead from restAPI'
-      payload = @sObjectRecords['AssignmentRules']['LeadJSON'][0]
-      payload['body']['email'] = emailId
-      payload['body']['company_size'] = @sObjectRecords['AssignmentRules']['tour'][0]['companySize']
-
-
-      #payload['body']['buildings_interested_uuids'][0] = #selected building uuid
-      #puts payload.to_json.class
-      #puts @sObjectRecords['AssignmentRules']['ServiceURL'][0]['inboundlead']
-      getResponse = @objSFRest.postData(''+payload.to_json,"#{@sObjectRecords['AssignmentRules']['ServiceURL'][0]['inboundlead']}")
-
-      puts getResponse
-
-
-      return getResponse['lead_sfid'],emailId
-
-    end
-  rescue
-    return nil
-
+      return emailId    
+    rescue
+      return nil
   end
 
   def update(sObject, updated_values)
@@ -103,14 +74,12 @@ class AccountAssignmentFromLead
     puts "in accountAssignment::getElementByAttribute"
     driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(elementFindBy, elementIdentity))
     puts "in getElementByAttribute #{attributeValue}"
-    @driver = driver
-    elements = @driver.find_elements(elementFindBy, elementIdentity)
+    elements = driver.find_elements(elementFindBy, elementIdentity)
     elements.each do |element|
       if element.attribute(attributeName) != nil then
         if element.attribute(attributeName).include? attributeValue then
           puts "element found"
           return element
-          break
         end
       end
     end
@@ -146,7 +115,7 @@ class AccountAssignmentFromLead
     lead = Salesforce.getRecords(@salesforceBulk, 'Lead', "SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
     if lead.result.records[0] != nil then
       puts "get lead record"
-      return lead.result.records[0]
+      return lead.result.records
     else
       return nil
     end
@@ -354,10 +323,9 @@ class AccountAssignmentFromLead
   end
 
   def bookTour(count, bookTour, isCreateOpp = nil)
-    if false and (@mapCredentials['Staging']['WeWork System Administrator']['username'].include? "staging" or @mapCredentials['Staging']['WeWork System Administrator']['username'].include? 'preprod') and 0 then
-
+    
         if isCreateOpp then
-            @sObjectRecords["AssignmentRules"]["tour"][count]['opportunity'] = @sObjectRecords["AssignmentRules"]["tour"][count]['opportunity'] + SecureRandom.random_number(10000000000).to_s
+            @sObjectRecords["AccountAssignment"]["tour"][count]['opportunity'] = @sObjectRecords["AccountAssignment"]["tour"][count]['opportunity'] + SecureRandom.random_number(10000000000).to_s
         end
         @wait.until {!@driver.find_element(:id, "spinner").displayed?}
 
@@ -367,20 +335,19 @@ class AccountAssignmentFromLead
 
         if !@driver.find_elements(:id, "Phone").empty? && @driver.find_element(:id, "Phone").attribute('value').eql?("") then
             puts "*1"
-            EnziUIUtility.setValue(@driver, :id, "Phone", "#{@sObjectRecords["AssignmentRules"]["tour"][count]['phone']}")
+            EnziUIUtility.setValue(@driver, :id, "Phone", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['phone']}")
         end
         if !@driver.find_elements(:id, "FTE").empty? && @driver.find_element(:id, "FTE").attribute('value').eql?("") then
             puts "*2"
-            EnziUIUtility.setValue(@driver, :id, "FTE", "#{@sObjectRecords["AssignmentRules"]["tour"][count]['companySize']}")
+            EnziUIUtility.setValue(@driver, :id, "FTE", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['companySize']}")
         end
         #if !@driver.find_elements(:id,"InterestedDesks").empty? && @driver.find_element(:id,"InterestedDesks").attribute('value').eql?("") then
 
-        puts "*3"
-        EnziUIUtility.setValue(@driver, :id, "InterestedDesks", "#{@sObjectRecords["AssignmentRules"]["tour"][count]['numberOfDesks']}")
+        EnziUIUtility.setValue(@driver, :id, "InterestedDesks", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['numberOfDesks']}")
         #end
         if !@driver.find_elements(:id, "Opportunity").empty? && @driver.find_element(:id, "Opportunity").attribute('value').eql?("") then
             puts "*4"
-            EnziUIUtility.setValue(@driver, :id, "Opportunity", "#{@sObjectRecords["AssignmentRules"]["tour"][count]['opportunity']}")
+            EnziUIUtility.setValue(@driver, :id, "Opportunity", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['opportunity']}")
             #puts AccountAssignmentFromLead.getElementByAttribute(@driver,:tag_name,"a","title","Create New").attribute('title')
 
             #@wait.until {!@driver.find_element(:id ,"spinner").displayed?}
@@ -391,7 +358,7 @@ class AccountAssignmentFromLead
 
         if isCreateOpp then
             puts "*5"
-            EnziUIUtility.setValue(@driver, :id, "Opportunity", "#{@sObjectRecords["AssignmentRules"]["tour"][count]['opportunity']}")
+            EnziUIUtility.setValue(@driver, :id, "Opportunity", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['opportunity']}")
             createNewElement = AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "a", "title", "Create New")
             @wait.until {createNewElement.displayed?}
             @wait.until {!@driver.find_element(:id, "spinner").displayed?}
@@ -413,7 +380,7 @@ class AccountAssignmentFromLead
         container = @driver.find_element(:id, "BookTours#{count}")
         puts "1"
 
-        AccountAssignmentFromLead.selectBuilding(container, "#{@sObjectRecords["AssignmentRules"]["tour"][count]['building']}", @timeSettingMap, @driver)
+        AccountAssignmentFromLead.selectBuilding(container, "#{@sObjectRecords["AccountAssignment"]["tour"][count]['building']}", @timeSettingMap, @driver)
 
         @wait.until {!@driver.find_element(:id, "spinner").displayed?}
 
@@ -421,79 +388,7 @@ class AccountAssignmentFromLead
         AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'input', 'placeholder', 'Select Tour Date').click
 
         selectDateFromDatePicker(container, @driver)
-=begin
-    puts "2"
-    @wait.until {!@driver.find_element(:id ,"spinner").displayed?}
-    puts "3"
 
-    if Date.today.next_day(1).saturday? || Date.today.saturday? then
-      puts "4"
-      @wait.until {container.find_element(:id ,Date.today.next_day(3).to_s)}
-      container.find_element(:id ,Date.today.next_day(3).to_s).click
-      if @driver.find_elements(:class,"slds-theme--error")[0].text.eql? "No times slots available for the selected date"
-        puts "5"
-        #@driver.find_elements(:class,"slds-theme--error")[0].text.eql? "No times slots available for the selected date" then
-        EnziUIUtility.wait(@driver,:class,"slds-icon slds-icon--small",@timeSettingMap['Wait']['Environment']['Lightening']['Min'])
-        @driver.find_elements(:class,"slds-icon slds-icon--small")[0].click
-        AccountAssignmentFromLead.selectTourDate(container,@timeSettingMap,@driver,@selectorSettingMap)
-        @wait.until {!@driver.find_element(:id ,"spinner").displayed?}
-        @wait.until {container.find_element(:id ,Date.today.next_day(5).to_s)}
-        container.find_element(:id ,Date.today.next_day(5).to_s).click
-
-      end
-      if @driver.find_elements(:class,"slds-theme--error")[0].text.eql? "No times slots available for the selected date"
-        puts "5"
-        #@driver.find_elements(:class,"slds-theme--error")[0].text.eql? "No times slots available for the selected date" then
-        EnziUIUtility.wait(@driver,:class,"slds-icon slds-icon--small",@timeSettingMap['Wait']['Environment']['Lightening']['Min'])
-        @driver.find_elements(:class,"slds-icon slds-icon--small")[0].click
-        AccountAssignmentFromLead.selectTourDate(container,@timeSettingMap,@driver,@selectorSettingMap)
-        @wait.until {!@driver.find_element(:id ,"spinner").displayed?}
-        @wait.until {container.find_element(:id ,Date.today.next_day(5).to_s)}
-        container.find_element(:id ,Date.today.next_day(12).to_s).click
-
-      end
-    else
-      puts "6"
-      @wait.until {container.find_element(:id ,Date.today.next_day(1).to_s)}
-      sleep(5)
-      begin
-        container.find_element(:id ,Date.today.next_day(28).to_s).click
-      rescue Exception => e
-        puts e
-        #container.find_element(:id ,Date.today.next_day(28).to_s).click
-
-        AccountAssignmentFromLead.getElementByAttribute(@driver,:tag_name,'button','title','Next Month').click
-        container.find_element(:id ,Date.today.next_day(28).to_s).click
-
-      end
-
-      sleep(5)
-      if @driver.find_elements(:tag_name,"h2")[0].text.eql? "No times slots available for the selected date" then
-        puts "7"
-        #@driver.find_elements(:class,"slds-theme--error")[0].text.eql? "No times slots available for the selected date" then
-        EnziUIUtility.wait(@driver,:class,"slds-icon--small",@timeSettingMap['Wait']['Environment']['Lightening']['Min'])
-        @driver.find_elements(:class,"slds-icon--small")[1].click
-        AccountAssignmentFromLead.selectTourDate(container,@timeSettingMap,@driver,@selectorSettingMap)
-        @wait.until {!@driver.find_element(:id ,"spinner").displayed?}
-        @wait.until {container.find_element(:id ,Date.today.next_day(7).to_s)}
-        container.find_element(:id ,Date.today.next_day(7).to_s).click
-
-      end
-      if @driver.find_elements(:tag_name,"h2")[0].text.eql? "No times slots available for the selected date" then
-        puts "7"
-        #@driver.find_elements(:class,"slds-theme--error")[0].text.eql? "No times slots available for the selected date" then
-        EnziUIUtility.wait(@driver,:class,"slds-icon--small",@timeSettingMap['Wait']['Environment']['Lightening']['Min'])
-        @driver.find_elements(:class,"slds-icon--small")[1].click
-        AccountAssignmentFromLead.selectTourDate(container,@timeSettingMap,@driver,@selectorSettingMap)
-        @wait.until {!@driver.find_element(:id ,"spinner").displayed?}
-        @wait.until {container.find_element(:id ,Date.today.next_day(7).to_s)}
-        container.find_element(:id ,Date.today.next_day(14).to_s).click
-
-      end
-      #EnziUIUtility.selectElement(@driver.find_element(:id,"BookTours#{count}"),"Today","a")
-    end
-    @wait.until {!@driver.find_element(:id ,"spinner").displayed?}
-=end
         puts "8"
         if @driver.find_elements(:class, "startTime").size > 0 then
             puts "9"
@@ -512,28 +407,7 @@ class AccountAssignmentFromLead
             #EnziUIUtility.wait(@driver,:id,"header43",@timeSettingMap['Wait']['Environment']['Lightening']['Max'])
         end
         return true
-  else
-        puts "book tour from rest api"
-        payload = @sObjectRecords['AssignmentRules']['TourJSON'][0]
-        payload['body']['email'] = @sObjectRecords['AssignmentRules']['tour'][0]['email']
-        payload['body']['company_size'] = @sObjectRecords['AssignmentRules']['tour'][0]['companySize']
-        payload['body']['tour_date'] = Date.today
-        payload['body']['buildings_interested_uuids'][0] = @sObjectRecords['AssignmentRules']['LeadJSON'][0]['body']['buildings_interested_uuids'][0]
-        payload['body']['tour_building_uuid'] = payload['body']['buildings_interested_uuids'][0]
-        payload['body']['account_uuid'] = SecureRandom.uuid
-        payload['body']['contact_uuid'] = SecureRandom.uuid
-
-        puts payload
-
-        #payload['body']['buildings_interested_uuids'][0] = #selected building uuid
-
-        puts @sObjectRecords['AssignmentRules']['ServiceURL'][0]['tour']
-        getResponse = @objSFRest.postData(''+payload.to_json,"#{@sObjectRecords['AssignmentRules']['ServiceURL'][0]['tour']}")
-
-        puts getResponse['success']
-      return getResponse['success']
-
-  end
+  
   rescue Exception => e
     puts e
     raise e
@@ -566,16 +440,16 @@ class AccountAssignmentFromLead
     EnziUIUtility.wait(@driver, :id, "Number_of_Full_Time_Employees__c", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
 
 
-    EnziUIUtility.setValue(@driver, :id, "Number_of_Full_Time_Employees__c", "#{@sObjectRecords["AssignmentRules"]['tour'][0]['companySize']}")
+    EnziUIUtility.setValue(@driver, :id, "Number_of_Full_Time_Employees__c", "#{@sObjectRecords["AccountAssignment"]['tour'][0]['companySize']}")
 
     EnziUIUtility.wait(@driver, :id, "Interested_in_Number_of_Desks__c", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
 
-    EnziUIUtility.setValue(@driver, :id, "Interested_in_Number_of_Desks__c", "#{@sObjectRecords["AssignmentRules"]['tour'][0]['numberOfDesks']}")
+    EnziUIUtility.setValue(@driver, :id, "Interested_in_Number_of_Desks__c", "#{@sObjectRecords["AccountAssignment"]['tour'][0]['numberOfDesks']}")
 
 
     EnziUIUtility.wait(@driver, :id, "Building__c", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
 
-    EnziUIUtility.setValue(@driver, :id, "Building__c", "#{@sObjectRecords["AssignmentRules"]['tour'][0]['building']}")
+    EnziUIUtility.setValue(@driver, :id, "Building__c", "#{@sObjectRecords["AccountAssignment"]['tour'][0]['building']}")
 
 
     @wait.until {!@driver.find_element(:id, "spinner").displayed?}
@@ -588,7 +462,7 @@ class AccountAssignmentFromLead
     #@wait.until {AccountAssignmentFromLead.getElementByAttribute(@driver,:tag_name,"li","title","MUM-BKC")[2].displayed?}
 
     sleep(2)
-    AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "mark", "text", "#{@sObjectRecords["AssignmentRules"]['tour'][0]['building']}")[0].click
+    AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "mark", "text", "#{@sObjectRecords["AccountAssignment"]['tour'][0]['building']}")[0].click
 
     AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "button", "title", "Save").click
 
@@ -687,15 +561,15 @@ class AccountAssignmentFromLead
     puts date
     if date.saturday? then
       puts "sat"
-      date1 = date.next_day(2)
+      date1 = date.next_day(7)
       return date1
     elsif date.sunday? then
       puts "sun"
-      date1 = date.next_day(1)
+      date1 = date.next_day(8)
       return date1
     else
       puts 'other'
-      date1 = date.next_day(1)
+      date1 = date.next_day(7)
     end
     return date1
   end
@@ -708,23 +582,25 @@ class AccountAssignmentFromLead
 
     puts date
     puts Date::MONTHNAMES[date.month]
-    sleep(10)
+    sleep(3)
     puts "month in calender"
     puts driver.find_elements(:id, 'month')[0].text
     puts driver.find_elements(:id, 'month')[0].size
     @wait.until {driver.find_element(:id, 'month')}
     if Date::MONTHNAMES[date.month] != driver.find_elements(:id, 'month')[0].text then
       puts "month not match"
-      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'button', 'text', 'Next Month')[0].click
+      sleep(10)
+      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'button', 'text', 'Next Month')[1].click
     end
     @wait.until {container.find_element(:id, date.to_s)}
     container.find_element(:id, date.to_s).click
     puts 'date selected'
-    sleep(2)
+    sleep(4)
     if driver.find_elements(:tag_name, "h2")[0].text.eql? "No times slots available for the selected date" then
       puts "error ------ No Time Slots------"
-      EnziUIUtility.wait(driver, :class, "slds-icon--small", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
-      driver.find_elements(:class, "slds-icon--small")[1].click
+      #EnziUIUtility.wait(driver, :class, "slds-icon--small", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
+      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'button', 'title', 'Close').click
+      #driver.find_elements(:class, "slds-icon--small")[1].click
       return false
     else
       puts 'no error'

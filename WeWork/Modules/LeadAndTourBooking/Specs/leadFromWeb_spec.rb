@@ -1,16 +1,16 @@
 #require "json"
-#require "selenium-webdriver"
+require "selenium-webdriver"
 require "rspec"
-require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
-#require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
+#require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
+require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
 include RSpec::Expectations
 
 describe "LeadGenerete" do
 
   before(:all) do    
     @helper = Helper.new
-    #@driver = Selenium::WebDriver.for :chrome
-    @driver = ARGV[0]
+    @driver = Selenium::WebDriver.for :chrome
+    #@driver = ARGV[0]
     @testDataJSON = @helper.getRecordJSON()
     @accept_next_alert = true
     @driver.manage.timeouts.implicit_wait = 30
@@ -752,6 +752,15 @@ describe "LeadGenerete" do
     begin
         @helper.addLogs('C:2150 To Check New Journey Creation if dupicate lead submisison happens for existing contact which is created within 30 days from today when the existing contact does not have permission to create journey.','2150')
 
+        allUsers = @helper.getSalesforceRecord('User',"SELECT id,IsActive FROM User")
+        activeUserArray = []
+        allUsers.each do |user|
+            if user.fetch('IsActive') == 'true' then
+                puts "Active users found"
+                activeUserArray.push(user.fetch('Id'))
+            end
+        end
+
 
         users = @helper.getSalesforceRecord('Setting__c',"select Data__c from Setting__c Where Name = 'User/Queue Journey Creation'")
 
@@ -771,13 +780,7 @@ describe "LeadGenerete" do
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
-        allUsers = @helper.getSalesforceRecord('User',"SELECT id,IsActive FROM User")
-        activeUserArray = []
-        allUsers.each do |user|
-            if user.fetch('IsActive') == true then
-                activeUserArray.push(user.fetch('Id'))
-            end
-        end
+        
 
         puts '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
         puts activeUserArray
@@ -1005,6 +1008,4 @@ describe "LeadGenerete" do
   ensure
     @accept_next_alert = true
   end
-
-  puts "33333"
 end

@@ -6,6 +6,46 @@
     ],
   "CreateLeadFromWeb" :
     [
-      {"Name":"john.sparrow","Email":"","Phone":"123456789","Building":"MUM-BKC","MoveInDate":"Flexible","NumberOfPeople":"1 people","Notes":"Test Data"}
-    ]
+      {"Name":"john.sparrow","Email":"","Phone":"123456789","Building":"MUM-Marol","MoveInDate":"Flexible","NumberOfPeople":"1 people","Notes":"Test Data"}
+    ],
+  "AccountAssignment":
+     {
+      "GenerateLeadFromWeb" :
+              [
+                {"BuildingName":"bkc","City":"mumbai","Name":"johh.smith","Email":"","PhoneNumber":"123456789","MoveInDate":"Flexible","NumberOfPeople":"2 people"}
+              ],
+      "tour" :
+              [
+                {"productLine":"WeWork","bookedBySalesLead":"Yes","phone":"+91-9975839755","email":"test1_enzi@gmail.com","company":"test1_enzi","name":"test1_name","companySize":"12" , "numberOfDesks":"12" , "building":"MUM-BKC" , "opportunity" : "test1"}
+              ],
+      "AddOpportunity" :
+              [
+                {"companySize":"12" , "numberOfDesks":"6" , "building":"MUM-BKC"}
+              ],
+      "UpdatedAccount" :
+              [
+                {"name":"Updated Acc","BillingCountry":"India" , "BillingState":"Maharashtra" , "BillingCity":"Mumbai" , "Number_of_Full_Time_Employees__c":"25"}
+              ],
+      "UpdatedOpportunity" :
+              [
+                {"StageName":"Closed Won"}
+              ],
+      "Lead":
+              [
+                {"firstname":"Enzi_Spec_John","lastname":"Smith01","email":"enzi_spec01@example.com","Company":"Enzigma Software pvt. ltd.","LeadSource":"Broker","Lead_Source_Detail__c":"Book A Tour"}
+              ],
+      "ServiceURL" :
+              [
+                { "inboundlead" : "/services/apexrest/InboundLead" , "tour" : "/services/apexrest/Tour" , "contractEvent" : "/services/apexrest/contractEvent"}
+              ],
+      "TourJSON" :
+              [
+                {  "body": {    "first_name": "John",    "last_name": "pyrofic",    "email": "",    "phone": "8146185355",    "lead_source": "wework.com",    "lead_source_detail": "Book A Tour Form",    "utm_campaign": "San Francisco - Modifier",    "utm_content": "utm contents",    "utm_medium": "cpc",    "utm_source": "ads-google",    "utm_term": "virtual +office +san +francisco",    "company_name": "pyrofic",    "company_size": "",    "desks_interested_min": 5,    "desks_interested_max": 5,    "desks_interested_range": "5",    "company_industry": "Education",    "quick_quote_location": "New York City",    "notes": "Our Notes for",    "referral_code": "JetBlue",    "promo_code": "JetBlue",    "buildings_interested_uuids": [      ""    ],    "product_interests": [      "Office Space"    ],    "product_line": "WeWork",    "locale": "US",    "country_code": "US",    "tour_date": "",    "tour_time": "11:00AM",    "tour_building_uuid": "",    "tour_notes": "Currently at Manhattan, Relocate",    "account_uuid": "",    "contact_uuid": "",    "original_tour": "",    "original_tour_uuid": "",    "sf_journey_uuid": "",    "booked_by_contact_id": "",    "tour_completed_by": "",    "opportunity_id": ""  }}
+              ],
+      "LeadJSON" :
+              [
+                {  "body": {    "last_name": "pyrofic",    "first_name": "John",    "email": "",    "phone": "8146185355",    "lead_source": "wework.com",    "lead_source_detail": "Book A Tour Form",    "utm_campaign": "San Francisco - Modifier",    "utm_content": "utm contents",    "utm_medium": "cpc",    "utm_source": "ads-google",    "utm_term": "virtual +office +san +francisco",    "company_name": "pyrofic",    "company_size": "",    "desks_interested_min": 5,    "desks_interested_max": 5,    "desks_interested_range": "5",    "company_industry": "Education",    "quick_quote_location": "New York City",    "notes": "Our Notes for",    "referral_code": "JetBlue",    "promo_code": "JetBlue",    "buildings_interested_uuids": [      ""    ],    "product_interests": [      "Office Space"    ],    "product_line": "WeWork",    "locale": "US",    "country_code": "US",    "contact_referrer_only": true  }}
+              ]
+
+  }
 }
