@@ -39,7 +39,7 @@ describe "LeadGenerete" do
         @helper.addLogs('Go to Staging website and create lead')
 
         
-        @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
+        @driver.get "https://www-staging.wework.com/buildings/marol--mumbai"
         @driver.find_element(:id, "tourFormContactNameField").clear
         @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
         @driver.find_element(:id, "tourFormEmailField").clear
@@ -56,14 +56,15 @@ describe "LeadGenerete" do
         
         passedLogs = @helper.addLogs("[Step    ] get building details of #{@testDataJSON['CreateLeadFromWeb'][0]["Building"]}")
         buildingName = @testDataJSON['CreateLeadFromWeb'][0]["Building"]
-        building = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
-        expect(building).to_not eq nil
+        #building = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
+        building = @helper.getSalesforceRecordByRestforce("SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
+        expect(building.size).to eq 1
         #puts building.size
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
 
         passedLogs = @helper.addLogs("[Step    ] get Lead details")
-        lead  = @helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate,Company,Phone,LeadSource,Company_Size__c,Lead_Source_Detail__c,Status,Building_Interested_In__c,Building_Interested_Name__c,Locations_Interested__c,Journey_Created_On__c FROM Lead WHERE Email='#{emailLead}'")
+        lead  = @helper.getSalesforceRecordByRestforce("SELECT Id,Name,Email,Owner.Name,CreatedDate,Company,Phone,LeadSource,Company_Size__c,Lead_Source_Detail__c,Status,Building_Interested_In__c,Building_Interested_Name__c,Locations_Interested__c,Journey_Created_On__c FROM Lead WHERE Email='#{emailLead}'")
         #puts lead
         expect(lead.size == 1).to eq true
         expect(lead[0]).to_not eq nil
@@ -71,7 +72,7 @@ describe "LeadGenerete" do
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
-        journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name FROM Journey__c WHERE Primary_Email__c = '#{emailLead}'")
+        journey  = @helper.getSalesforceRecordByRestforce("SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name FROM Journey__c WHERE Primary_Email__c = '#{emailLead}'")
         #puts journey
         expect(journey.size == 1).to eq true
         expect(journey[0]).to_not eq nil
@@ -81,7 +82,7 @@ describe "LeadGenerete" do
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         leadId  =lead[0].fetch('Id')
-        activity  = @helper.getSalesforceRecord('Task',"Select Id,Status,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{leadId}'")
+        activity  = @helper.getSalesforceRecordByRestforce("Select Id,Status,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{leadId}'")
         #puts activity
         expect(activity.size == 1).to eq true
         expect(activity[0]).to_not eq nil
@@ -300,8 +301,6 @@ describe "LeadGenerete" do
         expect(activity[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
-
         puts "*******************************"
 
         passedLogs = @helper.addLogs("[Validate] journey:.Name")
@@ -309,8 +308,8 @@ describe "LeadGenerete" do
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] journey:NMD_Next_Contact_Date__c")
-        puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
-        puts Date.today
+        #puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
+        #puts Date.today
         expect(journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')).to eq Date.today.to_s
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
@@ -339,10 +338,8 @@ describe "LeadGenerete" do
         expect(activity[activity.size - 1].fetch('Status')).to eq "Not Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
         @helper.postSuccessResult('2145')
     rescue Exception => e
-        puts e
         @helper.postFailResult(e,'2145')
     end
   end
@@ -415,14 +412,20 @@ describe "LeadGenerete" do
         expect(activity[activity.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
+
+        deleted_journeys = Hash["id" => "#{journey[journey.size - 1].fetch('Id')}"]
+        records_to_delete = Array.new
+        records_to_delete.push(deleted_journeys)
+        @helper.deleteSalesforceRecords('Journey__c',records_to_delete)
+
         puts "*******************************"
         passedLogs = @helper.addLogs("[Validate] journey:.Name")
         expect(journey[journey.size - 1].fetch('Name')).to match("#{@testDataJSON['CreateLeadFromWeb'][0]['Name']}")
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] journey:NMD_Next_Contact_Date__c")
-        puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
-        puts Date.today
+        #puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
+        #puts Date.today
         expect(journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')).to eq Date.today.to_s
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
@@ -452,11 +455,8 @@ describe "LeadGenerete" do
         expect(activity[activity.size - 1].fetch('Status')).to eq "Not Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
-
         @helper.postSuccessResult('2146')
     rescue Exception => e
-        puts e
         @helper.postFailResult(e,'2146')
     end
   end
@@ -467,10 +467,11 @@ describe "LeadGenerete" do
     begin
         @helper.addLogs('C:2147 To check new journey creation if duplicate lead submission happens for existing lead which is created after 30 days from today.','2147')
 
-
         passedLogs = @helper.addLogs("[Step    ] get details of 30 days ago lead")
-        lead = @helper.getSalesforceRecord('Lead',"select id,Name,createdDate,IsConverted,Email from Lead where Email like  '%@example.com%' AND createdDate = LAST_N_DAYS:30 And IsConverted= false LIMIT 1")
-        #puts lead
+        #d = Date.today().next_day(-30)
+        #puts d
+        lead = @helper.getSalesforceRecord('Lead',"select id,Name,createdDate,IsConverted,Email from Lead where Email like  '%@example.com%' AND createdDate = LAST_N_DAYS:30 And IsConverted= false order by CreatedDate LIMIT 1")
+        puts lead
         
         if (lead[0] == nil ) then
           @helper.addLogs("Lead not present")
@@ -480,9 +481,7 @@ describe "LeadGenerete" do
         expect(lead[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
         @helper.addLogs('Go to Staging website and create lead with email id of existing lead created before 4 to 30 days.')
-
         
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
         sleep(5)
@@ -504,7 +503,7 @@ describe "LeadGenerete" do
         building = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
         expect(building).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
-
+=begin
         passedLogs = @helper.addLogs("[Step    ] get Lead details")
         lead  = @helper.getSalesforceRecord('Lead',"SELECT Id,Name,Email,Owner.Name,CreatedDate,Company,Phone,LeadSource,Company_Size__c,Lead_Source_Detail__c,Status,Building_Interested_In__c,Building_Interested_Name__c,Locations_Interested__c,Journey_Created_On__c FROM Lead WHERE Email='#{emailLead}'")
         #puts lead
@@ -512,15 +511,17 @@ describe "LeadGenerete" do
         expect(lead[0]).to_not eq nil
         expect(lead[0].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
-
+=end
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
         journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name FROM Journey__c WHERE Primary_Email__c = '#{emailLead}' order by CreatedDate")
-        #puts journey
-        #puts journey.size 
+        puts journey
+        puts journey.size 
         #expect(journey.size == 1).to eq true
         expect(journey[journey.size - 1]).to_not eq nil
         expect(journey[journey.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
+
+
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         leadId  =lead[0].fetch('Id')
@@ -532,14 +533,21 @@ describe "LeadGenerete" do
         expect(activity[activity.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
+
+        deleted_journeys = Hash["id" => "#{journey[journey.size - 1].fetch('Id')}"]
+        records_to_delete = Array.new
+        records_to_delete.push(deleted_journeys)
+        puts records_to_delete
+        @helper.deleteSalesforceRecords('Journey__c',records_to_delete)
+
         puts "*******************************"
         passedLogs = @helper.addLogs("[Validate] journey:.Name")
         expect(journey[journey.size - 1].fetch('Name')).to match("#{@testDataJSON['CreateLeadFromWeb'][0]['Name']}")
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
         passedLogs = @helper.addLogs("[Validate] journey:NMD_Next_Contact_Date__c")
-        puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
-        puts Date.today
+        #puts journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')
+        #puts Date.today
         expect(journey[journey.size - 1].fetch('NMD_Next_Contact_Date__c')).to eq Date.today.to_s
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
@@ -568,10 +576,10 @@ describe "LeadGenerete" do
         passedLogs = @helper.addLogs("[Validate] Activity:Status")
         expect(activity[activity.size - 1].fetch('Status')).to eq "Not Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
-
+        #@helper.deleteSalesforceRecords('Journey__c',["#{journey[journey.size - 1].fetch('Id')}"])
         @helper.postSuccessResult('2147')
     rescue Exception => e
-        puts e
+        #@helper.deleteSalesforceRecords('Journey__c',["#{journey[journey.size - 1].fetch('Id')}"])
         @helper.postFailResult(e,'2147')
     end
   end
@@ -648,8 +656,7 @@ describe "LeadGenerete" do
         @driver.find_element(:id, "tourFormNotesField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Notes']
         sleep(2)
         @driver.find_element(:id, "tourFormStepTwoSubmitButton").click
-        @helper.addLogs('Success')
-  
+        @helper.addLogs('Success')  
         sleep(20)
 
         passedLogs = @helper.addLogs("[Step    ] get building details of #{@testDataJSON['CreateLeadFromWeb'][0]["Building"]}")
@@ -657,15 +664,12 @@ describe "LeadGenerete" do
         building = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
         expect(building).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
-
         
         passedLogs = @helper.addLogs("[Step    ] get details of Contact")
         contact= @helper.getSalesforceRecord('Contact',"select id,Name,createdDate,Account.Id,Looking_For_Number_Of_Desk__c,Owner.Id,Owner.Name,RecordType.Name,Number_of_Full_Time_Employees__c,Email,Interested_in_Number_of_Desks__c from Contact where Email = '#{emailId}'")
         expect(contact[0]).to_not eq nil
         expect(contact[0].fetch('Id')).to_not eq nil
-        passedLogs = @helper.addLogs("[Result  ]  Success")
-
-       
+        passedLogs = @helper.addLogs("[Result  ]  Success")       
 
         @helper.addLogs('Go to Staging website again and genetate lead')        
         @driver.get "https://www-staging.wework.com/buildings/bkc--mumbai"
@@ -677,8 +681,6 @@ describe "LeadGenerete" do
         @driver.find_element(:id, "tourFormStepOneSubmitButton").click
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
-
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
         journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name FROM Journey__c WHERE Primary_Email__c = '#{emailId}' order by CreatedDate")
         puts journey
@@ -687,7 +689,6 @@ describe "LeadGenerete" do
         expect(journey[journey.size - 1]).to_not eq nil
         expect(journey[journey.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
-
 
         passedLogs = @helper.addLogs("[Step    ] get Activity details")
         whoId  = contact[0].fetch('Id')
@@ -698,7 +699,6 @@ describe "LeadGenerete" do
         expect(activity[activity.size - 1]).to_not eq nil
         expect(activity[activity.size - 1].fetch('Id')).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
-
 
         puts "*******************************"
 
@@ -738,7 +738,6 @@ describe "LeadGenerete" do
         expect(activity[activity.size - 1].fetch('Status')).to eq "Not Started"
         passedLogs = @helper.addLogs("[Result  ]  Success")
 
-
         @helper.postSuccessResult('2149')
     rescue Exception => e
         puts e
@@ -756,10 +755,10 @@ describe "LeadGenerete" do
         activeUserArray = []
         allUsers.each do |user|
             if user.fetch('IsActive') == 'true' then
-                puts "Active users found"
                 activeUserArray.push(user.fetch('Id'))
             end
         end
+        puts activeUserArray.size
 
 
         users = @helper.getSalesforceRecord('Setting__c',"select Data__c from Setting__c Where Name = 'User/Queue Journey Creation'")
@@ -773,8 +772,7 @@ describe "LeadGenerete" do
         end
 
         
-        passedLogs = @helper.addLogs("[Step    ] get building details of #{@testDataJSON['CreateLeadFromWeb'][0]["Building"]}")
-        buildingName = @testDataJSON['CreateLeadFromWeb'][0]["Building"]
+        passedLogs = @helper.addLogs("[Step    ] get all building details")
         buildings = @helper.getSalesforceRecord('Building__c',"SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c")
         expect(buildings).to_not eq nil
         passedLogs = @helper.addLogs("[Result  ]  Success")
@@ -783,17 +781,17 @@ describe "LeadGenerete" do
         
 
         puts '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
-        puts activeUserArray
+        puts activeUserArray.size
         buildingToSet = nil
         buildings.each do |building|
-            puts (activeUserArray.include? building.fetch('Community_Lead__c'))
+            puts building
             if (building.fetch('Community_Lead__c') != "") && !(arrOfUsersHavingPermissionToCreateJourney.include? building.fetch('Community_Lead__c')) && (activeUserArray.include? building.fetch('Community_Lead__c')) then
                 puts "CM does not have permission #{building}"
                 buildingToSet = building
                 break;
             end
         end
-
+puts "+++++++++++++++++++++++++++"
         puts buildingToSet
 
         

@@ -1,20 +1,18 @@
-require_relative '../PageObjects/accountAssignmentFromLead.rb'
+
 #require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
 require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
+
+
+require_relative '../PageObjects/accountAssignmentFromLead.rb'
+#require_relative 'WeWork/Modules/AccountAssignment/PageObjects/accountAssignmentFromLead.rb'
 require 'json'
 require 'yaml'
 require 'selenium-webdriver'
 require 'rspec'
-#require 'restforce'
 require 'rails'
-#require 'faye'
-#require 'cookiejar'
 require 'httparty'
 
-#require_relative File.expand_path('..', Dir.pwd) + '/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb'
-#require_relative File.expand_path('',Dir.pwd )+ '/rollbarUtility.rb'
-
-describe AccountAssignmentFromLead do
+describe 'AccountAssignmentFromLead' do
   
   before(:all){
     @helper = Helper.new
@@ -22,9 +20,7 @@ describe AccountAssignmentFromLead do
     #@driver = ARGV[0]
     @testDataJSON = @helper.getRecordJSON()
     @objAccAssignmentFromLead = AccountAssignmentFromLead.new(@driver,@testDataJSON,@helper.instance_variable_get(:@mapCredentials),@helper.instance_variable_get(:@timeSettingMap),@helper.instance_variable_get(:@salesforceBulk))
-  }
-
-  
+  }  
 
  context "by Create Account and Dont Merge" do
 
@@ -40,16 +36,15 @@ describe AccountAssignmentFromLead do
           
 
           @helper.addLogs("[Step    ] get building details of #{@testDataJSON['AccountAssignment']["tour"][0]["building"]}")
-          #building = @objAccAssignmentFromLead.fetchBuildingDetails(@testDataJSON['AccountAssignment']["tour"][0]["building"])
-          #expect(building).to_not eq nil
+          building = @objAccAssignmentFromLead.fetchBuildingDetails(@testDataJSON['AccountAssignment']["tour"][0]["building"])
+          expect(building).to_not eq nil
 
-          #@testDataJSON['AccountAssignment']['LeadJSON'][0]['body']['buildings_interested_uuids'][0]  = building.fetch('UUID__c')
+          @testDataJSON['AccountAssignment']['LeadJSON'][0]['body']['buildings_interested_uuids'][0]  = building.fetch('UUID__c')
 
 
           @helper.addLogs("[Step    ] Creating lead")
           emailId = @objAccAssignmentFromLead.createLead()
           puts emailId
-          puts emailId.class
           #expect(@driver.title).to match("Coworking Office Sambhav BKC | WeWork")
 
           puts "lead created from web with emailId = #{emailId}"

@@ -20,8 +20,8 @@ class AccountAssignmentFromLead
     @timeSettingMap = timeSettingMap
     @mapCredentials = mapCredentials
     @salesforceBulk = salesforceBulk
-    puts @mapCredentials['Staging']['WeWork System Administrator']['username']
-    puts @mapCredentials['Staging']['WeWork System Administrator']['password']
+    #puts @mapCredentials['Staging']['WeWork System Administrator']['username']
+    #puts @mapCredentials['Staging']['WeWork System Administrator']['password']
     #@selectorSettingMap = YAML.load_file(File.expand_path('..', Dir.pwd) + '/TestData/selectorSetting.yaml')
     #@selectorSettingMap['screenSize']['actual'] = @driver.manage.window.size.width
     @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
@@ -55,7 +55,6 @@ class AccountAssignmentFromLead
 
       EnziUIUtility.clickElement(@driver, :id, "tourFormStepOneSubmitButton")
       puts "lead Created With email = >   #{emailId}"
-
       return emailId    
     rescue
       return nil
@@ -322,8 +321,7 @@ class AccountAssignmentFromLead
 
   end
 
-  def bookTour(count, bookTour, isCreateOpp = nil)
-    
+  def bookTour(count, bookTour, isCreateOpp = nil)    
         if isCreateOpp then
             @sObjectRecords["AccountAssignment"]["tour"][count]['opportunity'] = @sObjectRecords["AccountAssignment"]["tour"][count]['opportunity'] + SecureRandom.random_number(10000000000).to_s
         end
@@ -590,7 +588,8 @@ class AccountAssignmentFromLead
     if Date::MONTHNAMES[date.month] != driver.find_elements(:id, 'month')[0].text then
       puts "month not match"
       sleep(10)
-      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'button', 'text', 'Next Month')[1].click
+      @driver.find_element(:css, "lightning-icon.slds-icon-utility-right.slds-icon_container > lightning-primitive-icon > svg.slds-icon.slds-icon-text-default.slds-icon_xx-small > use").click
+      #AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'button', 'text', 'Next Month')[1].click
     end
     @wait.until {container.find_element(:id, date.to_s)}
     container.find_element(:id, date.to_s).click
