@@ -1,12 +1,12 @@
 =begin
 ************************************************************************************************************************************
-    Author 		  : 	QaAutomationTeam
-    Description : 	This gem provides methods for CRUD operations in Salesforce.
+    Author      :   QaAutomationTeam
+    Description :   This gem provides methods for CRUD operations in Salesforce.
 
     History     :
-	----------------------------------------------------------------------------------------------------------------------------------
-	VERSION		         DATE				      AUTHOR					        DETAIL
-	1			            21 April 2018   	QaAutomationTeam				Initial Developement
+  ----------------------------------------------------------------------------------------------------------------------------------
+  VERSION            DATE             AUTHOR                  DETAIL
+  1                 21 April 2018     QaAutomationTeam        Initial Developement
 **************************************************************************************************************************************
 =end
 
@@ -16,25 +16,25 @@ require 'faye'
 require 'cookiejar'
 
 class EnziRestforce
-	#@@client = nil
+  #@@@client = nil
   @@createdRecordsIds = Hash.new
 
 =begin
   ************************************************************************************************************************************
-        Author 				  : 	QaAutomationTeam
-        Description 		: 	This method authenticate user  and return client object.
-		    Created Date		: 	21 April 2018
-		    Issue No.			  :
-	**************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
 =end
 
-  def self.login(username,password,clientId,clientSecret,isSandbox)
+  def initialize(username,password,clientId,clientSecret,isSandbox)
     if(!isSandbox) then
       host = 'login.salesforce.com'
     else
       host = 'test.salesforce.com'
     end
-    client = Restforce.new(username: "#{username}",
+    @client = Restforce.new(username: "#{username}",
                            password: "#{password}",
                            #mashify: false,
                            host: "#{host}",
@@ -45,9 +45,9 @@ class EnziRestforce
                            api_version: '41.0',
                            request_headers: { 'sforce-auto-assign' => 'FALSE' })
 
-    client.authenticate!
+    @client.authenticate!
     puts "Authenticate.....!!!!"
-    return client
+    return @client
     rescue Exception => e
       puts e
       return nil
@@ -56,10 +56,10 @@ class EnziRestforce
 
 =begin
     ************************************************************************************************************************************
-         Author 				  : 	QaAutomationTeam
-         Description 		  : 	This method will fetch records from salesforce.
-         Created Date		  : 	21 April 2018
-         Issue No.			  :
+         Author           :   QaAutomationTeam
+         Description      :   This method will fetch records from salesforce.
+         Created Date     :   21 April 2018
+         Issue No.        :
                     record.class   -   Restforce::Collection
                     record.first.Id - get id
                     record.first.fetch('Id') - get id
@@ -72,16 +72,16 @@ class EnziRestforce
     **************************************************************************************************************************************
 =end
 
-  def self.getRecords(client,query)
+  def getRecords(query)
 
     puts "in getRecords"
-    record = client.query_all("#{query}") #where emailId = #{emailId}")
+    record = @client.query_all("#{query}") #where emailId = #{emailId}")
     return record.to_a
-    #explain = client.explain("#{query}")
+    #explain = @client.explain("#{query}")
     #puts explain.class
     #puts explain
 
-    #find = client.find('Lead', '00Q3D000003QtdjUAC')
+    #find = @client.find('Lead', '00Q3D000003QtdjUAC')
     #puts find
 =begin
     puts "hello"
@@ -122,13 +122,13 @@ class EnziRestforce
 
 =begin
     ************************************************************************************************************************************
-         Author 				  : 	QaAutomationTeam
-         Description 		  : 	This method stores created records in @@createdRecordsIds class varable.
-         Created Date		  : 	21 April 2018
-         Issue No.			  :
+         Author           :   QaAutomationTeam
+         Description      :   This method stores created records in @@createdRecordsIds class varable.
+         Created Date     :   21 April 2018
+         Issue No.        :
     **************************************************************************************************************************************
 =end
-  def self.createdRecords(key,value)
+  def createdRecords(key,value)
     if @@createdRecordsIds.key?("#{key}") then
       @@createdRecordsIds["#{key}"] << Hash["Id" => value]
     else
@@ -138,20 +138,20 @@ class EnziRestforce
 
 =begin
     ************************************************************************************************************************************
-         Author 				  : 	QaAutomationTeam
-         Description 		  : 	This method will create record in salesforce.
+         Author           :   QaAutomationTeam
+         Description      :   This method will create record in salesforce.
                               returns id of created record in string format
-         Created Date		  : 	21 April 2018
-         Issue No.			  :
+         Created Date     :   21 April 2018
+         Issue No.        :
                               records_to_insert = Hash.new
                               records_to_insert.store('Name','Kishor_shinde')
-                              createRecords(client,sObject,records_to_insert)
+                              createRecords(@client,sObject,records_to_insert)
     **************************************************************************************************************************************
 =end
-  def self.createRecord(client,sObject,records_to_insert)
+  def createRecord(sObject,records_to_insert)
     puts "in createREcords"
     puts records_to_insert
-    record = client.create("#{sObject}", records_to_insert)
+    record = @client.create("#{sObject}", records_to_insert)
     puts record
     EnziRestforce.createdRecords(sObject,record)
     return record
@@ -159,30 +159,30 @@ class EnziRestforce
 
 =begin
     ************************************************************************************************************************************
-         Author 				  : 	QaAutomationTeam
-         Description 		  : 	This method will get Created Records.
-         Created Date		  : 	21 April 2018
-         Issue No.			  :
+         Author           :   QaAutomationTeam
+         Description      :   This method will get Created Records.
+         Created Date     :   21 April 2018
+         Issue No.        :
     **************************************************************************************************************************************
 =end
-  def self.getCreatedRecords()
+  def getCreatedRecords()
     puts "in getCreated records"
     return @@createdRecordsIds
   end
 
 =begin
     ************************************************************************************************************************************
-         Author 				  : 	QaAutomationTeam
-         Description 		  : 	This method will delete record.
-         Created Date		  : 	21 April 2018
-         Issue No.			  :
-                            EnziRestforce.deleteRecords(client,'Account','0013D00000T6PnRQAV')
+         Author           :   QaAutomationTeam
+         Description      :   This method will delete record.
+         Created Date     :   21 April 2018
+         Issue No.        :
+                            EnziRestforce.deleteRecords(@client,'Account','0013D00000T6PnRQAV')
     **************************************************************************************************************************************
 =end
- def self.deleteRecord(client,sObjectType,recordsToDelete)
+ def deleteRecord(sObjectType,recordsToDelete)
    puts "in deleteRecords"
    if( recordsToDelete != nil ) #&& recordsToDelete.count > 0 && recordsToDelete.count < 10)
-      result = client.destroy("#{sObjectType}", recordsToDelete)
+      result = @client.destroy("#{sObjectType}", recordsToDelete)
       return result
     else
       return nil
@@ -191,16 +191,16 @@ class EnziRestforce
 
 =begin
     ************************************************************************************************************************************
-         Author 				  : 	QaAutomationTeam
-         Description 		  : 	This method will update record.
-         Created Date		  : 	21 April 2018
-         Issue No.			  :
+         Author           :   QaAutomationTeam
+         Description      :   This method will update record.
+         Created Date     :   21 April 2018
+         Issue No.        :
     **************************************************************************************************************************************
 =end
-  def self.updateRecord(client,sObject,updated_values)
+  def updateRecord(sObject,updated_values)
     updated_values = {Id: '0013D00000T6PnRQAV', Name: 'Whizbang Corp'}
     puts updated_values
-    client.update("#{sObject}",updated_values)
+    @client.update("#{sObject}",updated_values)
   end
 
 
@@ -212,13 +212,13 @@ class EnziRestforce
          Issue No.        :
 
 
-         result = EnziRestforce.serachRecord(client,'FIND {Kishor_shinde} RETURNING Account (Name,Id)')
+         result = EnziRestforce.serachRecord(@client,'FIND {Kishor_shinde} RETURNING Account (Name,Id)')
             puts result.to_a[0][1][0].attrs -> {"Name"=>"Kishor_shinde", "Id"=>"0013D00000TTzwQQAT"}
             puts result.to_a[0][1][0].attrs['Id']  ->  get id 
     **************************************************************************************************************************************
 =end
-  def self.serachRecord(client,query)
-    result = client.search(query)
+  def searchRecord(query)
+    result = @client.search(query)
     if result.to_a[0][1].size == 0 then
       puts "No records found"
     end
@@ -227,7 +227,7 @@ class EnziRestforce
 end
 
 
-client = EnziRestforce.login('monika.pingale@wework.com.qaauto','monikaPingale@123','3MVG9PE4xB9wtoY9IbhNtYSuAVOegE_yR6h8s4fwIITYduuN1V8Tt84iUykgOM_X3lj7md_cCbNBlsN6D6LSc','3006740022073476903',true)
+#obj = EnziRestforce.new('monika.pingale@wework.com.qaauto','monikaPingale@123','3MVG9PE4xB9wtoY9IbhNtYSuAVOegE_yR6h8s4fwIITYduuN1V8Tt84iUykgOM_X3lj7md_cCbNBlsN6D6LSc','3006740022073476903',true)
 
 =begin
 puts "1"
@@ -235,16 +235,22 @@ records_to_insert = Hash.new
 records_to_insert.store('Name','Kishor_shinde')
 #records = Array.new
 #records.push(records_to_insert)
-createdRecords = EnziRestforce.createRecords(client,'Account',records_to_insert)
+createdRecords = EnziRestforce.createRecords(@client,'Account',records_to_insert)
 puts createdRecords
 =end
-puts "2"
-array = EnziRestforce.getRecords(client,"select Id,Name from Lead")# where Id  = '00Q3D000003QtiAUAS'")
-#puts array
-puts array.class
-puts array[0].class
-puts array[1].class
-puts "################"
+#puts "2"
+=begin
+array = obj.getRecords("SELECT id,Looking_For_Number_Of_Desk__c,Name,Owner.Id,Owner.Name,RecordType.Name,RecordType.Id,Number_of_Full_Time_Employees__c FROM Contact limit 10")# where Id  = '00Q3D000003QtiAUAS'")
+puts array[0].attrs
+puts array[0].('RecordType')
+puts array[0].'RecordType')['Name']
+puts "121211"
+puts array[0].fetch('RecordType.Name')
+#puts array.class
+#puts array[0].class
+#puts array[1].class
+#puts "################"
+=end
 
 
 =begin
@@ -255,11 +261,11 @@ ar = Array.new
 ar= {"1":{"Name":"Kishor1"},"2":{"Name":"Kishor2"}}
 =end
 
-#EnziRestforce.createRecords(client,'Account',ar)
+#EnziRestforce.createRecords(@client,'Account',ar)
 
 
-#puts EnziRestforce.updateRecord(client,'Account',recordMap)
-#puts EnziRestforce.deleteRecords(client,'Account','0013D00000T6PnRQAV')
+#puts EnziRestforce.updateRecord(@client,'Account',recordMap)
+#puts EnziRestforce.deleteRecords(@client,'Account','0013D00000T6PnRQAV')
 
 
 
@@ -270,22 +276,22 @@ puts array[0]
 puts "################"
 puts array[0].fetch('Id')
 puts array.size
-#puts client.limits
+#puts @client.limits
 =end
 
 
 
-puts "hiiiiiii"
+#puts "hiiiiiii"
 
 # Find all occurrences of 'bar'
-#srch = client.search('FIND {bar}')
+#srch = @client.search('FIND {bar}')
 #puts srch
 #puts "hhjhjhj"
 #puts srch.to_a[0]
 # => #<Restforce::Collection >
 =begin
 # Find accounts matching the term 'genepoint' and return the `Name` field
-srch2 = client.search('FIND {Kishor_shinde} RETURNING Account (Name,Id)')
+srch2 = @client.search('FIND {Kishor_shinde} RETURNING Account (Name,Id)')
 puts "12121212"
 puts srch2
 puts "232323232"
@@ -303,11 +309,11 @@ puts srch2.to_a[0][1][0].attrs['Id']
 
 # Get the global describe for all sobjects
 #puts "jjjjjj"
-#puts client.describe
+#puts @client.describe
 # => { ... }
 
 # Get the describe for the Account object
-#puts client.describe_layouts('Account')
+#puts @client.describe_layouts('Account')
 # => { ... }
 
 

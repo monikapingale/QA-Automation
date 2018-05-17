@@ -19,13 +19,13 @@ describe 'AccountAssignmentFromLead' do
     @driver = Selenium::WebDriver.for :chrome
     #@driver = ARGV[0]
     @testDataJSON = @helper.getRecordJSON()
-    @objAccAssignmentFromLead = AccountAssignmentFromLead.new(@driver,@testDataJSON,@helper.instance_variable_get(:@mapCredentials),@helper.instance_variable_get(:@timeSettingMap),@helper.instance_variable_get(:@salesforceBulk))
+    @objAccAssignmentFromLead = AccountAssignmentFromLead.new(@driver,@helper)
   }  
 
  context "by Create Account and Dont Merge" do
 
   it "C2022 : To check account assignment for Record Type Consumer and Deal type Transactional.", :'2022'=> 'true' do
-        begin
+      begin
           @helper.addLogs('C:2022 To check account assignment for Record Type Consumer and Deal type Transactional.','2022')
 
           @testDataJSON['AccountAssignment']["GenerateLeadFromWeb"][0]["BuildingName"]  = 'marol'
@@ -39,7 +39,7 @@ describe 'AccountAssignmentFromLead' do
           building = @objAccAssignmentFromLead.fetchBuildingDetails(@testDataJSON['AccountAssignment']["tour"][0]["building"])
           expect(building).to_not eq nil
 
-          @testDataJSON['AccountAssignment']['LeadJSON'][0]['body']['buildings_interested_uuids'][0]  = building.fetch('UUID__c')
+          @testDataJSON['AccountAssignment']['LeadJSON'][0]['body']['buildings_interested_uuids'][0]  = building[0].fetch('UUID__c')
 
 
           @helper.addLogs("[Step    ] Creating lead")
@@ -74,23 +74,26 @@ describe 'AccountAssignmentFromLead' do
           expect(@objAccAssignmentFromLead.bookTour(0,true)).to eq true
 
           @helper.addLogs("[Step    ] click on Create Account and Don't Merge")
-          expect(@objAccAssignmentFromLead.duplicateAccountSelector("Create Account and Don't Merge",nil)).to eq true
-          
+          expect(@objAccAssignmentFromLead.duplicateAccountSelector("Create Account and Don't Merge",nil)).to eq true          
 
           @helper.addLogs("[Step    ] checking fields...")
 
-
-
           @helper.addLogs("[Step    ] get Contact details")
           contact = @objAccAssignmentFromLead.fetchContactDetails("#{emailId}")
+          expect(contact.size != 0).to eq true
+          expect(contact[0]).to_not eq nil
+          contact = contact[0]
+          puts contact.attrs
+          puts contact.fetch('Id')
+          puts contact.fetch('RecordType')['Name']
           expect(contact).to_not eq nil
 
           @helper.addLogs("[Validate] contact:RecordType.Name")
-          expect(contact.fetch('RecordType.Name')).to eq "Consumer"
+          expect(contact.fetch('RecordType')['Name']).to eq "Consumer"
           @helper.addLogs("[Result  ]  Success")
 
           @helper.addLogs("[Validate] contact:Owner.Id")
-          expect(contact.fetch('Owner.Id')).to eq "#{building.fetch('Community_Lead__c')}"
+          expect(contact.fetch('Owner')['Id']).to eq "#{building[0].fetch('Community_Lead__c')}"
           @helper.addLogs("[Result  ]  Success")
 
           @helper.addLogs("[Validate] contact:Number_of_Full_Time_Employees__c")
@@ -103,10 +106,13 @@ describe 'AccountAssignmentFromLead' do
 
           puts "get Opportunity details"
           opportunity = @objAccAssignmentFromLead.fetchOpportunityDetails("#{contact.fetch('Id')}")
+          expect(opportunity.size != 0).to eq true
+          expect(opportunity[0]).to_not eq nil
+          opportunity = opportunity[0]
           puts opportunity
 
           @helper.addLogs("[Validate] opportunity:RecordType.Name")
-          expect(opportunity.fetch('RecordType.Name')).to eq "Consumer"
+          expect(opportunity.fetch('RecordType')['Name']).to eq "Consumer"
           @helper.addLogs("[Result  ]  Success")
 
           @helper.addLogs("[Validate] opportunity:Deal_Type__c")
@@ -114,7 +120,119 @@ describe 'AccountAssignmentFromLead' do
           @helper.addLogs("[Result  ]  Success")
 
           @helper.addLogs("[Validate] opportunity:Owner.Id")
-          expect(opportunity.fetch('Owner.Id')).to eq "#{building.fetch('Community_Lead__c')}"
+          expect(opportunity.fetch('Owner')['Id']).to eq "#{building[0].fetch('Community_Lead__c')}"
+          @helper.addLogs("[Result  ]  Success")
+
+          @helper.addLogs("[Validate] opportunity:Quantity__c")
+          expect(opportunity.fetch('Quantity__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["numberOfDesks"]}".to_i
+          @helper.addLogs("[Result  ]  Success")
+
+          puts "get Account Details"
+          account = @objAccAssignmentFromLead.fetchAccountDetails("#{contact.fetch('Id')}")
+          expect(account.size != 0).to eq true
+          expect(account[0]).to_not eq nil
+          account = account[0]
+
+          @helper.addLogs("[Validate] account:RecordType.Name")
+          expect(account.fetch('RecordType')['Name']).to eq "Consumer"
+          @helper.addLogs("[Result  ]  Success")
+
+          @helper.addLogs("[Validate] account:Owner.Id")
+          expect(account.fetch('Owner')['Id']).to eq "#{building[0].fetch('Community_Lead__c')}"
+          @helper.addLogs("[Result  ]  Success")
+
+          @helper.addLogs("[Validate] account:Number_of_Full_Time_Employees__c")
+          expect(account.fetch('Number_of_Full_Time_Employees__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["companySize"]}".to_i
+          @helper.addLogs("[Result  ]  Success")
+  
+          @helper.addLogs("[Validate] account:Interested_in_Number_of_Desks__c")
+          expect(account.fetch('Interested_in_Number_of_Desks__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["numberOfDesks"]}".to_i
+          @helper.addLogs("[Result  ]  Success")
+
+          @helper.postSuccessResult('2022')
+      rescue Exception => e
+          @helper.postFailResult(e,'2022')
+      end
+  end
+
+  it "C2028 : To check account assignment for Record Type Consumer and Deal type Relational.", :'2028'=> 'true' do
+      begin
+          @helper.addLogs("C2028 : To check account assignment for Record Type Consumer and Deal type Relational.",'2028')
+          
+          @testDataJSON['AccountAssignment']["GenerateLeadFromWeb"][0]["BuildingName"]  = 'marol'
+          @testDataJSON['AccountAssignment']["GenerateLeadFromWeb"][0]["City"]  = 'mumbai'
+          @testDataJSON['AccountAssignment']['tour'][0]['companySize']  = '15'
+          @testDataJSON['AccountAssignment']['tour'][0]['numberOfDesks']  = '13'
+          @testDataJSON['AccountAssignment']['tour'][0]['building']  = 'MUM-BKC'
+
+          
+          @helper.addLogs("[Step    ] booking tour from WebSite")
+          emailId = @objAccAssignmentFromLead.createLead()
+          expect(@driver.title).to match("Coworking Office Sambhav BKC | WeWork")
+
+          @helper.addLogs("[Validate]  Lead should be created")
+          leadId = @objAccAssignmentFromLead.fetchLeadDetails(emailId).fetch('Id')
+          expect(leadId).to_not eq 'nil'
+          @helper.addLogs("[Expected]  Lead created successfully with emailId = #{emailId} \n[Result  ]  Success ")
+
+          @helper.addLogs("[Step    ] logging to salesforce")
+          @objAccAssignmentFromLead.loginToSalesforce
+
+          @helper.addLogs("[Step    ] go to details page of created lead and Clicking on 'Manage/book Tour' button")
+          expect(@objAccAssignmentFromLead.goToDetailPage(leadId)).to eq true
+
+
+          @helper.addLogs("[Validate] Checking Manage Tour page when user click on 'Manage/book tour' button")
+          expect(@driver.title).to match("Manage Tours")
+          @helper.addLogs("[Expected] Manage tour page opened successfully with Page Title= Manage Tours \n[Result  ]  Success")
+
+          @helper.addLogs("[Step    ] filling all required fields and booked a tour")
+
+          expect(@objAccAssignmentFromLead.bookTour(0,true)).to eq true
+
+          @helper.addLogs("[Step    ] click on Create Account and Don't Merge")
+          @objAccAssignmentFromLead.instance_variable_get(:@wait).until {@driver.find_element(:id ,"header43").displayed?}
+          expect(@objAccAssignmentFromLead.duplicateAccountSelector("Create Account and Don't Merge",nil)).to eq true
+
+          @helper.addLogs("[Step    ] checking fields...")
+
+          @helper.addLogs("[Step    ] get building details of #{@testDataJSON['AccountAssignment']["tour"][0]["building"]}")
+          building = @objAccAssignmentFromLead.fetchBuildingDetails(@testDataJSON['AccountAssignment']["tour"][0]["building"])
+          expect(building).to_not eq nil
+
+          @helper.addLogs("[Step    ] get Contact details")
+          contact = @objAccAssignmentFromLead.fetchContactDetails("#{emailId}")
+          expect(contact).to_not eq nil
+
+          @helper.addLogs("[Validate] contact:RecordType.Name")
+          expect(contact.fetch('RecordType.Name')).to eq "Consumer"
+          @helper.addLogs("[Result  ]  Success")
+
+          @helper.addLogs("[Validate] contact:Owner.Id")
+          expect(contact.fetch('Owner.Name')).to eq "#{building.fetch('Cluster_Sales_Lead_Name__c')}"
+          @helper.addLogs("[Result  ]  Success")
+
+          @helper.addLogs("[Validate] contact:Number_of_Full_Time_Employees__c")
+          expect(contact.fetch('Number_of_Full_Time_Employees__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["companySize"]}".to_i
+          @helper.addLogs("[Result  ]  Success")
+
+          @helper.addLogs("[Validate] contact:Looking_For_Number_Of_Desk__c")
+          expect(contact.fetch('Looking_For_Number_Of_Desk__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["numberOfDesks"]}".to_i
+          @helper.addLogs("[Result  ]  Success")
+
+          puts "get Opportunity details"
+          opportunity = @objAccAssignmentFromLead.fetchOpportunityDetails("#{contact.fetch('Id')}")
+
+          @helper.addLogs("[Validate] opportunity:RecordType.Name")
+          expect(opportunity.fetch('RecordType.Name')).to eq "Consumer"
+          @helper.addLogs("[Result  ]  Success")
+
+          @helper.addLogs("[Validate] opportunity:Deal_Type__c")
+          expect(opportunity.fetch('Deal_Type__c')).to eq "Relational"
+          @helper.addLogs("[Result  ]  Success")
+
+          @helper.addLogs("[Validate] opportunity:Owner.Id")
+          expect(opportunity.fetch('Owner.Name')).to eq "#{building.fetch('Cluster_Sales_Lead_Name__c')}"
           @helper.addLogs("[Result  ]  Success")
 
           @helper.addLogs("[Validate] opportunity:Quantity__c")
@@ -128,131 +246,22 @@ describe 'AccountAssignmentFromLead' do
           expect(account.fetch('RecordType.Name')).to eq "Consumer"
           @helper.addLogs("[Result  ]  Success")
 
-          @helper.addLogs("[Validate] account:Owner.Id")
-          expect(account.fetch('Owner.Id')).to eq "#{building.fetch('Community_Lead__c')}"
+          @helper.addLogs("[Validate] account:Owner.Name")
+          expect(account.fetch('Owner.Name')).to eq "#{building.fetch('Cluster_Sales_Lead_Name__c')}"
           @helper.addLogs("[Result  ]  Success")
 
           @helper.addLogs("[Validate] account:Number_of_Full_Time_Employees__c")
           expect(account.fetch('Number_of_Full_Time_Employees__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["companySize"]}".to_i
           @helper.addLogs("[Result  ]  Success")
-  
+
           @helper.addLogs("[Validate] account:Interested_in_Number_of_Desks__c")
           expect(account.fetch('Interested_in_Number_of_Desks__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["numberOfDesks"]}".to_i
           @helper.addLogs("[Result  ]  Success")
 
+          @helper.postSuccessResult('2028')
       rescue Exception => e
-            @helper.addLogs("[Result  ]  Fail")
-            raise e
+          @helper.postFailResult(e,'2028')
       end
-
-  end
-
-  it "C2028 : To check account assignment for Record Type Consumer and Deal type Relational.", :'2028'=> 'true' do
-    begin
-      puts "C2028 : To check account assignment for Record Type Consumer and Deal type Relational."
-
-      @testDataJSON['AccountAssignment']['tour'][0]['companySize']  = '15'
-      @testDataJSON['AccountAssignment']['tour'][0]['numberOfDesks']  = '13'
-      @testDataJSON['AccountAssignment']['tour'][0]['building']  = 'MUM-BKC'
-
-      caseInfo = @testRailUtility.getCase('2022')
-      @helper.addLogs("[Step    ] booking tour from WebSite", caseInfo['id'])
-      emailId = @objAccAssignmentFromLead.createLead()
-      expect(@driver.title).to match("Coworking Office Sambhav BKC | WeWork")
-
-      @helper.addLogs("[Validate]  Lead should be created")
-      leadId = @objAccAssignmentFromLead.fetchLeadDetails(emailId).fetch('Id')
-      expect(leadId).to_not eq 'nil'
-      @helper.addLogs("[Expected]  Lead created successfully with emailId = #{emailId} \n[Result  ]  Success ")
-
-      @helper.addLogs("[Step    ] logging to salesforce")
-      @objAccAssignmentFromLead.loginToSalesforce
-
-      @helper.addLogs("[Step    ] go to details page of created lead and Clicking on 'Manage/book Tour' button")
-      expect(@objAccAssignmentFromLead.goToDetailPage(leadId)).to eq true
-
-
-      @helper.addLogs("[Validate] Checking Manage Tour page when user click on 'Manage/book tour' button")
-      expect(@driver.title).to match("Manage Tours")
-      @helper.addLogs("[Expected] Manage tour page opened successfully with Page Title= Manage Tours \n[Result  ]  Success")
-
-      @helper.addLogs("[Step    ] filling all required fields and booked a tour")
-
-      expect(@objAccAssignmentFromLead.bookTour(0,true)).to eq true
-
-      @helper.addLogs("[Step    ] click on Create Account and Don't Merge")
-      @objAccAssignmentFromLead.instance_variable_get(:@wait).until {@driver.find_element(:id ,"header43").displayed?}
-      expect(@objAccAssignmentFromLead.duplicateAccountSelector("Create Account and Don't Merge",nil)).to eq true
-
-      @helper.addLogs("[Step    ] checking fields...")
-
-      @helper.addLogs("[Step    ] get building details of #{@testDataJSON['AccountAssignment']["tour"][0]["building"]}")
-      building = @objAccAssignmentFromLead.fetchBuildingDetails(@testDataJSON['AccountAssignment']["tour"][0]["building"])
-      expect(building).to_not eq nil
-
-      @helper.addLogs("[Step    ] get Contact details")
-      contact = @objAccAssignmentFromLead.fetchContactDetails("#{emailId}")
-      expect(contact).to_not eq nil
-
-      @helper.addLogs("[Validate] contact:RecordType.Name")
-      expect(contact.fetch('RecordType.Name')).to eq "Consumer"
-      @helper.addLogs("[Result  ]  Success")
-
-      @helper.addLogs("[Validate] contact:Owner.Id")
-      expect(contact.fetch('Owner.Name')).to eq "#{building.fetch('Cluster_Sales_Lead_Name__c')}"
-      @helper.addLogs("[Result  ]  Success")
-
-      @helper.addLogs("[Validate] contact:Number_of_Full_Time_Employees__c")
-      expect(contact.fetch('Number_of_Full_Time_Employees__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["companySize"]}".to_i
-      @helper.addLogs("[Result  ]  Success")
-
-      @helper.addLogs("[Validate] contact:Looking_For_Number_Of_Desk__c")
-      expect(contact.fetch('Looking_For_Number_Of_Desk__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["numberOfDesks"]}".to_i
-      @helper.addLogs("[Result  ]  Success")
-
-      puts "get Opportunity details"
-      opportunity = @objAccAssignmentFromLead.fetchOpportunityDetails("#{contact.fetch('Id')}")
-
-      @helper.addLogs("[Validate] opportunity:RecordType.Name")
-      expect(opportunity.fetch('RecordType.Name')).to eq "Consumer"
-      @helper.addLogs("[Result  ]  Success")
-
-      @helper.addLogs("[Validate] opportunity:Deal_Type__c")
-      expect(opportunity.fetch('Deal_Type__c')).to eq "Relational"
-      @helper.addLogs("[Result  ]  Success")
-
-      @helper.addLogs("[Validate] opportunity:Owner.Id")
-      expect(opportunity.fetch('Owner.Name')).to eq "#{building.fetch('Cluster_Sales_Lead_Name__c')}"
-      @helper.addLogs("[Result  ]  Success")
-
-      @helper.addLogs("[Validate] opportunity:Quantity__c")
-      expect(opportunity.fetch('Quantity__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["numberOfDesks"]}".to_i
-      @helper.addLogs("[Result  ]  Success")
-
-      puts "get Account Details"
-      account = @objAccAssignmentFromLead.fetchAccountDetails("#{contact.fetch('Id')}")
-
-      @helper.addLogs("[Validate] account:RecordType.Name")
-      expect(account.fetch('RecordType.Name')).to eq "Consumer"
-      @helper.addLogs("[Result  ]  Success")
-
-      @helper.addLogs("[Validate] account:Owner.Name")
-      expect(account.fetch('Owner.Name')).to eq "#{building.fetch('Cluster_Sales_Lead_Name__c')}"
-      @helper.addLogs("[Result  ]  Success")
-
-      @helper.addLogs("[Validate] account:Number_of_Full_Time_Employees__c")
-      expect(account.fetch('Number_of_Full_Time_Employees__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["companySize"]}".to_i
-      @helper.addLogs("[Result  ]  Success")
-
-      @helper.addLogs("[Validate] account:Interested_in_Number_of_Desks__c")
-      expect(account.fetch('Interested_in_Number_of_Desks__c').to_i).to eq "#{@testDataJSON['AccountAssignment']["tour"][0]["numberOfDesks"]}".to_i
-      @helper.addLogs("[Result  ]  Success")
-
-    rescue Exception => e
-      @helper.addLogs("[Result  ]  Fail")
-      raise e
-    end
-
   end
 
   it "C2040 : To check account assignment for Record Type Consumer and Deal type Strategic.", :'2040'=> 'true' do

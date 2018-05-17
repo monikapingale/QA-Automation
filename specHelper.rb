@@ -100,7 +100,7 @@ end
 
 
 
-def deleteSalesforceRecords(sObject,recordsToDelete)
+def deleteSalesforceRecordBySfbulk(sObject,recordsToDelete)
   puts recordsToDelete
   result = Salesforce.deleteRecords(@salesforceBulk,sObject,recordsToDelete)
   puts "record deleted===> #{result}"

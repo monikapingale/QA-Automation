@@ -4,9 +4,6 @@ require 'json'
 require 'yaml'
 require 'selenium-webdriver'
 require 'date'
-
-
-
 #require_relative File.expand_path("",Dir.pwd)+"/sfRESTService.rb"
 
 class AccountAssignmentFromLead
@@ -16,13 +13,14 @@ class AccountAssignmentFromLead
   @timeSettingMap = nil
   @mapCredentials = nil
 
-  def initialize(driver,recordJSON,mapCredentials,timeSettingMap,salesforceBulk)
+  def initialize(driver,helper)
     puts "in AccountAssignment:initialize"
     @driver = driver
-    @sObjectRecords = recordJSON
-    @timeSettingMap = @helper.instance_variable_get(:@mapCredentials)
+    @helper = helper
+    @sObjectRecords = @helper.getRecordJSON()
+    @timeSettingMap = @helper.instance_variable_get(:@timeSettingMap)
     @mapCredentials = @helper.instance_variable_get(:@mapCredentials)
-    @salesforceBulk = salesforceBulk
+    @salesforceBulk = @helper.instance_variable_get(:@salesforceBulk)
     #puts @mapCredentials['Staging']['WeWork System Administrator']['username']
     #puts @mapCredentials['Staging']['WeWork System Administrator']['password']
     #@selectorSettingMap = YAML.load_file(File.expand_path('..', Dir.pwd) + '/TestData/selectorSetting.yaml')
@@ -114,10 +112,11 @@ class AccountAssignmentFromLead
 
   def fetchLeadDetails(leadEmailId)
     puts "in AccountAssignmentFromLead::fetchLeadDetails"
-    lead = Salesforce.getRecords(@salesforceBulk, 'Lead', "SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
-    if lead.result.records[0] != nil then
+    sleep(30)
+    lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
+    if lead[0] != nil then
       puts "get lead record"
-      return lead.result.records
+      return lead
     else
       return nil
     end
@@ -155,6 +154,9 @@ class AccountAssignmentFromLead
   end
 
   def fetchOpportunityDetails(primaryMember)
+    return checkRecordCreated("Opportunity", "SELECT id,Quantity__c,name,Owner.Id,Owner.Name,Primary_Member__c,Deal_Type__c,RecordType.Name,Interested_in_Number_of_Desks__c FROM Opportunity WHERE Primary_Member__c = '#{primaryMember}'")
+    
+=begin
     opp = Salesforce.getRecords(@salesforceBulk, "Opportunity", "SELECT id,StageName,Quantity__c,name,Owner.Id,Owner.Name,Primary_Member__c,Deal_Type__c,RecordType.Name,Interested_in_Number_of_Desks__c FROM Opportunity WHERE Primary_Member__c = '#{primaryMember}'")
     if opp.result.records.size > 1 then
       puts "multiple records found"
@@ -175,6 +177,7 @@ class AccountAssignmentFromLead
     else
       return checkRecordCreated("Opportunity", "SELECT id,Quantity__c,name,Owner.Id,Owner.Name,Primary_Member__c,Deal_Type__c,RecordType.Name,Interested_in_Number_of_Desks__c FROM Opportunity WHERE Primary_Member__c = '#{primaryMember}'")
     end
+=end
   end
 
   def fetAccOwnerQueue(portFolio, recordType)
@@ -238,10 +241,10 @@ class AccountAssignmentFromLead
 
   def checkRecordCreated(sObject, query)
     puts "in AccountAssignmentFromLead:checkRecordCreated"
-    result = Salesforce.getRecords(@salesforceBulk, "#{sObject}", "#{query}", nil)
-    Salesforce.addRecordsToDelete(sObject, result.result.records[0].fetch('Id'))
-    puts "#{sObject} created => #{result.result.records[0]}"
-    return result.result.records[0]
+    result = @helper.getSalesforceRecordByRestforce("#{query}")
+    #Salesforce.addRecordsToDelete(sObject, result.result.records[0].fetch('Id'))
+    puts "#{sObject} created => #{result[0]}"
+    return result
   rescue
     puts "No record found111111"
     return nil
@@ -344,7 +347,9 @@ class AccountAssignmentFromLead
         end
         #if !@driver.find_elements(:id,"InterestedDesks").empty? && @driver.find_element(:id,"InterestedDesks").attribute('value').eql?("") then
 
-        EnziUIUtility.setValue(@driver, :id, "InterestedDesks", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['numberOfDesks']}")
+        @driver.find_element(:id, "InterestedDesks").clear
+        EnziUIUtility.setValue(@driver, :id, "InterestedDesks", "#{@sObjectRecords['AccountAssignment']['tour'][count]['numberOfDesks']}")
+        #@driver.find_element(:id, "InterestedDesks").send_keys "25"
         #end
         if !@driver.find_elements(:id, "Opportunity").empty? && @driver.find_element(:id, "Opportunity").attribute('value').eql?("") then
             puts "*4"

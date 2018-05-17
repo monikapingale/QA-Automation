@@ -13,6 +13,7 @@ class EnziUIUtility
   #            elementIdentification: use to send name(id,name,class,xpath) to find element
   #Example: setValue(:id,'txtMinVal',20)
   def self.setValue(driver,findBy,elementIdentification,val)
+    puts "setting value of #{elementIdentification} to #{val}"
      element = driver.find_element(findBy,elementIdentification)
      if element.enabled? then
       element.send_keys val
