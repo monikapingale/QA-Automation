@@ -4,6 +4,9 @@ require 'json'
 require 'yaml'
 require 'selenium-webdriver'
 require 'date'
+
+
+
 #require_relative File.expand_path("",Dir.pwd)+"/sfRESTService.rb"
 
 class AccountAssignmentFromLead
@@ -17,8 +20,8 @@ class AccountAssignmentFromLead
     puts "in AccountAssignment:initialize"
     @driver = driver
     @sObjectRecords = recordJSON
-    @timeSettingMap = timeSettingMap
-    @mapCredentials = mapCredentials
+    @timeSettingMap = @helper.instance_variable_get(:@mapCredentials)
+    @mapCredentials = @helper.instance_variable_get(:@mapCredentials)
     @salesforceBulk = salesforceBulk
     #puts @mapCredentials['Staging']['WeWork System Administrator']['username']
     #puts @mapCredentials['Staging']['WeWork System Administrator']['password']

@@ -514,7 +514,11 @@ describe "LeadGenerete" do
 =end
         passedLogs = @helper.addLogs("[Step    ] get Journey details")
         journey  = @helper.getSalesforceRecord('Journey__c',"SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name FROM Journey__c WHERE Primary_Email__c = '#{emailLead}' order by CreatedDate")
+<<<<<<< HEAD
         puts journey
+=======
+        #puts journey
+>>>>>>> d9473aab02df2626acb9f80f16fc72faf45e35b1
         puts journey.size 
         #expect(journey.size == 1).to eq true
         expect(journey[journey.size - 1]).to_not eq nil
