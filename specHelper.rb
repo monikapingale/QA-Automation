@@ -5,11 +5,11 @@
 require 'enziUIUtility'
 require 'enziSalesforce'
 require 'enziRestforce'
-#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
 
-require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
 
 #require_relative File.expand_path('',Dir.pwd )+ "/credentials.yaml"
 #require_relative File.expand_path(Dir.pwd+"/GemUtilities/testRecords.json")
@@ -20,13 +20,13 @@ def initialize()
   @runId = '1698'
   @objRollbar = RollbarUtility.new()
   
-  #@sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
-  #@timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
-  #@mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
+  @sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
+  @timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
+  @mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
 
-  @sObjectRecords = JSON.parse(File.read(File.expand_path('..',Dir.pwd ) + "/testRecords.json"))
-  @timeSettingMap = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/timeSettings.yaml')
-  @mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
+  #@sObjectRecords = JSON.parse(File.read(File.expand_path('..',Dir.pwd ) + "/testRecords.json"))
+  #@timeSettingMap = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/timeSettings.yaml')
+  #@mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
   
 
   @testRailUtility = EnziTestRailUtility::TestRailUtility.new(@mapCredentials['TestRail']['username'],@mapCredentials['TestRail']['password'])
@@ -79,11 +79,11 @@ def getSalesforceRecord(sObject,query)
 end
 
 def getRestforceObj()
-  return @client
+  return @restForce
 end
 
 def getSalesforceRecordByRestforce(query)
-    puts query
+    #puts query
     record = @restForce.getRecords("#{query}")
     if record.size > 1 then
       puts "Multiple records handle carefully....!!!"

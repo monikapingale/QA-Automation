@@ -198,7 +198,7 @@ class EnziRestforce
     **************************************************************************************************************************************
 =end
   def updateRecord(sObject,updated_values)
-    updated_values = {Id: '0013D00000T6PnRQAV', Name: 'Whizbang Corp'}
+    
     puts updated_values
     @client.update("#{sObject}",updated_values)
   end

@@ -21,6 +21,7 @@ class AccountAssignmentFromLead
     @timeSettingMap = @helper.instance_variable_get(:@timeSettingMap)
     @mapCredentials = @helper.instance_variable_get(:@mapCredentials)
     @salesforceBulk = @helper.instance_variable_get(:@salesforceBulk)
+    @restforce = @helper.instance_variable_get(:@restForce)
     #puts @mapCredentials['Staging']['WeWork System Administrator']['username']
     #puts @mapCredentials['Staging']['WeWork System Administrator']['password']
     #@selectorSettingMap = YAML.load_file(File.expand_path('..', Dir.pwd) + '/TestData/selectorSetting.yaml')
@@ -50,15 +51,16 @@ class AccountAssignmentFromLead
       EnziUIUtility.wait(@driver, :id, "tourFormPhoneField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
       EnziUIUtility.setValue(@driver, :id, "tourFormPhoneField", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['PhoneNumber']}")
 
-      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['MoveInDate']}").click
+      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['MoveInDate']}")[0].click
 
-      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['NumberOfPeople']}").click
-
+      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['NumberOfPeople']}")[0].click
+      sleep(3)
       EnziUIUtility.clickElement(@driver, :id, "tourFormStepOneSubmitButton")
       puts "lead Created With email = >   #{emailId}"
       return emailId    
-    rescue
-      return nil
+    rescue Exception => e
+      raise e
+      #return nil
   end
 
   def update(sObject, updated_values)
@@ -91,7 +93,8 @@ class AccountAssignmentFromLead
     switchToClassic(@driver)
     return true
       #EnziUIUtility.wait(@driver,:id, "phHeaderLogoImage",60)
-  rescue
+  rescue Exception => e
+    puts e
     return nil
   end
 
@@ -106,25 +109,39 @@ class AccountAssignmentFromLead
       EnziUIUtility.wait(@driver, :class, "profile-card-footer", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
       @driver.find_element(:link, "Switch to Salesforce Classic").click
     else
-      puts "You are already on Classic..."
+      #puts "You are already on Classic..."
     end
   end
 
   def fetchLeadDetails(leadEmailId)
     puts "in AccountAssignmentFromLead::fetchLeadDetails"
-    sleep(30)
+    sleep(10)
     lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
     if lead[0] != nil then
       puts "get lead record"
       return lead
     else
-      return nil
+      sleep(10)
+      lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
+      if lead[0] != nil then
+        puts "get lead record"
+        return lead
+      else
+        sleep(10)
+        lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
+        if lead[0] != nil then
+          puts "get lead record"
+          return lead
+        else
+          return nil
+        end
+      end
     end
 
   end
 
   def fetchJourneyDetails(leadEmailId)
-
+    sleep(30)
     return checkRecordCreated("Journey__c", "SELECT id FROM Journey__c WHERE Primary_Email__c = '#{leadEmailId}'")
 
 =begin
@@ -211,31 +228,34 @@ class AccountAssignmentFromLead
 
   def fetchRecordTypeId(sObject)
     @mapRecordType = Hash.new
-    recordTypeIds = Salesforce.getRecords(@salesforceBulk, 'RecordType', "Select id,Name from RecordType where SObjectType = '#{sObject}'")
-    if recordTypeIds.result.records != nil then
-      recordTypeIds.result.records.each do |typeid|
-        @mapRecordType.store(typeid[1], typeid[0])
+    recordTypeIds = @helper.getSalesforceRecordByRestforce("Select id,Name from RecordType where SObjectType = '#{sObject}'")
+    if recordTypeIds[0] != nil then
+      recordTypeIds.each do |type|
+        @mapRecordType.store(type['Name'], type['Id'])
       end
     end
-    puts @mapRecordType
+    #puts @mapRecordType
     return @mapRecordType
   end
 
 
   def updateProductAndOpp(oppid, quantityToUpdate, accId, recordTppeToUpdate)
-
-    puts "@@@@@@@@$$$$$$$$$$$@@@@@@@@@@"
+    puts "in updateProductAndOpp"
     product = fetchProductDetails(oppid)
-    puts product.fetch('Id')
-
-    updated_product = Hash["Quantity" => "#{quantityToUpdate}", "id" => "#{product.fetch('Id')}"]
+    puts product[0].fetch('Id')
+    updated_product = {Id: "#{product[0].fetch('Id')}", Quantity: "#{quantityToUpdate}"}
+    #updated_product = Hash["Quantity" => "#{quantityToUpdate}", "id" => "#{product[0].fetch('Id')}"]
     puts updated_product
-    update('OpportunityLineItem', updated_product)
+    puts @restforce.updateRecord('OpportunityLineItem', updated_product)
+    #update('OpportunityLineItem', updated_product)
     mapRecordType = fetchRecordTypeId('Account')
     puts mapRecordType['Mid Market']
-    updated_Acc = Hash["RecordTypeId" => mapRecordType["#{recordTppeToUpdate}"], "id" => accId]
-
-    update('Account', updated_Acc)
+    updated_Acc = {Id: accId, RecordTypeId: mapRecordType["#{recordTppeToUpdate}"]}
+    puts updated_Acc
+    #updated_Acc = Hash["RecordTypeId" => mapRecordType["#{recordTppeToUpdate}"], "id" => accId]
+    @restforce.updateRecord('Account', updated_Acc)
+    #update('Account', updated_Acc)
+    puts "account recordTypeupdated"
     return true
   end
 
@@ -342,11 +362,13 @@ class AccountAssignmentFromLead
             EnziUIUtility.setValue(@driver, :id, "Phone", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['phone']}")
         end
         if !@driver.find_elements(:id, "FTE").empty? && @driver.find_element(:id, "FTE").attribute('value').eql?("") then
-            puts "*2"
+            puts "FTE"
+            puts @sObjectRecords["AccountAssignment"]["tour"][count]['companySize']
             EnziUIUtility.setValue(@driver, :id, "FTE", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['companySize']}")
         end
         #if !@driver.find_elements(:id,"InterestedDesks").empty? && @driver.find_element(:id,"InterestedDesks").attribute('value').eql?("") then
-
+        puts "InterestedDesks"
+        puts @sObjectRecords['AccountAssignment']['tour'][count]['numberOfDesks']
         @driver.find_element(:id, "InterestedDesks").clear
         EnziUIUtility.setValue(@driver, :id, "InterestedDesks", "#{@sObjectRecords['AccountAssignment']['tour'][count]['numberOfDesks']}")
         #@driver.find_element(:id, "InterestedDesks").send_keys "25"
@@ -445,16 +467,16 @@ class AccountAssignmentFromLead
 
     EnziUIUtility.wait(@driver, :id, "Number_of_Full_Time_Employees__c", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
 
-
+    @driver.find_element(:id, "Number_of_Full_Time_Employees__c").clear
     EnziUIUtility.setValue(@driver, :id, "Number_of_Full_Time_Employees__c", "#{@sObjectRecords["AccountAssignment"]['tour'][0]['companySize']}")
 
     EnziUIUtility.wait(@driver, :id, "Interested_in_Number_of_Desks__c", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
-
+    @driver.find_element(:id, "Interested_in_Number_of_Desks__c").clear
     EnziUIUtility.setValue(@driver, :id, "Interested_in_Number_of_Desks__c", "#{@sObjectRecords["AccountAssignment"]['tour'][0]['numberOfDesks']}")
 
 
     EnziUIUtility.wait(@driver, :id, "Building__c", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
-
+    @driver.find_element(:id, "Building__c").clear
     EnziUIUtility.setValue(@driver, :id, "Building__c", "#{@sObjectRecords["AccountAssignment"]['tour'][0]['building']}")
 
 
@@ -478,8 +500,6 @@ class AccountAssignmentFromLead
   rescue Exception => e
     puts e
     return false
-
-
   end
 
   def self.setValue(driver, findBy, elementIdentification, val)
@@ -588,21 +608,21 @@ class AccountAssignmentFromLead
 
     puts date
     puts Date::MONTHNAMES[date.month]
-    sleep(3)
+    #sleep(2)
     puts "month in calender"
     puts driver.find_elements(:id, 'month')[0].text
     puts driver.find_elements(:id, 'month')[0].size
     @wait.until {driver.find_element(:id, 'month')}
     if Date::MONTHNAMES[date.month] != driver.find_elements(:id, 'month')[0].text then
       puts "month not match"
-      sleep(10)
+      #sleep(5)
       @driver.find_element(:css, "lightning-icon.slds-icon-utility-right.slds-icon_container > lightning-primitive-icon > svg.slds-icon.slds-icon-text-default.slds-icon_xx-small > use").click
       #AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'button', 'text', 'Next Month')[1].click
     end
     @wait.until {container.find_element(:id, date.to_s)}
     container.find_element(:id, date.to_s).click
     puts 'date selected'
-    sleep(4)
+    sleep(2)
     if driver.find_elements(:tag_name, "h2")[0].text.eql? "No times slots available for the selected date" then
       puts "error ------ No Time Slots------"
       #EnziUIUtility.wait(driver, :class, "slds-icon--small", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
