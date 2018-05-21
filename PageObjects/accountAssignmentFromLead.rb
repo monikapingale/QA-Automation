@@ -41,7 +41,7 @@ class AccountAssignmentFromLead
       @sObjectRecords['AccountAssignment']['tour'][0]['email'] = emailId
       #puts "Create lead from website"
       @driver.get "https://www-staging.wework.com/buildings/#{@sObjectRecords["AccountAssignment"]["GenerateLeadFromWeb"][0]["BuildingName"]}--#{@sObjectRecords["AccountAssignment"]["GenerateLeadFromWeb"][0]["City"]}"
-
+      sleep(3)
       EnziUIUtility.wait(@driver, :id, "tourFormContactNameField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
       EnziUIUtility.setValue(@driver, :id, "tourFormContactNameField", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['Name']}")
 
