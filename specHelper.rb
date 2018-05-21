@@ -40,12 +40,14 @@ end
 
 def postSuccessResult(caseId)
   puts "----------------------------------------------------------------------------------"
+  puts ""
   @testRailUtility.postResult(caseId,"Pass",1,@runId)
   @passedLogs = @objRollbar.addLog("[Result  ]  Success")
 end
 
 def postFailResult(exception,caseId)
   puts "----------------------------------------------------------------------------------"
+  puts ""
   puts exception
   caseInfo = @testRailUtility.getCase(caseId)
   @passedLogs = @objRollbar.addLog("[Result  ]  Failed")

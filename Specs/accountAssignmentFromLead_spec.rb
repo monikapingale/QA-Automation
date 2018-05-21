@@ -5286,6 +5286,8 @@ describe 'AccountAssignmentFromLead' do
 
   }
   after(:each){
+    puts "----------------------------------------------------------------------------------"
+    puts ""
 
   }
   end
