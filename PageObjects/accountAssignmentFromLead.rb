@@ -137,7 +137,9 @@ class AccountAssignmentFromLead
         end
       end
     end
-
+  rescue Exception => e
+    puts e
+    return nil
   end
 
   def fetchJourneyDetails(leadEmailId)
