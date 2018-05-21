@@ -14,7 +14,7 @@ class AccountAssignmentFromLead
   @mapCredentials = nil
 
   def initialize(driver,helper)
-    puts "in AccountAssignment:initialize"
+    #puts "in AccountAssignment:initialize"
     @driver = driver
     @helper = helper
     @sObjectRecords = @helper.getRecordJSON()
@@ -36,10 +36,10 @@ class AccountAssignmentFromLead
   end
 
   def createLead()
-    puts "in create Lead"
+      #puts "in create Lead"
       emailId = @sObjectRecords["AccountAssignment"]["GenerateLeadFromWeb"][0]["Name"] + SecureRandom.random_number(10000000000).to_s + "@example.com"
       @sObjectRecords['AccountAssignment']['tour'][0]['email'] = emailId
-      puts "Create lead from website"
+      #puts "Create lead from website"
       @driver.get "https://www-staging.wework.com/buildings/#{@sObjectRecords["AccountAssignment"]["GenerateLeadFromWeb"][0]["BuildingName"]}--#{@sObjectRecords["AccountAssignment"]["GenerateLeadFromWeb"][0]["City"]}"
 
       EnziUIUtility.wait(@driver, :id, "tourFormContactNameField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
@@ -66,21 +66,21 @@ class AccountAssignmentFromLead
   def update(sObject, updated_values)
     #updated_account = Hash["name" => "Test Account -- Updated", "id" => "a00A0001009zA2m"] # Nearly identical to an insert, but we need to pass the salesforce id.
 
-    puts updated_values
-    puts sObject
+    #puts updated_values
+    #puts sObject
     #records_to_update.push(updated_account)
     Salesforce.updateRecord(@salesforceBulk, sObject, updated_values)
   end
 
   def self.getElementByAttribute(driver, elementFindBy, elementIdentity, attributeName, attributeValue)
-    puts "in accountAssignment::getElementByAttribute"
+    #puts "in accountAssignment::getElementByAttribute"
     driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(elementFindBy, elementIdentity))
-    puts "in getElementByAttribute #{attributeValue}"
+    #puts "in getElementByAttribute #{attributeValue}"
     elements = driver.find_elements(elementFindBy, elementIdentity)
     elements.each do |element|
       if element.attribute(attributeName) != nil then
         if element.attribute(attributeName).include? attributeValue then
-          puts "element found"
+          #puts "element found"
           return element
         end
       end
@@ -88,7 +88,7 @@ class AccountAssignmentFromLead
   end
 
   def loginToSalesforce()
-    puts "in AccountAssignmentFromLead:loginToSalesforce"
+    #puts "in AccountAssignmentFromLead:loginToSalesforce"
     @driver.get "https://test.salesforce.com/login.jsp?pw=#{@mapCredentials['Staging']['WeWork System Administrator']['password']}&un=#{@mapCredentials['Staging']['WeWork System Administrator']['username']}"
     switchToClassic(@driver)
     return true
@@ -114,23 +114,23 @@ class AccountAssignmentFromLead
   end
 
   def fetchLeadDetails(leadEmailId)
-    puts "in AccountAssignmentFromLead::fetchLeadDetails"
+    #puts "in AccountAssignmentFromLead::fetchLeadDetails"
     sleep(10)
     lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
     if lead[0] != nil then
-      puts "get lead record"
+      #puts "get lead record"
       return lead
     else
       sleep(10)
       lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
       if lead[0] != nil then
-        puts "get lead record"
+        #puts "get lead record"
         return lead
       else
         sleep(10)
         lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
         if lead[0] != nil then
-          puts "get lead record"
+          #puts "get lead record"
           return lead
         else
           return nil
@@ -198,9 +198,9 @@ class AccountAssignmentFromLead
   end
 
   def fetAccOwnerQueue(portFolio, recordType)
-    puts "in AccountAssignmentFromLead:fetAccOwnerQueue"
-    puts "portFolio---> #{portFolio}"
-    puts "recordType ----> #{recordType}"
+    #puts "in AccountAssignmentFromLead:fetAccOwnerQueue"
+    #puts "portFolio---> #{portFolio}"
+    #puts "recordType ----> #{recordType}"
     accQueue = Salesforce.getRecords(@salesforceBulk, "Account_Queue__c", "SELECT id, Member__c FROM Account_Queue__c where Is_Member_Active__c = true and Is_Queue_Active__c = true and Portfolio__c = '#{portFolio}' and Account_Record_Type__c = '#{recordType}'", nil)
     #accQueue = checkRecordCreated("Account_Queue__c","SELECT id, Member__c FROM Account_Queue__c where Is_Member_Active__c = true and Is_Queue_Active__c = true and Portfolio__c = '#{portFolio}' and Account_Record_Type__c = '#{recordType}'")
     #puts accQueue.result.records[0] != nil
@@ -222,7 +222,7 @@ class AccountAssignmentFromLead
 
 
   def fetchProductDetails(oppId)
-    puts "in fetchProductDetails"
+    #puts "in fetchProductDetails"
     return checkRecordCreated("OpportunityLineItem", "SELECT Id,Quantity FROM OpportunityLineItem WHERE OpportunityId = '#{oppId}'")
   end
 
@@ -240,27 +240,27 @@ class AccountAssignmentFromLead
 
 
   def updateProductAndOpp(oppid, quantityToUpdate, accId, recordTppeToUpdate)
-    puts "in updateProductAndOpp"
+    #puts "in updateProductAndOpp"
     product = fetchProductDetails(oppid)
-    puts product[0].fetch('Id')
+    #puts product[0].fetch('Id')
     updated_product = {Id: "#{product[0].fetch('Id')}", Quantity: "#{quantityToUpdate}"}
     #updated_product = Hash["Quantity" => "#{quantityToUpdate}", "id" => "#{product[0].fetch('Id')}"]
-    puts updated_product
-    puts @restforce.updateRecord('OpportunityLineItem', updated_product)
+    #puts updated_product
+    #puts @restforce.updateRecord('OpportunityLineItem', updated_product)
     #update('OpportunityLineItem', updated_product)
     mapRecordType = fetchRecordTypeId('Account')
-    puts mapRecordType['Mid Market']
+    #puts mapRecordType['Mid Market']
     updated_Acc = {Id: accId, RecordTypeId: mapRecordType["#{recordTppeToUpdate}"]}
-    puts updated_Acc
+    #puts updated_Acc
     #updated_Acc = Hash["RecordTypeId" => mapRecordType["#{recordTppeToUpdate}"], "id" => accId]
     @restforce.updateRecord('Account', updated_Acc)
     #update('Account', updated_Acc)
-    puts "account recordTypeupdated"
+    #puts "account recordTypeupdated"
     return true
   end
 
   def checkRecordCreated(sObject, query)
-    puts "in AccountAssignmentFromLead:checkRecordCreated"
+    #puts "in AccountAssignmentFromLead:checkRecordCreated"
     result = @helper.getSalesforceRecordByRestforce("#{query}")
     #Salesforce.addRecordsToDelete(sObject, result.result.records[0].fetch('Id'))
     #puts "#{sObject} created => #{result[0]}"
@@ -272,7 +272,7 @@ class AccountAssignmentFromLead
 
   def goToDetailPage(sObjectId)
     begin
-      puts "in AccountAssignmentFromLead:goToDetailPage"
+      #puts "in AccountAssignmentFromLead:goToDetailPage"
       url = @driver.current_url();
       newUrl = url.split('/')
       @driver.get "#{newUrl[0]}//#{newUrl[2]}/#{sObjectId}"
@@ -293,11 +293,11 @@ class AccountAssignmentFromLead
   def openManageTouFromJourney(sObjectId)
 
     begin
-      puts "in AccountAssignmentFromLead:openManageTouFromJourney"
+      #puts "in AccountAssignmentFromLead:openManageTouFromJourney"
       url = @driver.current_url();
       newUrl = url.split('/')
       finalURL = "#{newUrl[0]}//#{newUrl[2]}/#{sObjectId}"
-      puts finalURL
+      #puts finalURL
       @driver.get "#{newUrl[0]}//#{newUrl[2]}/#{sObjectId}"
       EnziUIUtility.wait(@driver, :id, "actionDropdown", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
 
@@ -322,11 +322,11 @@ class AccountAssignmentFromLead
 
   def goToDetailPageJourney(sObjectId)
     begin
-      puts "in AccountAssignmentFromLead:goToDetailPage"
+      #puts "in AccountAssignmentFromLead:goToDetailPage"
       url = @driver.current_url();
       newUrl = url.split('/')
       finalURL = "#{newUrl[0]}//#{newUrl[2]}/#{sObjectId}"
-      puts finalURL
+      #puts finalURL
       @driver.get "#{newUrl[0]}//#{newUrl[2]}/#{sObjectId}"
 
       EnziUIUtility.wait(@driver, :id, "taction:0", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
@@ -336,10 +336,10 @@ class AccountAssignmentFromLead
       #click on Add Opportunity
       @driver.find_element(:id, "taction:0").click
 
-      puts "########"
-      puts @driver.current_url()
+      #puts "########"
+      #puts @driver.current_url()
       EnziUIUtility.switchToWindow(@driver, @driver.current_url())
-      puts "$$$$$$$$"
+      #puts "$$$$$$$$"
       return true
     rescue
       return false
@@ -358,23 +358,23 @@ class AccountAssignmentFromLead
         @wait.until {!@driver.find_element(:id, "spinner").displayed?}
 
         if !@driver.find_elements(:id, "Phone").empty? && @driver.find_element(:id, "Phone").attribute('value').eql?("") then
-            puts "*1"
+            #puts "*1"
             EnziUIUtility.setValue(@driver, :id, "Phone", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['phone']}")
         end
         if !@driver.find_elements(:id, "FTE").empty? && @driver.find_element(:id, "FTE").attribute('value').eql?("") then
-            puts "FTE"
-            puts @sObjectRecords["AccountAssignment"]["tour"][count]['companySize']
+            #puts "FTE"
+            #puts @sObjectRecords["AccountAssignment"]["tour"][count]['companySize']
             EnziUIUtility.setValue(@driver, :id, "FTE", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['companySize']}")
         end
         #if !@driver.find_elements(:id,"InterestedDesks").empty? && @driver.find_element(:id,"InterestedDesks").attribute('value').eql?("") then
-        puts "InterestedDesks"
-        puts @sObjectRecords['AccountAssignment']['tour'][count]['numberOfDesks']
+        #puts "InterestedDesks"
+        #puts @sObjectRecords['AccountAssignment']['tour'][count]['numberOfDesks']
         @driver.find_element(:id, "InterestedDesks").clear
         EnziUIUtility.setValue(@driver, :id, "InterestedDesks", "#{@sObjectRecords['AccountAssignment']['tour'][count]['numberOfDesks']}")
         #@driver.find_element(:id, "InterestedDesks").send_keys "25"
         #end
         if !@driver.find_elements(:id, "Opportunity").empty? && @driver.find_element(:id, "Opportunity").attribute('value').eql?("") then
-            puts "*4"
+            #puts "*4"
             EnziUIUtility.setValue(@driver, :id, "Opportunity", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['opportunity']}")
             #puts AccountAssignmentFromLead.getElementByAttribute(@driver,:tag_name,"a","title","Create New").attribute('title')
 
@@ -385,14 +385,14 @@ class AccountAssignmentFromLead
         end
 
         if isCreateOpp then
-            puts "*5"
+            #puts "*5"
             EnziUIUtility.setValue(@driver, :id, "Opportunity", "#{@sObjectRecords["AccountAssignment"]["tour"][count]['opportunity']}")
             createNewElement = AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "a", "title", "Create New")
             @wait.until {createNewElement.displayed?}
             @wait.until {!@driver.find_element(:id, "spinner").displayed?}
             sleep(2)
             createNewElement.click
-            puts "Clicked on Create Opp"
+            #puts "Clicked on Create Opp"
             #AccountAssignmentFromLead.getElementByAttribute(@driver,:tag_name,"a","title","Create New").click
             #sleep(20)
         end
@@ -406,7 +406,7 @@ class AccountAssignmentFromLead
         AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "WeWork").click
 
         container = @driver.find_element(:id, "BookTours#{count}")
-        puts "1"
+        #puts "1"
 
         AccountAssignmentFromLead.selectBuilding(container, "#{@sObjectRecords["AccountAssignment"]["tour"][count]['building']}", @timeSettingMap, @driver)
 
@@ -417,19 +417,19 @@ class AccountAssignmentFromLead
 
         selectDateFromDatePicker(container, @driver)
 
-        puts "8"
+        #puts "8"
         if @driver.find_elements(:class, "startTime").size > 0 then
-            puts "9"
+            #puts "9"
             AccountAssignmentFromLead.setElementValue(container, "startTime", nil)
         else
-            puts "10"
+            #puts "10"
             AccountAssignmentFromLead.setElementValue(container, "startTime2", "4:00PM")
         end
 
         @wait.until {!@driver.find_element(:id, "spinner").displayed?}
         if bookTour then
-            puts "11"
-            puts "book a tour"
+            #puts "11"
+            #puts "book a tour"
             EnziUIUtility.selectElement(@driver, "Book Tours", "button").click
             #EnziUIUtility.switchToWindow(@driver,@driver.current_url())
             #EnziUIUtility.wait(@driver,:id,"header43",@timeSettingMap['Wait']['Environment']['Lightening']['Max'])
@@ -442,14 +442,14 @@ class AccountAssignmentFromLead
   end
 
   def addOpportunity()
-    puts "AccountAssignmentFromLead::addOpportunity"
+    #puts "AccountAssignmentFromLead::addOpportunity"
 
     EnziUIUtility.wait(@driver, :id, "lightning", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
 
     #EnziUIUtility.wait(@driver,:title,"Journey Name",@timeSettingMap['Wait']['Environment']['Lightening']['Max'])
 
 
-    puts "1111111111111111222222"
+    #puts "1111111111111111222222"
     #puts AccountAssignmentFromLead.getElementByAttribute(@driver,:tag_name,"h1","title","Journey Name").text
     @wait.until {AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "h1", "title", "Journey Name").displayed?}
 
@@ -503,7 +503,7 @@ class AccountAssignmentFromLead
   end
 
   def self.setValue(driver, findBy, elementIdentification, val)
-    puts "in enziUtility:setValue #{val}"
+    #puts "in enziUtility:setValue #{val}"
 
     element = driver.find_element(findBy, elementIdentification)
     if element.enabled? then
@@ -564,7 +564,7 @@ class AccountAssignmentFromLead
   end
 
   def self.closeErrorAndSelectNextDate(noOfDaysToAdd)
-    puts "5"
+    #puts "5"
     #@driver.find_elements(:class,"slds-theme--error")[0].text.eql? "No times slots available for the selected date" then
     EnziUIUtility.wait(@driver, :class, "slds-icon slds-icon--small", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
     @driver.find_elements(:class, "slds-icon slds-icon--small")[0].click
@@ -583,67 +583,67 @@ class AccountAssignmentFromLead
 
   def addDays(date)
 
-    puts 'in addDays'
-    puts date
+    #puts 'in addDays'
+    #puts date
     if date.saturday? then
-      puts "sat"
+      #puts "sat"
       date1 = date.next_day(7)
       return date1
     elsif date.sunday? then
-      puts "sun"
+      #puts "sun"
       date1 = date.next_day(8)
       return date1
     else
-      puts 'other'
+      #puts 'other'
       date1 = date.next_day(7)
     end
     return date1
   end
 
   def selectDate(driver, date, container)
-    puts 'in selectdate'
+    #puts 'in selectdate'
     AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'input', 'placeholder', 'Select Tour Date').click
 
     @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
 
-    puts date
-    puts Date::MONTHNAMES[date.month]
+    #puts date
+    #puts Date::MONTHNAMES[date.month]
     #sleep(2)
-    puts "month in calender"
-    puts driver.find_elements(:id, 'month')[0].text
-    puts driver.find_elements(:id, 'month')[0].size
+    #puts "month in calender"
+    #puts driver.find_elements(:id, 'month')[0].text
+    #puts driver.find_elements(:id, 'month')[0].size
     @wait.until {driver.find_element(:id, 'month')}
     if Date::MONTHNAMES[date.month] != driver.find_elements(:id, 'month')[0].text then
-      puts "month not match"
+      #puts "month not match"
       #sleep(5)
       @driver.find_element(:css, "lightning-icon.slds-icon-utility-right.slds-icon_container > lightning-primitive-icon > svg.slds-icon.slds-icon-text-default.slds-icon_xx-small > use").click
       #AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'button', 'text', 'Next Month')[1].click
     end
     @wait.until {container.find_element(:id, date.to_s)}
     container.find_element(:id, date.to_s).click
-    puts 'date selected'
+    #puts 'date selected'
     sleep(2)
     if driver.find_elements(:tag_name, "h2")[0].text.eql? "No times slots available for the selected date" then
-      puts "error ------ No Time Slots------"
+      #puts "error ------ No Time Slots------"
       #EnziUIUtility.wait(driver, :class, "slds-icon--small", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
       AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'button', 'title', 'Close').click
       #driver.find_elements(:class, "slds-icon--small")[1].click
       return false
     else
-      puts 'no error'
+      #puts 'no error'
       return true
     end
   end
 
   def selectDateFromDatePicker(container, driver)
-    puts "In selectDateFromDatePicker"
+    #puts "In selectDateFromDatePicker"
     @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
     @wait.until {!@driver.find_element(:id, "spinner").displayed?}
     AccountAssignmentFromLead.selectTourDate(container, @timeSettingMap, @driver, @selectorSettingMap)
     @wait.until {!@driver.find_element(:id, "spinner").displayed?}
 
     date = Date.today
-    puts date
+    #puts date
 
     until selectDate(@driver, date, container) == true do
       date = addDays(date)
@@ -684,24 +684,24 @@ class AccountAssignmentFromLead
   end
 
   def self.setElementValue(container, elementToset, value = nil)
-    puts elementToset
-    puts value
-    puts "12"
+    #puts elementToset
+    #puts value
+    #puts "12"
     dropdown = AccountAssignmentFromLead.getElement("select", elementToset, container)
     if value != nil then
-      puts "13"
+      #puts "13"
       EnziUIUtility.selectElement(dropdown[0], "#{value}", "option")[0].click
     end
     if dropdown[0].find_elements(:tag_name, "option").size > 1 then
-      puts "11"
+      #puts "11"
       dropdown[0].find_elements(:tag_name, "option")[1].click
     end
-    puts dropdown[0].size
+    #puts dropdown[0].size
     #dropdown[0]
   end
 
   def self.getElement(tagName, elementToset, container)
-    puts '21'
+    #puts '21'
     innerDiv = container.find_elements(:class, "#{elementToset}")
     innerFields = innerDiv[0].find_elements(:class, "cEnziField")
     innerFieldDivContainer = innerFields[3].find_elements(:tag_name, "div")
@@ -737,28 +737,28 @@ class AccountAssignmentFromLead
   def getOwnerbasedOnAddress(account)
 
     portfolio = nil
-    puts account
+    #puts account
     if account.fetch('BillingCountry') != nil then
-      puts "00"
+      #puts "00"
       portfolio = Salesforce.getRecords(@salesforceBulk, "Country__c", "Select Id,Name,Portfolio__c From Country__c where Name = '#{account.fetch('BillingCountry')}'", nil)
       puts portfolio.result.records
     elsif account.fetch('BillingState') != nil then
-      puts "01"
+      #puts "01"
       portfolio = Salesforce.getRecords(@salesforceBulk, "State__c", "Select Id,Name,Portfolio__c From Country__c where Name = '#{account.fetch('BillingState')}'", nil)
       puts portfolio.result.records
     elsif account.fetch('BillingCity') != nil then
-      puts '02'
+      #puts '02'
       portfolio = Salesforce.getRecords(@salesforceBulk, "City__c", "Select Id,Name,Portfolio__c From Country__c where Name = '#{account.fetch('BillingCity')}'", nil)
       puts portfolio.result.records
     end
 
     if portfolio.result.records[0] != nil && (portfolio.result.records[0].fetch('Portfolio__c') != nil || portfolio.result.records[0].fetch('Portfolio__c') != '') then
-      puts '03'
+      #puts '03'
       ownerQueue = fetAccOwnerQueue("#{portfolio.result.records[0].fetch('Portfolio__c')}", "#{account.fetch('RecordType.Name')}")
-      puts ownerQueue
+      #puts ownerQueue
       return ownerQueue
     else
-      puts 'no owner queue'
+      #puts 'no owner queue'
       return nil
 
     end
