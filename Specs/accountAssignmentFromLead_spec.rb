@@ -5,7 +5,7 @@ require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
 
 #require_relative '../PageObjects/accountAssignmentFromLead.rb'
 #require_relative 'WeWork/Modules/AccountAssignment/PageObjects/accountAssignmentFromLead.rb'
-require_relative '/PageObjects/accountAssignmentFromLead.rb'
+require_relative '../PageObjects/accountAssignmentFromLead.rb'
 require 'json'
 require 'yaml'
 require 'selenium-webdriver'
