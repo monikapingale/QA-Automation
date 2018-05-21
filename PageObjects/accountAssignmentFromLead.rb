@@ -263,7 +263,7 @@ class AccountAssignmentFromLead
     puts "in AccountAssignmentFromLead:checkRecordCreated"
     result = @helper.getSalesforceRecordByRestforce("#{query}")
     #Salesforce.addRecordsToDelete(sObject, result.result.records[0].fetch('Id'))
-    puts "#{sObject} created => #{result[0]}"
+    #puts "#{sObject} created => #{result[0]}"
     return result
   rescue
     puts "No record found111111"

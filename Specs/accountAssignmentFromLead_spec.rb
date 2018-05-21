@@ -23,7 +23,7 @@ describe 'AccountAssignmentFromLead' do
     @objAccAssignmentFromLead = AccountAssignmentFromLead.new(@driver,@helper)
   }  
 
- context "by Create Account and Dont Merge", :'12321'=> 'true' do
+ context "by Create Account and Dont Merge" do
 
 
   it "test", :'159'=> 'true' do
@@ -4898,7 +4898,7 @@ describe 'AccountAssignmentFromLead' do
         @helper.addLogs("[Result  ]  Success")
 
         expect(@objAccAssignmentFromLead.updateProductAndOpp("#{opportunity[0].fetch('Id')}",'19',account[0].fetch('Id'),'Mid Market')).to eq true
-sleep(20)
+        sleep(20)
         @helper.addLogs("[Step    ] get Contact details")
         contact = @objAccAssignmentFromLead.fetchContactDetails("#{emailId}")
         expect(contact[0]).to_not eq nil
