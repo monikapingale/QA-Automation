@@ -51,9 +51,9 @@ class AccountAssignmentFromLead
       EnziUIUtility.wait(@driver, :id, "tourFormPhoneField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
       EnziUIUtility.setValue(@driver, :id, "tourFormPhoneField", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['PhoneNumber']}")
 
-      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['MoveInDate']}")[0].click
+      #AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['MoveInDate']}")[0].click
 
-      AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['NumberOfPeople']}")[0].click
+      #AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, "option", "text", "#{@sObjectRecords['AccountAssignment']['GenerateLeadFromWeb'][0]['NumberOfPeople']}")[0].click
       sleep(3)
       EnziUIUtility.clickElement(@driver, :id, "tourFormStepOneSubmitButton")
       puts "lead Created With email = >   #{emailId}"
@@ -115,7 +115,7 @@ class AccountAssignmentFromLead
 
   def fetchLeadDetails(leadEmailId)
     #puts "in AccountAssignmentFromLead::fetchLeadDetails"
-    sleep(10)
+    sleep(20)
     lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Email,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id FROM Lead WHERE email = '#{leadEmailId}'")
     if lead[0] != nil then
       #puts "get lead record"
@@ -418,6 +418,7 @@ class AccountAssignmentFromLead
         selectDateFromDatePicker(container, @driver)
 
         #puts "8"
+        sleep(1)
         if @driver.find_elements(:class, "startTime").size > 0 then
             #puts "9"
             AccountAssignmentFromLead.setElementValue(container, "startTime", nil)

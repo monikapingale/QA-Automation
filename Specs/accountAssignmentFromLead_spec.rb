@@ -86,7 +86,7 @@ describe 'AccountAssignmentFromLead' do
 
           @helper.addLogs("[Step    ] Creating lead")
           emailId = @objAccAssignmentFromLead.createLead()
-          puts emailId
+          #puts emailId
           #expect(@driver.title).to match("Coworking Office Sambhav BKC | WeWork")
 
           puts "lead created from web with emailId = #{emailId}"
@@ -123,9 +123,9 @@ describe 'AccountAssignmentFromLead' do
           expect(contact[0].size != 0).to eq true
           expect(contact[0]).to_not eq nil
         
-          puts contact[0].attrs
-          puts contact[0].fetch('Id')
-          puts contact[0].fetch('RecordType')['Name']
+          #puts contact[0].attrs
+          #puts contact[0].fetch('Id')
+          #puts contact[0].fetch('RecordType')['Name']
           expect(contact).to_not eq nil
 
           @helper.addLogs("[Validate] contact:RecordType.Name")
@@ -148,7 +148,7 @@ describe 'AccountAssignmentFromLead' do
           opportunity = @objAccAssignmentFromLead.fetchOpportunityDetails("#{contact[0].fetch('Id')}")
           expect(opportunity[0].size != 0).to eq true
           expect(opportunity[0]).to_not eq nil
-          puts opportunity
+          #puts opportunity
 
           @helper.addLogs("[Validate] opportunity:RecordType.Name")
           expect(opportunity[0].fetch('RecordType')['Name']).to eq "Consumer"
@@ -246,10 +246,10 @@ describe 'AccountAssignmentFromLead' do
           @helper.addLogs("[Result  ]  Success")
 
           @helper.addLogs("[Validate] contact:Owner.Id")
-          puts contact[0].fetch('Owner')['Name']
-          puts contact[0].fetch('Owner')['Name'].to_s
-          puts building[0].fetch('Cluster_Sales_Lead_Name__c')
-          puts building[0].fetch('Cluster_Sales_Lead_Name__c').to_s
+          #puts contact[0].fetch('Owner')['Name']
+          #puts contact[0].fetch('Owner')['Name'].to_s
+          #puts building[0].fetch('Cluster_Sales_Lead_Name__c')
+          #puts building[0].fetch('Cluster_Sales_Lead_Name__c').to_s
           expect(contact[0].fetch('Owner')['Name'].to_s).to eq building[0].fetch('Cluster_Sales_Lead_Name__c').to_s
           @helper.addLogs("[Result  ]  Success")
 
@@ -263,7 +263,8 @@ describe 'AccountAssignmentFromLead' do
 
           puts "get Opportunity details"
           opportunity = @objAccAssignmentFromLead.fetchOpportunityDetails("#{contact[0].fetch('Id')}")
-          
+          expect(opportunity[0]).to_not eq nil
+
           @helper.addLogs("[Validate] opportunity:RecordType.Name")
           expect(opportunity[0].fetch('RecordType')['Name']).to eq "Consumer"
           @helper.addLogs("[Result  ]  Success")
@@ -282,6 +283,7 @@ describe 'AccountAssignmentFromLead' do
 
           puts "get Account Details"
           account = @objAccAssignmentFromLead.fetchAccountDetails("#{contact[0].fetch('Id')}")
+          expect(account[0]).to_not eq nil
           
           @helper.addLogs("[Validate] account:RecordType.Name")
           expect(account[0].fetch('RecordType')['Name']).to eq "Consumer"
