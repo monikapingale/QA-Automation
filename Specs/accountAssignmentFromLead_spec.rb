@@ -1,6 +1,6 @@
 
-#require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
-require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
+require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
+#require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
 
 
 #require_relative '../PageObjects/accountAssignmentFromLead.rb'
@@ -17,8 +17,8 @@ describe 'AccountAssignmentFromLead' do
   
   before(:all){
     @helper = Helper.new
-    @driver = Selenium::WebDriver.for :chrome
-    #@driver = ARGV[0]
+    #@driver = Selenium::WebDriver.for :chrome
+    @driver = ARGV[0]
     @testDataJSON = @helper.getRecordJSON()
     @objAccAssignmentFromLead = AccountAssignmentFromLead.new(@driver,@helper)
   }  
