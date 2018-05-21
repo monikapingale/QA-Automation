@@ -602,13 +602,14 @@ class AccountAssignmentFromLead
 
   def selectDate(driver, date, container)
     #puts 'in selectdate'
+    sleep(1)
     AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'input', 'placeholder', 'Select Tour Date').click
 
     @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
 
     #puts date
     #puts Date::MONTHNAMES[date.month]
-    #sleep(2)
+    sleep(2)
     #puts "month in calender"
     #puts driver.find_elements(:id, 'month')[0].text
     #puts driver.find_elements(:id, 'month')[0].size
@@ -624,13 +625,13 @@ class AccountAssignmentFromLead
     #puts 'date selected'
     sleep(2)
     if driver.find_elements(:tag_name, "h2")[0].text.eql? "No times slots available for the selected date" then
-      #puts "error ------ No Time Slots------"
+      puts "error ------ No Time Slots------"
       #EnziUIUtility.wait(driver, :class, "slds-icon--small", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
       AccountAssignmentFromLead.getElementByAttribute(@driver, :tag_name, 'button', 'title', 'Close').click
       #driver.find_elements(:class, "slds-icon--small")[1].click
       return false
     else
-      #puts 'no error'
+      puts 'no error'
       return true
     end
   end
