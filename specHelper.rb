@@ -79,6 +79,11 @@ def getSalesforceRecord(sObject,query)
     puts "No record found111111"
     return nil
 end
+def createSalesforceRecord(objectType,records_to_insert)
+
+    result= Salesforce.createRecords(@salesforceBulk,objectType ,records_to_insert)
+
+end
 
 def getRestforceObj()
   return @restForce
