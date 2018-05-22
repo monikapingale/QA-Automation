@@ -44,6 +44,7 @@ class CreateOppManageProduct
 
   def createRecord
     puts @driver.current_url()
+    puts @leadsTestData
     @result= @helper.createSalesforceRecord('Lead',@leadsTestData)
     puts @result
     url = @driver.current_url();
