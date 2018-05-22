@@ -266,7 +266,7 @@ describe 'AccountAssignmentFromLead' do
           expect(opportunity[0]).to_not eq nil
 
           @helper.addLogs("[Validate] opportunity:RecordType.Name")
-          expect(opportunity[0].fetch('RecordType')['Name']).to eq "Consumer"
+          expect(opportunity[0].fetch('RecordType')['Name']).to eq "Mid Market"
           @helper.addLogs("[Result  ]  Success")
 
           @helper.addLogs("[Validate] opportunity:Deal_Type__c")
