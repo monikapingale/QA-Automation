@@ -29,7 +29,7 @@ class LeadGeneration
   def createLead(emailId)
       @sObjectRecords['CreateLeadFromWeb'][0]['Email'] = emailId
       @driver.get "https://www-staging.wework.com/buildings/#{@sObjectRecords["CreateLeadFromWeb"][0]["BuildingName"]}--#{@sObjectRecords["CreateLeadFromWeb"][0]["City"]}"
-      sleep(3)
+      sleep(10)
       EnziUIUtility.wait(@driver, :id, "tourFormContactNameField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
       EnziUIUtility.setValue(@driver, :id, "tourFormContactNameField", "#{@sObjectRecords['CreateLeadFromWeb'][0]['Name']}")
 
@@ -39,9 +39,10 @@ class LeadGeneration
       EnziUIUtility.wait(@driver, :id, "tourFormPhoneField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
       EnziUIUtility.setValue(@driver, :id, "tourFormPhoneField", "#{@sObjectRecords['CreateLeadFromWeb'][0]['PhoneNumber']}")
 
-
+      sleep(3)
     @driver.find_element(:name, "move_in_time_frame").click
     Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "move_in_time_frame")).select_by(:text, "This Month")
+    sleep(2)
     @driver.find_element(:name, "desired_capacity").clear
     @driver.find_element(:name, "desired_capacity").send_keys @sObjectRecords['CreateLeadFromWeb'][0]['NumberOfPeople']
 
