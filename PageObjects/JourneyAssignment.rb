@@ -1,5 +1,5 @@
 require 'enziUIUtility'
-require 'salesforce'
+require 'enziSalesforce'
 require 'json'
 require 'yaml'
 require 'selenium-webdriver'
