@@ -104,9 +104,6 @@ def getSalesforceRecordByRestforce(query)
     puts e
     return nil
 end
-
-
-
 def deleteSalesforceRecordBySfbulk(sObject,recordsToDelete)
   #puts recordsToDelete
   result = Salesforce.deleteRecords(@salesforceBulk,sObject,recordsToDelete)
@@ -117,6 +114,26 @@ def deleteSalesforceRecordBySfbulk(sObject,recordsToDelete)
   puts e
   return nil
 end
+
+def getElementByAttribute(driver, elementFindBy, elementIdentity, attributeName, attributeValue)
+    puts "in accountAssignment::getElementByAttribute"
+    driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(elementFindBy, elementIdentity))
+    puts "in getElementByAttribute #{attributeValue}"
+    @driver = driver
+    elements = @driver.find_elements(elementFindBy, elementIdentity)
+    elements.each do |element|
+      if element.attribute(attributeName) != nil then
+        if element.attribute(attributeName).include? attributeValue then
+          puts "element found"
+          return element
+          break
+        end
+      end
+    end
+  end
+
+
+
 
 end
 
