@@ -70,7 +70,7 @@ def getRecordJSON()
 end
 
 def getSalesforceRecord(sObject,query)
-   #puts query
+   puts query
     result = Salesforce.getRecords(@salesforceBulk, "#{sObject}", "#{query}", nil)
     #puts "#{sObject} created => #{result.result.records}"
     return result.result.records
