@@ -10,7 +10,8 @@ describe "ToCheckTourBookedFromWebsiteWhetherRecordTypeIsConsumerAndDealTypeIsTr
 
   before(:all) do
     @helper = Helper.new
-    @driver = Selenium::WebDriver.for :chrome
+    @driver = ARGV[0]
+    #@driver = Selenium::WebDriver.for :chrome
     @objRollbar = RollbarUtility.new()
 
     #@base_url = "https://www.katalon.com/"
