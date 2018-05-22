@@ -6,13 +6,13 @@
     ],
   "CreateLeadFromWeb" :
     [
-      {"Name":"john.sparrow","Email":"","Phone":"123456789","Building":"MUM-Marol","MoveInDate":"Flexible","NumberOfPeople":"1 people","Notes":"Test Data"}
+      {"Name":"john.sparrow","Email":"","PhoneNumber":"123456789","Building":"MUM-Marol","MoveInDate":"This Month","NumberOfPeople":"2","Notes":"Test Data","BuildingName":"marol","City":"mumbai"}
     ],
   "AccountAssignment":
      {
       "GenerateLeadFromWeb" :
               [
-                {"BuildingName":"marol","City":"mumbai","Name":"johh.smith","Email":"","PhoneNumber":"123456789","MoveInDate":"Flexible","NumberOfPeople":"2 people"}
+                {"BuildingName":"marol","City":"mumbai","Name":"johh.smith","Email":"","PhoneNumber":"123456789","MoveInDate":"Flexible","NumberOfPeople":"2"}
               ],
       "tour" :
               [
