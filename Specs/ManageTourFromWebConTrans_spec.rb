@@ -27,7 +27,7 @@ describe "ToCheckTourBookedFromWebsiteWhetherRecordTypeIsConsumerAndDealTypeIsTr
   it "C:2151 To check Tour Booked from website whether record type is consumer and deal type is transactional.", :'2151'=> 'true' do 
     begin
     @helper.addLogs('To check Tour Booked from website whether record type is consumer and deal type is transactional.','2151')
-    @driver.get "https://www-staging.wework.com/buildings/vikhroli-west--mumbai"
+    @driver.get "https://www-staging.wework.com/buildings/marol--mumbai"
     @driver.find_element(:id, "tourFormContactNameField").click
     @driver.find_element(:id, "tourFormContactNameField").clear
     @driver.find_element(:id, "tourFormContactNameField").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Name']
