@@ -4,6 +4,10 @@
       {"firstname":"Enzi_Spec_John","lastname":"Smith01","email":"enzi_spec01@example.com","Company":"Enzigma Software pvt. ltd.","LeadSource":"Broker","Lead_Source_Detail__c":"Book A Tour"},
       {"firstname":"Enzi_Spec_John","lastname":"Smith02","email":"enzi_spec02@example.com","Company":"Enzigma Software pvt. ltd.","LeadSource":"Broker","Lead_Source_Detail__c":"Book A Tour"}
     ],
+  "InboundLead" :
+    [
+      {"FirstName":"john","LastName":"smith","Email":"","Phone":"1234567890","Company":"Enzigma Software Pvt ltd","CompanySize":"12","NumberofDesks":"8","Building Interested":"MUM-BKC"}
+    ],
   "CreateLeadFromWeb" :
     [
       {"Name":"john.sparrow","Email":"","PhoneNumber":"123456789","Building":"MUM-Marol","MoveInDate":"This Month","NumberOfPeople":"2","Notes":"Test Data","BuildingName":"marol","City":"mumbai"}
