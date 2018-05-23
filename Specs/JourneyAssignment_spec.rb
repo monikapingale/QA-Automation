@@ -17,8 +17,8 @@ describe "VerificationOfJourneyAssignmentWhenJourneyIsAssociatedWithLead" do
 
   before(:all) do
   	@helper = Helper.new
-    #@driver = Selenium::WebDriver.for :chrome
-    @driver = ARGV[0]
+    @driver = Selenium::WebDriver.for :chrome
+    #@driver = ARGV[0]
     
     #@base_url = "https://www.katalon.com/"
     @testDataJSON = @helper.getRecordJSON()
@@ -51,9 +51,6 @@ describe "VerificationOfJourneyAssignmentWhenJourneyIsAssociatedWithLead" do
     puts journey
     expect(journey[0].size != 0).to eq true
     expect(journey[0]).to_not eq nil
-    #expect(journey.size == 1).to eq true
-    #expect(journey[0]).to_not eq nil
-    #expect(journey[0].fetch('Id')).to_not eq nil
     @helper.addLogs("[Result  ]  Success")
 
     puts "\n"
@@ -64,9 +61,6 @@ describe "VerificationOfJourneyAssignmentWhenJourneyIsAssociatedWithLead" do
     puts lead
     expect(lead[0].size != 0).to eq true
     expect(lead[0]).to_not eq nil
-    #expect(lead.size == 1).to eq true
-    #expect(lead[0]).to_not eq nil
-    #expect(lead[0].fetch('Id')).to_not eq nil
     @helper.addLogs("[Result  ]  Success")
     puts "\n"
 
@@ -90,51 +84,17 @@ describe "VerificationOfJourneyAssignmentWhenJourneyIsAssociatedWithLead" do
  	begin
  	@helper.addLogs("[Step    ] Creating lead",'994')
  	emailLead = @journeyAssignmentFromLead.createLead()
-    #puts demo
     puts "\n"
     puts "lead created from Sales Console with emailId = #{emailLead}"
     puts "\n"
 
-=begin
-	@driver.find_element(:link, "Follow-Up Task").click
-    puts "follow up after"
-    !60.times{ break if (@driver.find_element(:id, "FollowUpAfter").displayed? rescue false); sleep 1 }
-    @driver.find_element(:id, "FollowUpAfter").click
-    Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "FollowUpAfter")).select_by(:text, "1 Day")
-    @driver.find_element(:xpath, "//select[@id='FollowUpAfter']/option[1]").click
-    #@driver.find_element(:id, "FollowUpAfter").click
-    @driver.find_element(:xpath, "//div[@id='lightning']/div[4]/div[3]/div[3]/div[2]/div/textarea").click
-    @driver.find_element(:xpath, "//div[@id='lightning']/div[4]/div[3]/div[3]/div[2]/div/textarea").clear
-    @driver.find_element(:xpath, "//div[@id='lightning']/div[4]/div[3]/div[3]/div[2]/div/textarea").send_keys "Test Data"
-    @driver.find_element(:xpath, "//div[@id='lightning']/div[4]/div[4]/button").click
-    @driver.find_element(:xpath, "//div[@id='lightning']/div[4]/div[4]/button[2]").click
-    @driver.close
-=end
 	puts "click on More action"
-	sleep(10)
-	EnziUIUtility.switchToWindow(@driver, @driver.current_url())
-
-	#puts @driver.find_elements(:xpath,"//iframe[contains(@id,'ext-comp-')]")
-	#puts @driver.find_elements(:xpath,"//iframe[contains(@id,'ext-comp-')]")[1].attribute('id')
-	#frameid = @driver.find_elements(:xpath,"//iframe[contains(@id,'ext-comp-')]")[1].attribute('id')
-   	frameid = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[1].attribute('id')
-   	puts frameid
-   	@driver.switch_to.frame(frameid)
-   #EnziUIUtility.switchToWindow(@driver, @driver.current_url())
-   	#sleep(10)
-   #puts @driver.find_element(:id,"#{frameid}").attribute('name')
-   	#sleep(5)
-   	#puts "8888"
-   	#sleep(10)
-   @driver.find_element(:id,'actionDropdown').click
+	frameid = @journeyAssignmentFromLead.moreAction()
+	
 	puts "Click on Follow Up"
 	@driver.find_element(:link_text, 'Follow Up').click
 	sleep(2)
 	@driver.switch_to.frame('frame')
-
-	#@driver.find_element(:link, "Follow Up").click
-    #@driver.find_element(:css, "svg.slds-icon.slds-icon-text-default.slds-icon_x-small > use").click
-    #@driver.find_element(:xpath, "//li[@id='action:1']/a/span").click
     @wait.until {!@driver.find_element(:id, "spinner").displayed?}
    	!60.times{ break if (@driver.find_element(:id, "FollowUpAfter").displayed? rescue false); sleep 1 }
     @driver.find_element(:id, "FollowUpAfter").click
@@ -147,12 +107,8 @@ describe "VerificationOfJourneyAssignmentWhenJourneyIsAssociatedWithLead" do
     @driver.find_element(:xpath, "//div[@id='lightning']/div[4]/div[4]/button").click
     puts "Follow up is done"
 
-    EnziUIUtility.switchToWindow(@driver, @driver.current_url())
-    frameid = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[1].attribute('id')
-   	puts frameid
-   	@driver.switch_to.frame(frameid)
-   	@driver.find_element(:id,'actionDropdown').click
-   	puts "Click on  Log A Call"
+    frameid = @journeyAssignmentFromLead.moreAction()
+	puts "Click on  Log A Call"
    	@driver.find_element(:xpath, "//li[@id='action:5']/a/span").click
    	sleep(5)
    	@driver.switch_to.frame('frame')
@@ -186,7 +142,7 @@ describe "VerificationOfJourneyAssignmentWhenJourneyIsAssociatedWithLead" do
     puts "\n"
 
     @helper.addLogs("[Validate] Get Outreach Stage")
-    expect(journey[0].fetch('Outreach_Stage__c')).to eq "Call 1"
+    expect(journey[0].fetch('Outreach_Stage__c')).to eq "Call"
     @helper.addLogs("[Result  ] Success")
     puts "\n"
 
@@ -196,8 +152,6 @@ describe "VerificationOfJourneyAssignmentWhenJourneyIsAssociatedWithLead" do
     puts activity
     expect(activity[0].size != 0).to eq true
     expect(activity[0]).to_not eq nil
-    #expect(activity[activity.size - 1]).to_not eq nil
-    #expect(activity[activity.size - 1].fetch('Id')).to_not eq nil
     passedLogs = @helper.addLogs("[Result  ]  Success")
     puts "\n"
 
@@ -221,13 +175,6 @@ describe "VerificationOfJourneyAssignmentWhenJourneyIsAssociatedWithLead" do
     expect(activity[0].fetch('Status')).to eq "Not Started"
     @helper.addLogs("[Result  ] Success")
     puts "\n"
-
-=begin
-	@helper.addLogs("[Validate] Get Due Date on Followup Activity")
-    expect(activity[0].fetch('Status')).to eq "Not Started"
-    @helper.addLogs("[Result  ] Success")
-    puts "\n"
-=end
 
 	@helper.addLogs("[Validate] Get WhatId on Followup Activity")
     expect(activity[0].fetch('WhatId')).to eq "#{journeyId}"
@@ -302,12 +249,7 @@ end
     puts "lead created from Sales Console with emailId = #{emailLead}"
     puts "\n"
     puts "click on More action"
-	sleep(10)
-	EnziUIUtility.switchToWindow(@driver, @driver.current_url())
-	frameid = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[1].attribute('id')
-   	puts frameid
-   	@driver.switch_to.frame(frameid)
-   	@driver.find_element(:id,'actionDropdown').click
+    frameid = @journeyAssignmentFromLead.moreAction()
    	puts "Click on  Log A Call"
    	@driver.find_element(:xpath, "//li[@id='action:5']/a/span").click
    	sleep(5)
@@ -398,7 +340,134 @@ end
       @helper.postFailResult(e,'987')
   end
 end
+	it "C:988 Verification of Log a call for more than two times when journey status is started.", :'988'=> 'true' do 
+	 begin
+	@helper.addLogs("[Step    ] Creating lead",'988')
+  	emailLead = @journeyAssignmentFromLead.createLead()
+    #puts demo
+    puts "\n"
+    puts "lead created from Sales Console with emailId = #{emailLead}"
+    puts "\n"
+    puts "click on More action"
+    frameid = @journeyAssignmentFromLead.moreAction()
+   	puts "Click on  Log A Call"
+   	@driver.find_element(:xpath, "//li[@id='action:5']/a/span").click
+   	sleep(5)
+   	@driver.switch_to.frame('frame')
+   	#@wait.until {!@driver.find_element(:id, "spinner").displayed?}
+   	#@driver.find_element(:id, "left-a-voicemail").click
+    @driver.find_element(:id, "field-comment").click
+    @driver.find_element(:id, "field-comment").clear
+    @driver.find_element(:id, "field-comment").send_keys "Test Data"
+    @driver.find_element(:id, "view-save").click
+    puts "Log A Call is Done"
+    puts "\n"
 
+    frameid = @journeyAssignmentFromLead.moreAction()
+    puts "Click on  Log A Call"
+   	@driver.find_element(:xpath, "//li[@id='action:5']/a/span").click
+   	sleep(5)
+   	@driver.switch_to.frame('frame')
+   	#@wait.until {!@driver.find_element(:id, "spinner").displayed?}
+   	#@driver.find_element(:id, "left-a-voicemail").click
+    @driver.find_element(:id, "field-comment").click
+    @driver.find_element(:id, "field-comment").clear
+    @driver.find_element(:id, "field-comment").send_keys "Test Data"
+    @driver.find_element(:id, "view-save").click
+    puts "Log A Call is Done"
+    puts "\n"
+
+    frameid = @journeyAssignmentFromLead.moreAction()
+    puts "Click on  Log A Call"
+   	@driver.find_element(:xpath, "//li[@id='action:5']/a/span").click
+   	sleep(5)
+   	@driver.switch_to.frame('frame')
+   	#@wait.until {!@driver.find_element(:id, "spinner").displayed?}
+   	#@driver.find_element(:id, "left-a-voicemail").click
+    #@driver.find_element(:id, "field-comment").click
+    #@driver.find_element(:id, "field-comment").clear
+    #@driver.find_element(:id, "field-comment").send_keys "Test Data"
+    #@driver.find_element(:id, "view-save").click
+    puts "Save Button is disabled"
+    puts "\n"
+
+    @helper.addLogs("[Step    ] Get Journey details")
+    journey  =@helper.getSalesforceRecordByRestforce("SELECT Id,Status__c,NMD_Next_Contact_Date__c,Name,Owner.Name,Outreach_Stage__c FROM Journey__c WHERE Primary_Email__c='#{emailLead}'")
+    puts journey
+    expect(journey[0].size != 0).to eq true
+    expect(journey[0]).to_not eq nil
+    #expect(journey[0].fetch('Id')).to_not eq nil
+    @helper.addLogs("[Result  ]  Success")
+    puts "\n"
+
+    @helper.addLogs("[Validate] Get Journey Status")
+    expect(journey[0].fetch('Status__c')).to eq "Started"
+    @helper.addLogs("[Result  ] Success")
+    puts "\n"
+
+    @helper.addLogs("[Validate] Get Next Contact Date on Journey")
+    expect(journey[0].fetch('NMD_Next_Contact_Date__c')).to eq Date.today.to_s
+    @helper.addLogs("[Result  ] Success")
+    puts "\n"
+
+    @helper.addLogs("[Validate] Get Journey Owner")
+    expect(journey[0].fetch('Owner')['Name'].to_s).to eq "Ashutosh Thakur"
+    @helper.addLogs("[Result  ] Success")
+    puts "\n"
+
+    @helper.addLogs("[Validate] Get Outreach Stage")
+    expect(journey[0].fetch('Outreach_Stage__c')).to eq "Call 2"
+    @helper.addLogs("[Result  ] Success")
+    puts "\n"
+
+    @helper.addLogs("[Step    ] Get Lead Details")
+    lead  =@helper.getSalesforceRecordByRestforce("SELECT Id,Name,Email,Owner.Name,CreatedDate,Company,Phone,LeadSource,Company_Size__c,Lead_Source_Detail__c,Status,Building_Interested_In__c,Building_Interested_Name__c,Locations_Interested__c,Journey_Created_On__c FROM Lead WHERE Email='#{emailLead}'")
+    puts lead
+    expect(lead[0].size != 0).to eq true
+    expect(lead[0]).to_not eq nil
+    @helper.addLogs("[Result  ]  Success")
+    puts "\n"
+
+    @helper.addLogs("[Step    ] Get Lead Activity details")
+    leadId  =lead[0].fetch('Id')
+    activity=@helper.getSalesforceRecordByRestforce("Select Id,Type,Status,Owner.Name,Owner.Id, Subject, WhoId,CallDisposition FROM Task WHERE WhoId ='#{leadId}'and Status='Completed' order by createdDate DESC limit 1")
+    puts activity
+    expect(activity[0].size != 0).to eq true
+    expect(activity[0]).to_not eq nil
+    @helper.addLogs("[Result  ]  Success")
+    puts "\n"
+
+    @helper.addLogs("[Validate] Get Type on Lead ACtivity")
+    expect(activity[0].fetch('Type')).to eq "Call"
+    @helper.addLogs("[Result  ] Success")
+    puts "\n"
+
+    @helper.addLogs("[Validate] Get Subject on Lead Activity")
+    expect(activity[0].fetch('Subject')).to eq "Log A Call : Call 2"
+    @helper.addLogs("[Result  ] Success")
+    puts "\n"
+
+    @helper.addLogs("[Validate] Get Status on Lead Activity")
+    expect(activity[0].fetch('Status')).to eq "Completed"
+    @helper.addLogs("[Result  ] Success")
+    puts "\n"
+
+    @helper.addLogs("[Validate] Get Whoid on Lead Activity")
+    expect(activity[0].fetch('WhoId')).to eq "#{leadId}"
+    @helper.addLogs("[Result  ] Success")
+    puts "\n"
+
+    @helper.addLogs("[Validate] Get Call Result on Lead Activity")
+    expect(activity[0].fetch('CallDisposition')).to eq "Test Data"
+    @helper.addLogs("[Result  ] Success")
+    puts "\n"
+
+     @helper.postSuccessResult('988')
+     rescue Exception => e
+      raise e
+      @helper.postFailResult(e,'988')
+  end
+end
   def element_present?(how, what)
   	@driver.find_element(how, what)
     true
