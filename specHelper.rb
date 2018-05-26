@@ -5,34 +5,34 @@
 require 'enziUIUtility'
 require 'enziSalesforce'
 require 'enziRestforce'
-require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
 
-#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
 
 #require_relative File.expand_path('',Dir.pwd )+ "/credentials.yaml"
 #require_relative File.expand_path(Dir.pwd+"/GemUtilities/testRecords.json")
 class Helper
 def initialize()
   #@testRailUtility = EnziTestRailUtility::TestRailUtility.new('team-qa@enzigma.com','7O^dv0mi$IZHf4Cn')
-  @runId = ENV['RUN_ID']
-  #@runId = '1698'
+  #@runId = ENV['RUN_ID']
+  @runId = '1698'
   @objRollbar = RollbarUtility.new()
   
-  @sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
-  @timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
-  @mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
+  #@sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
+  #@timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
+  #@mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
 
-  #@sObjectRecords = JSON.parse(File.read(File.expand_path('..',Dir.pwd ) + "/testRecords.json"))
-  #@timeSettingMap = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/timeSettings.yaml')
-  #@mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
+  @sObjectRecords = JSON.parse(File.read(File.expand_path('..',Dir.pwd ) + "/testRecords.json"))
+  @timeSettingMap = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/timeSettings.yaml')
+  @mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
   
 
   @testRailUtility = EnziTestRailUtility::TestRailUtility.new(@mapCredentials['TestRail']['username'],@mapCredentials['TestRail']['password'])
   #puts @mapCredentials['Staging']['WeWork System Administrator']['username']
   #puts @mapCredentials['Staging']['WeWork System Administrator']['password']
-  @salesforceBulk = Salesforce.login(@mapCredentials['Staging']['WeWork System Administrator']['username'], @mapCredentials['Staging']['WeWork System Administrator']['password'], true)
+  #@salesforceBulk = Salesforce.login(@mapCredentials['Staging']['WeWork System Administrator']['username'], @mapCredentials['Staging']['WeWork System Administrator']['password'], true)
   @restForce = EnziRestforce.new(@mapCredentials['Staging']['WeWork System Administrator']['username'],@mapCredentials['Staging']['WeWork System Administrator']['password'],@mapCredentials['Staging']['WeWork System Administrator']['client_id'],@mapCredentials['Staging']['WeWork System Administrator']['client_secret'],true)
 end
 
@@ -79,10 +79,17 @@ def getSalesforceRecord(sObject,query)
     puts "No record found111111"
     return nil
 end
-def createSalesforceRecord(objectType,records_to_insert)
-
+def createSalesforceRecords(objectType,records_to_insert)
     result= Salesforce.createRecords(@salesforceBulk,objectType ,records_to_insert)
+    return result
+end
 
+def createRecord(sObject,records_to_insert)
+  puts "in @helper::createRecord"
+  puts records_to_insert
+    record = @restForce.createRecord(sObject,records_to_insert)
+    puts record
+    return record
 end
 
 def getRestforceObj()

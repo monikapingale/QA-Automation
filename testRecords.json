@@ -1,48 +1,112 @@
-{    
-  "Lead":
-    [      
-      {"firstname":"Enzi_Spec_John","lastname":"Smith01","email":"enzi_spec01@example.com","Company":"Enzigma Software pvt. ltd.","LeadSource":"Broker","Lead_Source_Detail__c":"Book A Tour"},
-      {"firstname":"Enzi_Spec_John","lastname":"Smith02","email":"enzi_spec02@example.com","Company":"Enzigma Software pvt. ltd.","LeadSource":"Broker","Lead_Source_Detail__c":"Book A Tour"}
+{  
+  "Account":
+    [
+      {"name":"john.snow_Org_qaauto1212121","RecordTypeId":"","Account_Type__c":"Org"},
+      {"name":"john.snow_Sales_qaauto","RecordTypeId":"","Account_Type__c":"Bill"},
+      {"name":"john.snow_Bill_qaauto","RecordTypeId":"","Account_Type__c":"Sales"}
     ],
-"CreateOpportunity": [
-	{
-		"lead": [
-			{
-				"lastName": "test_smithC",
-				"firstName": "test_johnC",
-				"website": "http://www.Testgmail.com",
-				"email": "test_johnsmith@example.com",
-				"phone": "8146185365",
-				"company": "Test_johnsmith1",
-				"company_Size__c": "21-50",
-				"lead_Source_Detail__c": "Book A Tour Form",
-				"Interested_in_Number_of_Desks__c":"1000",
-				"utm_campaign__c": "San Francisco - Modifier",
-				"utm_content__c": "utm contents",
-				"utm_medium__c": "cpc",
-				"utm_source__c": "ads-google",
-				"utm_term__c": "virtual +office +san +francisco",
-				"locale__c": "US",
-				"country_Code__c": "US",
-				"leadSource": "Event"
-			}
-		]
-	},
-	{
-		"createOpp": [
-			{
-				"accountName": "test_Enterprise1",
-				"Number_of_Full_Time_Employees__c": "1500",
-				"contact_Name": "john smith1",
-				"contact_Email": "johnsmith1@example.com",
-				"building": "AMS-Metropool",
-				"geography": "Weesperstraat 61-105, Noord-Holland",
-				"opportunityRole": "Decision Maker"
-			}
-		]
-	}
+  "Contact":
+    [
+      {"firstname":"john","lastname":"snow","email":"","AccountId":""}
+    ],
+  "Lead":
+    [
+      {
+        "RecordType":"Consumer",
+        "Salutation":"Mr.",
+        "FirstName":"john_QaAuto",
+        "LastName":"smith_QaAuto",
+        "Email":"",
+        "Company":"Enzigma Software pvt. ltd.",
+        "Industry":"",
+        "Phone":"",
+        "Mobile":"",
+        "Do Not Call":"",
+        "Email Quality":"",
+        "WinOver Competitor":"",
+        "Number of Journeys":"",
+        "Promo Code":"",
+        "Lease Expiration":"",
+        "Last Event Name":"",
+        "Journey Created On":"",
+        "Affiliate Consent":"",
+        "Marketing Consent":"",
+        "Ts and Cs Consent":"",
+        "Organization":"",
+        "Org Identification Status":"",
+        "Lead Status":"",
+        "Unqualified Reason":"",
+        "Not Interested Reason":"",
+        "User Deactivation Updated On":"",
+        "Reassignment On User Deactivation":"",
+        "Campaign":"",
+        "Generate Journey":"",
+        "Restart Journey":"",
+        "Email Opt Out":"",
+        "Has Active Journey":"",
+        "Contact Broker Only":"",
+        "Interested in Number of Desk(s)":"",
+        "Move In Time Frame":"",
+        "Quick Quote Location":"",
+        "Referral Fail Reason":"",
+        "leadSource":"Broker",
+        "lead_Source_Detail__c":"Book A Tour",
+        "Type":"",
+        "Market":"",
+        "Locale":"",
+        "Building Interested Name":"",
+        "Building Interested In":"",
+        "Markets Interested":"",
+        "Country Code":"",
+        "Number of Full Time Employees":"",
+        "Locations Interested":"",
+        "Referrer":"",
+        "Referrer Name":"",
+        "Referrer Email":""
+      }
+    ],
+  "CreateOpportunity":
+   [
+	    {
+    		"lead":
+          [
+      			{
+      				"lastName": "test_smithC",
+      				"firstName": "test_johnC",
+      				"website": "http://www.Testgmail.com",
+      				"email": "test_johnsmith@example.com",
+      				"phone": "8146185365",
+      				"company": "Test_johnsmith1",
+      				"company_Size__c": "21-50",
+      				"lead_Source_Detail__c": "Book A Tour Form",
+      				"Interested_in_Number_of_Desks__c":"1000",
+      				"utm_campaign__c": "San Francisco - Modifier",
+      				"utm_content__c": "utm contents",
+      				"utm_medium__c": "cpc",
+      				"utm_source__c": "ads-google",
+      				"utm_term__c": "virtual +office +san +francisco",
+      				"locale__c": "US",
+      				"country_Code__c": "US",
+      				"leadSource": "Event"
+      			}
+    		  ]
+	    },
+	    {
+		    "createOpp":
+          [
+      			{
+      				"accountName": "test_Enterprise1",
+      				"Number_of_Full_Time_Employees__c": "1500",
+      				"contact_Name": "john smith1",
+      				"contact_Email": "johnsmith1@example.com",
+      				"building": "AMS-Metropool",
+      				"geography": "Weesperstraat 61-105, Noord-Holland",
+      				"opportunityRole": "Decision Maker"
+      			}
+		      ]
+	    }
 
-],	
+    ],	
   "InboundLead" :
     [
       {"FirstName":"john","LastName":"smith","Email":"","Phone":"1234567890","Company":"Enzigma Software Pvt ltd","CompanySize":"12","NumberofDesks":"8","Building Interested":"MUM-BKC"}
@@ -51,8 +115,12 @@
     [
       {"Name":"john.sparrow","Email":"","PhoneNumber":"123456789","Building":"MUM-Marol","MoveInDate":"This Month","NumberOfPeople":"2","Notes":"Test Data","BuildingName":"marol","City":"mumbai"}
     ],
+  "CreateLeadFromStdSalesforce" :
+    [
+      {}
+    ],
   "AccountAssignment":
-     {
+    {
       "GenerateLeadFromWeb" :
               [
                 {"BuildingName":"marol","City":"mumbai","Name":"johh.smith","Email":"","PhoneNumber":"123456789","MoveInDate":"Flexible","NumberOfPeople":"2"}
@@ -87,8 +155,6 @@
               ],
       "LeadJSON" :
               [
-                {  "body": {    "last_name": "pyrofic",    "first_name": "John",    "email": "",    "phone": "8146185355",    "lead_source": "wework.com",    "lead_source_detail": "Book A Tour Form",    "utm_campaign": "San Francisco - Modifier",    "utm_content": "utm contents",    "utm_medium": "cpc",    "utm_source": "ads-google",    "utm_term": "virtual +office +san +francisco",    "company_name": "pyrofic",    "company_size": "",    "desks_interested_min": 5,    "desks_interested_max": 5,    "desks_interested_range": "5",    "company_industry": "Education",    "quick_quote_location": "New York City",    "notes": "Our Notes for",    "referral_code": "JetBlue",    "promo_code": "JetBlue",    "buildings_interested_uuids": [      ""    ],    "product_interests": [      "Office Space"    ],    "product_line": "WeWork",    "locale": "US",    "country_code": "US",    "contact_referrer_only": true  }}
+                {  "body": {    "last_name": "pyrofic",    "first_name": "John",    "email": "",    "phone": "8146185355",    "lead_source": "wework.com",    "lead_source_detail": "Book A Tour Form",    "utm_campaign": "San Francisco - Modifier",    "utm_content": "utm contents",    "utm_medium": "cpc",    "utm_source": "ads-google",    "utm_term": "virtual +office +san +francisco",    "company_name": "pyrofic",    "company_size": "",    "desks_interested_min": 5,    "desks_interested_max": 5,    "desks_interested_range": "5",    "company_industry": "Education",    "quick_quote_location": "New York City",    "notes": "Our Notes for",    "referral_code": "JetBlue",    "promo_code": "JetBlue",    "buildings_interested_uuids": [      ""    ],    "product_interests": [      "Office Space"    ],    "product_line": "WeWork",    "locale": "US",    "country_code": "US",    "contact_referrer_only": "true"  }}
               ]
-
-  }
-}
+    }}

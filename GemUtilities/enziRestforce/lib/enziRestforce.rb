@@ -41,7 +41,7 @@ class EnziRestforce
                            # security_token: 'l3WwT1P1u0BaUkLw8ocH5Wzp',
                            client_id: "#{clientId}",
                            client_secret: "#{clientSecret}",
-                           authentication_callback: Proc.new { |x| puts x },
+                           #authentication_callback: Proc.new { |x| puts x },
                            api_version: '41.0',
                            request_headers: { 'sforce-auto-assign' => 'FALSE' })
 
@@ -145,7 +145,7 @@ class EnziRestforce
          Issue No.        :
                               records_to_insert = Hash.new
                               records_to_insert.store('Name','Kishor_shinde')
-                              createRecords(@client,sObject,records_to_insert)
+                              createRecord(sObject,records_to_insert)
     **************************************************************************************************************************************
 =end
   def createRecord(sObject,records_to_insert)
@@ -153,7 +153,7 @@ class EnziRestforce
     puts records_to_insert
     record = @client.create("#{sObject}", records_to_insert)
     puts record
-    EnziRestforce.createdRecords(sObject,record)
+    #EnziRestforce.createdRecords(sObject,record)
     return record
   end
 
