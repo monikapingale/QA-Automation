@@ -190,6 +190,7 @@ class EnziUIUtility
       self.wait(driver,:class,"oneUserProfileCardTrigger",10)
       #puts "String 'lightning'"
       driver.find_element(:class, "oneUserProfileCardTrigger").click
+      driver.find_element(:class, "oneUserProfileCardTrigger").click
       self.wait(driver,:class,"oneUserProfileCardTrigger",10)
       driver.find_element(:link , "Switch to Salesforce Classic").click
     else

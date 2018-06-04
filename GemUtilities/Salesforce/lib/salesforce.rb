@@ -1,3 +1,14 @@
+=begin
+************************************************************************************************************************************
+   Author      :   QAAutomationTeam
+   Description :   This gem is used to consume salesforce rest api for crud operations.
+
+   History     :
+ ----------------------------------------------------------------------------------------------------------------------------------
+ VERSION            DATE             AUTHOR                    DETAIL
+ 1                 24 May 2018       QAAutomationTeam          Initial Developement
+**************************************************************************************************************************************
+=end
 require 'salesforce_bulk'
 
 class Salesforce

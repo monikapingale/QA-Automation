@@ -1,3 +1,38 @@
+PATH
+  remote: ../GemUtilities/EnziJenkinsUtility
+  specs:
+    enziJenkinsUtility (0.1.0)
+      rspec (~> 3.6, >= 3.6.0)
+
+PATH
+  remote: ../GemUtilities/EnziMailUtility
+  specs:
+    enziMailUtility (0.1.0)
+      mail (~> 2.7, >= 2.7.0)
+
+PATH
+  remote: ../GemUtilities/EnziUIUtility
+  specs:
+    enziUIUtility (0.0.1)
+      rspec (~> 3.6, >= 3.6.0)
+      selenium-webdriver (~> 3.4, >= 3.4.4)
+
+PATH
+  remote: ../GemUtilities/Salesforce
+  specs:
+    salesforce (0.1.0)
+
+PATH
+  remote: ../GemUtilities/ZipFileGenerator
+  specs:
+    zipFileGenerator (0.1.0)
+      rubyzip (~> 1.2, >= 1.2.1)
+
+PATH
+  remote: ../GemUtilities/enziRestforce
+  specs:
+    enziRestforce (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -40,14 +75,47 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    angular-rails-templates (1.0.2)
+      railties (>= 4.2, < 6)
+      sprockets (>= 3.0, < 5)
+      tilt
+    angularjs-rails (1.6.8)
     arel (8.0.0)
+    autoprefixer-rails (8.5.0)
+      execjs
+    bindex (0.5.0)
+    bootstrap-sass (3.3.7)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
+    bower-rails (0.11.0)
     builder (3.2.3)
     byebug (10.0.0)
+    capybara (2.18.0)
+      addressable
+      mini_mime (>= 0.1.3)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (>= 2.0, < 4.0)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
+    coderay (1.1.2)
+    coffee-rails (4.2.2)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.8.0)
     concurrent-ruby (1.0.5)
     cookiejar (0.3.3)
     crass (1.0.3)
+    databasedotcom (1.3.5)
+      activesupport
+      json
+      multipart-post (~> 2.0.0)
+    declarative (0.0.10)
+    declarative-option (0.1.0)
     diff-lcs (1.3)
     em-http-request (1.1.5)
       addressable (>= 2.3.4)
@@ -57,13 +125,10 @@ GEM
       http_parser.rb (>= 0.6.0)
     em-socksify (0.3.2)
       eventmachine (>= 1.0.0.beta.4)
-    enziRestforce (0.1.0)
-    enziSalesforce (0.0.1)
-    enziUIUtility (0.0.1)
-      rspec (~> 3.6, >= 3.6.0)
-      selenium-webdriver (~> 3.4, >= 3.4.4)
     erubi (1.7.0)
     eventmachine (1.2.7)
+    eventmachine (1.2.7-x64-mingw32)
+    execjs (2.7.0)
     faraday (0.15.1)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
@@ -80,34 +145,86 @@ GEM
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
     ffi (1.9.23)
+    ffi (1.9.23-x64-mingw32)
+    git (1.4.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    google-api-client (0.21.2)
+      addressable (~> 2.5, >= 2.5.1)
+      googleauth (>= 0.5, < 0.7.0)
+      httpclient (>= 2.8.1, < 3.0)
+      mime-types (~> 3.0)
+      representable (~> 3.0)
+      retriable (>= 2.0, < 4.0)
+    googleauth (0.6.2)
+      faraday (~> 0.12)
+      jwt (>= 1.4, < 3.0)
+      logging (~> 2.0)
+      memoist (~> 0.12)
+      multi_json (~> 1.11)
+      os (~> 0.9)
+      signet (~> 0.7)
     hashie (3.5.7)
     http_parser.rb (0.6.0)
-    httparty (0.16.0)
-      multi_xml (>= 0.5.2)
+    httpclient (2.8.3)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
+    jbuilder (2.7.0)
+      activesupport (>= 4.2.0)
+      multi_json (>= 1.2)
+    jenkins_api_client (1.5.3)
+      json (>= 1.0)
+      mixlib-shellout (>= 1.1.0)
+      nokogiri (~> 1.6)
+      socksify (>= 1.7.0)
+      terminal-table (>= 1.4.0)
+      thor (>= 0.16.0)
+    jquery-rails (4.3.3)
+      rails-dom-testing (>= 1, < 3)
+      railties (>= 4.2.0)
+      thor (>= 0.14, < 2.0)
     json (2.1.0)
+    jwt (2.1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
+    little-plugger (1.1.4)
+    logging (2.2.2)
+      little-plugger (~> 1.1)
+      multi_json (~> 1.10)
     loofah (2.2.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
+    memoist (0.16.0)
     method_source (0.9.0)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    mixlib-shellout (2.3.2)
+    mixlib-shellout (2.3.2-universal-mingw32)
+      win32-process (~> 0.8.2)
+      wmi-lite (~> 1.0)
     multi_json (1.13.1)
-    multi_xml (0.6.0)
     multipart-post (2.0.0)
     nio4r (2.2.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    nokogiri (1.8.2-x64-mingw32)
+      mini_portile2 (~> 2.3.0)
+    os (0.9.6)
+    pg (1.0.0)
+    pg (1.0.0-x64-mingw32)
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-rails (0.3.6)
+      pry (>= 0.10.4)
     public_suffix (3.0.2)
     puma (3.11.2)
     rack (2.0.4)
@@ -141,11 +258,16 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    representable (3.0.4)
+      declarative (< 0.1.0)
+      declarative-option (< 0.2.0)
+      uber (< 0.2.0)
     restforce (2.5.3)
       faraday (>= 0.9.0, <= 1.0)
       faraday_middleware (>= 0.8.8, <= 1.0)
       hashie (>= 1.2.0, < 4.0)
       json (>= 1.7.5)
+    retriable (3.1.1)
     rollbar (2.15.5)
       multi_json
     rspec (3.7.0)
@@ -165,9 +287,26 @@ GEM
     rubyzip (1.2.1)
     salesforce_bulk (1.0.3)
       xml-simple
+    sass (3.5.6)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
+    sass-rails (5.0.7)
+      railties (>= 4.0.0, < 6)
+      sass (~> 3.1)
+      sprockets (>= 2.8, < 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
+      tilt (>= 1.1, < 3)
     selenium-webdriver (3.9.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
+    signet (0.8.1)
+      addressable (~> 2.3)
+      faraday (~> 0.9)
+      jwt (>= 1.5, < 3.0)
+      multi_json (~> 1.10)
+    socksify (1.7.1)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -180,42 +319,84 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.3.13)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     thor (0.20.0)
     thread_safe (0.3.6)
+    tilt (2.0.8)
+    turbolinks (5.1.1)
+      turbolinks-source (~> 5.1)
+    turbolinks-source (5.1.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2018.5)
+      tzinfo (>= 1.0.0)
+    uber (0.1.0)
+    uglifier (4.1.10)
+      execjs (>= 0.3.0, < 3)
+    unicode-display_width (1.3.2)
+    web-console (3.6.2)
+      actionview (>= 5.0)
+      activemodel (>= 5.0)
+      bindex (>= 0.4.0)
+      railties (>= 5.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
+    win32-process (0.8.3)
+      ffi (>= 1.0.0)
+    wmi-lite (1.0.0)
     xml-simple (1.1.5)
+    xpath (3.0.0)
+      nokogiri (~> 1.8)
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
-  builder
+  angular-rails-templates
+  angularjs-rails
+  bootstrap-sass
+  bower-rails
   byebug
+  capybara (~> 2.13)
+  coffee-rails
+  coffee-script-source (~> 1.8.0)
   cookiejar
-  enziRestforce
-  enziSalesforce
-  enziUIUtility
+  databasedotcom
+  enziJenkinsUtility!
+  enziMailUtility!
+  enziRestforce!
+  enziUIUtility!
+  eventmachine
   faye
-  httparty
-  json
+  git
+  google-api-client
+  jbuilder (~> 2.5)
+  jenkins_api_client
+  jquery-rails
   listen (>= 3.0.5, < 3.2)
+  pg
+  pry-rails
   puma (~> 3.7)
   rack-cors
-  rails (~> 5.1.5)
+  rails
   restforce
   rollbar
   rspec
+  rubyzip
+  salesforce!
   salesforce_bulk
+  sass-rails (~> 5.0)
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
-  sqlite3
+  turbolinks (~> 5)
   tzinfo-data
+  uglifier (>= 1.3.0)
+  web-console (>= 3.3.0)
+  zipFileGenerator!
 
 BUNDLED WITH
    1.16.1

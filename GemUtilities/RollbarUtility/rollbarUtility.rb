@@ -1,7 +1,14 @@
-#Created By   : Pragalbha Mahajan
-#Created Date : 23/02/2018
-#Modified date:
+=begin
+************************************************************************************************************************************
+   Author      :   QAAutomationTeam
+   Description :   This gem has integration with rollbar.
 
+   History     :
+ ----------------------------------------------------------------------------------------------------------------------------------
+ VERSION            DATE             AUTHOR                    DETAIL
+ 1                 24 May 2018       QAAutomationTeam          Initial Developement
+**************************************************************************************************************************************
+=end
 require 'rollbar'
 
 Rollbar.configure do |config|
@@ -16,13 +23,15 @@ Rollbar.configure do |config|
 end
 
 class RollbarUtility
+	@@logHash = Hash.new()
+	@@sId = ''
 	def postRollbarData(id, title, passedExpects)
 		Rollbar.configure do |config| 
         	config.custom_data_method = lambda { { :Id => id, :Title => title, :PassExpects => passedExpects}}
       	end
 	end
 
-	def addLog(logMessage, specId = nil)
+	def addLogs(logMessage, specId = nil)
 	    puts logMessage
 	    
 	    if specId != nil
@@ -31,7 +40,7 @@ class RollbarUtility
 	      @@logHash.store(specId, logMessage)
 	    else
 	      #puts "Inside else: #{@@logHash}"
-	      @@logHash[@@sId] = @@logHash[@@sId]+"\n"+logMessage
+	      @@logHash[@@sId] = "#{@@logHash[@@sId]}\n#{logMessage}"
 	    end
 	    #puts @@logHash
 	    return @@logHash

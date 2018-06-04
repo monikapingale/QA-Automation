@@ -46,7 +46,7 @@ class EnziRestforce
                            request_headers: { 'sforce-auto-assign' => 'FALSE' })
 
     @client.authenticate!
-    puts "Authenticate.....!!!!"
+    puts "Authenticated.....!!!!"
     return @client
     rescue Exception => e
       puts e
@@ -73,8 +73,6 @@ class EnziRestforce
 =end
 
   def getRecords(query)
-
-    puts "in getRecords"
     record = @client.query_all("#{query}") #where emailId = #{emailId}")
     return record.to_a
     #explain = @client.explain("#{query}")
@@ -145,15 +143,12 @@ class EnziRestforce
          Issue No.        :
                               records_to_insert = Hash.new
                               records_to_insert.store('Name','Kishor_shinde')
-                              createRecords(@client,sObject,records_to_insert)
+                              createRecord(sObject,records_to_insert)
     **************************************************************************************************************************************
 =end
   def createRecord(sObject,records_to_insert)
-    puts "in createREcords"
-    puts records_to_insert
     record = @client.create("#{sObject}", records_to_insert)
-    puts record
-    EnziRestforce.createdRecords(sObject,record)
+    puts record.inspect
     return record
   end
 
@@ -198,7 +193,6 @@ class EnziRestforce
     **************************************************************************************************************************************
 =end
   def updateRecord(sObject,updated_values)
-    
     puts updated_values
     @client.update("#{sObject}",updated_values)
   end
@@ -223,6 +217,9 @@ class EnziRestforce
       puts "No records found"
     end
     return result.to_a[0][1]
+  end
+  def getUserInfo
+    @client.user_info
   end
 end
 
