@@ -1,27 +1,31 @@
 require "json"
 require "selenium-webdriver"
 require "rspec"
-require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
-#require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
+#require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
+require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
 
 require_relative '../PageObjects/CreateOppManageProduct.rb'
-#require_relative "D:/QAauto/specHelper.rb"
-#require_relative "D:/QAauto/PageObjects/CreateOppManageProduct.rb"
-include RSpec::Expectations
+require_relative '../PageObjects/leadGeneration.rb'
 
+include RSpec::Expectations
 
 describe "SendToEnterpriseManageProduct" do
 
   before(:each) do
+    @helper = Helper.new
+    @driver = Selenium::WebDriver.for :chrome
+    @testDataJSON = @helper.getRecordJSON()
 
-    #@driver = Selenium::WebDriver.for :chrome
-    @driver = ARGV[0]
+    @objLeadGeneration = LeadGeneration.new(@driver,@helper)
+    @createoppEnt= CreateOppManageProduct.new(@helper,@driver)
+
+    
+    #@driver = ARGV[0]
     @accept_next_alert = true
     @driver.manage.timeouts.implicit_wait = 30
     @verification_errors = []
-    @helper = Helper.new
+    
 
-    #@driver = ARGV[0]
 =begin
     @timeSettingMap = YAML.load_file("D:/QAauto/timeSettings.yaml")
     @verification_errors = []
@@ -37,7 +41,6 @@ describe "SendToEnterpriseManageProduct" do
 
 =end
 
-
     @leadsTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][0]['lead']
     @leadsTestData[0]['email'] = "test_johnsmith#{rand(99999999999999)}@example.com"
     @leadEmailId=@leadsTestData[0]['email']
@@ -45,21 +48,101 @@ describe "SendToEnterpriseManageProduct" do
     @oppTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][1]['createOpp']
     @oppTestData[0]['accountName']="test_Enterprise1#{rand(99999999999999)}"
     @oppAccName=@oppTestData[0]['accountName']
-    puts @oppAccName
-    @createoppEnt= CreateOppManageProduct.new(@helper,@driver)
+    #puts @oppAccName
+    
     #@wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
 
 
   end
 
-  after(:each) do
+  after(:all) do
     @driver.quit
     @verification_errors.should == []
   end
 
   it "Create opportunity and add product from lead", :"2172"=> true do
     begin
-    @helper.addLogs('C:2172 Create opportunity and add product from lead.','2172')
+        @helper.addLogs('C:2172 Create opportunity and add product from lead.','2172')
+
+        @testDataJSON['CreateLeadFromWeb'][0]["BuildingName"]  = 'marol'
+        @testDataJSON['CreateLeadFromWeb'][0]["City"]  = 'mumbai'
+        @testDataJSON['CreateLeadFromWeb'][0]["Building"]  = 'MUM-Marol'
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com"
+
+        @helper.addLogs('Go to Staging website and create lead')            
+        expect(@objLeadGeneration.createLeadFromWeb(@testDataJSON['CreateLeadFromWeb'][0]['Email'])).to eq true
+        @helper.addLogs('Success')
+      
+        @helper.addLogs('Login to salesforce')            
+        expect(@objLeadGeneration.loginToSalesforce()).to eq true
+        @helper.addLogs('Success')
+
+        @helper.addLogs('Go to Sales Console App')            
+        expect(@helper.go_to_app(@driver,'Sales Console')).to eq true
+        @helper.addLogs('Success')
+
+
+    @driver.get "https://wework--staging.cs96.my.salesforce.com/console?tsid=02uF00000011Ncb"
+    @driver.find_element(:id, "phSearchInput").clear
+    @driver.find_element(:id, "phSearchInput").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Email']
+
+    sleep(5)
+    @driver.find_element(:xpath, "//div[@id='phSearchInput_autoCompleteRowId_0']/span/span").click
+
+    #sw to frame
+    #sleep(10)
+    EnziUIUtility.switchToWindow(@driver, @driver.current_url())
+    puts @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]").size
+
+    puts @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[0].attribute('id')
+    @size  = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]").size
+
+    frameid = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[@size - 1 - 1].attribute('id')
+    puts frameid
+    puts "switching to frame"
+    @driver.switch_to.frame(frameid)
+    puts "click on link"
+    
+
+
+@driver.find_element(:xpath, " //*[@id='Journey__c_body']/table/tbody/tr[2]/th/a").click
+puts "click on actionDropdown"
+#sleep(30)
+
+
+EnziUIUtility.switchToWindow(@driver, @driver.current_url())
+#sleep(5)
+    puts @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]").size
+    puts "121211212"
+    @size = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]").size
+    puts @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[@size - 1].attribute('id')
+    puts @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[@size - 1 - 1].attribute('id')
+    
+    frameid2 = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[@size - 1 - 1].attribute('id')
+    puts frameid2
+    puts "switching to frame"
+    sleep(0)
+    @driver.switch_to.frame(frameid2)
+    puts "retetretre"
+    #sleep(10)
+    @driver.find_element(:id,'actionDropdown').click
+    sleep(5)
+    @driver.find_element(:xpath, "//li[@id='action:7']/a/span").click
+
+
+    sleep(200)
+    
+    
+        
+
+        
+
+
+
+
+
+        
+
 =begin
     #@helper.addLogs('C:2 To check opportunity is created from lead through Send to Enterprise','2')
     @driver.get "https://wework--staging.cs96.my.salesforce.com/"
@@ -155,13 +238,11 @@ describe "SendToEnterpriseManageProduct" do
     #@helper.getElementByAttribute(@driver,:tag_name ,"div","title",@oppTestData[0]['geography'])[0].click
     sleep(5)
 =end
-
-
-
+=begin
     #staginglogin
-    @createoppEnt.Salesforcelogin
-    @createoppEnt.createRecord
-    @createoppEnt.createOppEnt
+    #@createoppEnt.Salesforcelogin
+    #@createoppEnt.createRecord
+    #@createoppEnt.createOppEnt
 
     @helper.getElementByAttribute(@driver,:tag_name ,"button","title","Save Products").click
     sleep(60)
@@ -306,7 +387,7 @@ describe "SendToEnterpriseManageProduct" do
 
     #product=
 
-
+=end
 
 
     #@wait.until{@driver.find_element(:id ,"tsidLabel").displayed? }

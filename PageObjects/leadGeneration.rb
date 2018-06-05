@@ -10,8 +10,6 @@
 **************************************************************************************************************************************
 =end
 
-
-
 require 'enziUIUtility'
 require 'enziSalesforce'
 require 'json'
@@ -28,6 +26,14 @@ class LeadGeneration
   @mapCredentials = nil
   @salesConsoleSetting = nil
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def initialize(driver,helper)
     puts "in Lead::initialize"
     @mapRecordType = Hash.new
@@ -41,21 +47,29 @@ class LeadGeneration
     @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
     #@objSFRest = SfRESTService.new(@mapCredentials['Staging']['WeWork System Administrator']['grant_type'],@mapCredentials['Staging']['WeWork System Administrator']['client_id'],@mapCredentials['Staging']['WeWork System Administrator']['client_secret'],@mapCredentials['Staging']['WeWork System Administrator']['username'],@mapCredentials['Staging']['WeWork System Administrator']['password'])
     #recordTypeIds = Salesforce.getRecords(@salesforceBulk,'RecordType',"Select id,Name from RecordType where SObjectType = 'Account'")
-    
+    #@userInfo = @restForce.getUserInfo
     recordTypeIds = @helper.getSalesforceRecordByRestforce("Select id,Name from RecordType where SObjectType = 'Account'")
-    @salesConsoleSetting = @helper.instance_variable_get(:@restForce).getRecords("SELECT name,Data__c FROM Setting__c WHERE name IN ('User/Queue Journey Creation','Lead:Lead and Lead Source Details')")
-    puts "sales conso;e setting--->"
-    puts @salesConsoleSetting
+    @salesConsoleSetting = @helper.instance_variable_get(:@restForce).getRecords("SELECT name,Data__c FROM Setting__c WHERE name IN ('User/Queue Journey Creation','Lead:Lead and Lead Source Details','SplashEventJourney','Unassigned NMD US Queue')")
+    #puts "sales conso;e setting--->"
+    #puts @salesConsoleSetting
     if !recordTypeIds.nil? && recordTypeIds[0] != nil then
       recordTypeIds.each do |typeid|
         @mapRecordType.store(typeid.fetch('Name'),typeid.fetch('Id'))
       end
     end
-    puts "mapRecordType"
-    puts @mapRecordType
+    #puts "mapRecordType"
+    #puts @mapRecordType
     #createCommonTestData()
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def createCommonTestData
     puts "creating common test Data"
     #create 2 acc- org and sales
@@ -82,15 +96,31 @@ class LeadGeneration
 
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def leadCreateSfBulk()
     Salesforce.createRecords(@salesforceBulk, 'Lead', @testDataJSON["AccountAssignment"]["GenerateLeadFromWeb"][0]["BuildingName"])
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def createLeadFromWeb(emailId)
       puts "Lead::createLeadFromWeb"
       @testDataJSON['CreateLeadFromWeb'][0]['Email'] = emailId
       @driver.get "https://www-staging.wework.com/buildings/#{@testDataJSON["CreateLeadFromWeb"][0]["BuildingName"]}--#{@testDataJSON["CreateLeadFromWeb"][0]["City"]}"
-      sleep(10)
+      sleep(5)
       EnziUIUtility.wait(@driver, :id, "tourFormContactNameField", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
       EnziUIUtility.setValue(@driver, :id, "tourFormContactNameField", "#{@testDataJSON['CreateLeadFromWeb'][0]['Name']}")
 
@@ -109,14 +139,364 @@ class LeadGeneration
 
       sleep(3)
       EnziUIUtility.clickElement(@driver, :id, "tourFormStepOneSubmitButton")
+      EnziUIUtility.wait(@driver, :id, "tourFormStepTwoSubmitButton", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
       puts "lead Created With email = >   #{emailId}"
       return true
-    rescue Exception => e
+      rescue Exception => e
       raise e
       return false
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def createLeadFromMarketingPage()
+    @driver.get @testDataJSON['MarketingLandingPage'][0]['URL']
+    @driver.find_element(:xpath, "(//input[@name='contact_name'])[2]").clear
+    @driver.find_element(:xpath, "(//input[@name='contact_name'])[2]").send_keys @testDataJSON['MarketingLandingPage'][0]['Name']
+    @driver.find_element(:xpath, "(//input[@name='email'])[2]").clear
+    @driver.find_element(:xpath, "(//input[@name='email'])[2]").send_keys @testDataJSON['MarketingLandingPage'][0]['Email']
+    @driver.find_element(:xpath, "//input[@id='']").clear
+    @driver.find_element(:xpath, "//input[@id='']").send_keys @testDataJSON['MarketingLandingPage'][0]['Phone']
+    @driver.find_element(:xpath, "(//input[@name='company_name'])[2]").clear
+    @driver.find_element(:xpath, "(//input[@name='company_name'])[2]").send_keys @testDataJSON['MarketingLandingPage'][0]['Company']
+    @driver.find_element(:name, "company_size").click
+    Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "company_size")).select_by(:text, "#{@testDataJSON['MarketingLandingPage'][0]['I need space for']}")
+    #@driver.find_element(:xpath, "//div[@id='wework']/div/div[2]/main/section/div/div/div/div/div/div/div/form/div[7]/label").click
+    @driver.find_element(:xpath, "(//button[@type='submit'])[2]").click
+    return true
+    rescue Exception => e 
+    puts e
+    return false
+  end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def getOwnerByCampaignAssignment(campaignName)
+    campaign = @helper.getSalesforceRecordByRestforce("SELECT id,Name,IsActive,City__c,Lead_Owner__c,Email_Address__c FROM Campaign Where Name = '#{campaignName}'")
+    if (!campaign.eql? nil) && (campaign.size.eql? 1) then
+        allCriteriasChecked = false
+        if campaign[0].fetch('Lead_Owner__c') != nil then
+          puts "leadOwner found"          
+            if campaign[0].fetch('Lead_Owner__c').start_with? "00G" then
+                puts "Owner assigned is Queue"
+                group = checkRecordCreated("Group", "SELECT Id,Name FROM Group WHERE Id = '#{campaign[0].fetch('Lead_Owner__c')}'")
+                if group.nil? then 
+                  puts "No record found with given Group"
+                  allCriteriasChecked = true
+                else
+                  puts "owner--> #{campaign[0].fetch('Lead_Owner__c')}"
+                  puts "8888888888888888"
+                  return group[0].fetch('Id')
+                end
+            else
+                puts "Owner assigned is User"
+                user = checkRecordCreated("User", "SELECT Id,Name FROM User WHERE Id = '#{campaign[0].fetch('Lead_Owner__c')}' and IsActive = true")
+                if user.nil? then 
+                  puts "No active record found with given user"
+                  allCriteriasChecked = true
+                else
+                  puts "owner--> #{campaign[0].fetch('Lead_Owner__c')}"
+                  return user[0].fetch('Id')
+                end                    
+            end
+
+        end
+         
+        if campaign[0].fetch('Email_Address__c') != nil then
+            puts "owner--> #{campaign[0].fetch('Email_Address__c')}"
+            building = fetchBuildingDetail('Email__c',campaign[0].fetch('Email_Address__c'))
+            #puts building
+            buildingId = nil
+            if building[0].fetch('Id').size == 18 then 
+                buildingId = building[0].fetch('Id').chop().chop().chop()
+                puts buildingId
+            end
+            #puts building[0].fetch('Id').size
+            #puts building[0].fetch('Id').chop().chop().chop()
+            #puts "*****************************************"
+            #puts @salesConsoleSetting[1]
+            #puts "*****************************************"
+            #puts JSON.parse(@salesConsoleSetting[1]["Data__c"])
+            #puts "*****************************************"
+
+            JSON.parse(@salesConsoleSetting[1]["Data__c"]).each do |setting|
+                #puts setting['Buildings'].class
+                #puts setting['Buildings']
+                #puts "@@@@@@@@@@@@@@@@@@@@@@@@"
+
+                #puts setting['Buildings'].include?(buildingId)
+                if !setting['Buildings'].nil? && setting['Buildings'].include?("#{buildingId}") then
+                    puts "building found in--->"
+
+                    if setting['userId'].start_with? "00G" then
+                        puts "Owner assigned is Queue"
+                        group = checkRecordCreated("Group", "SELECT Id,Name FROM Group WHERE Id = '#{setting['userId']}'")
+                        puts "group#{group}"
+                        if group.nil? then 
+                          puts "No record found with given Group"
+                          allCriteriasChecked = true
+                        else
+                          puts "owner--> #{setting['userId']}"
+                          return group[0].fetch('Id')
+                        end
+                    else
+                        puts "Owner assigned is User"
+                        user = checkRecordCreated("User", "SELECT Id,Name FROM User WHERE Id = '#{setting['userId']}' and IsActive = true")
+                        if user.nil? then 
+                          puts "No active record found with given user"
+                          allCriteriasChecked = true
+                        else
+                          puts "owner--> #{setting['userId']}"
+                          return user[0].fetch('Id')
+                        end                    
+                    end
+                    #puts setting
+                    #puts setting['Buildings']
+                    #puts setting['userId']
+                    #if setting['userId'].start_with? "00G" then
+                    #    puts "Owner assigned is Queue"
+                    #    return setting['userId']
+                    #end
+                    #break
+                end
+            end
+        end
+        
+        if campaign[0].fetch('City__c') != nil then
+          #puts "12112121212121212454545454"
+          #puts "owner--> #{campaign[0].fetch('City__c')}"
+          JSON.parse(@salesConsoleSetting[1]["Data__c"]).each do |setting|
+                #puts setting['Buildings'].class
+                #puts setting['Buildings']
+                #puts "@@@@@@@@@@@@@@@@@@@@@@@@"
+
+                #puts setting['Buildings'].include?(buildingId)
+                if !setting['City'].nil? && setting['City'].include?("#{campaign[0].fetch('City__c')}") then
+                    puts "city found in--->"
+
+                    if setting['userId'].start_with? "00G" then
+                        puts "Owner assigned is Queue"
+                        group = checkRecordCreated("Group", "SELECT Id,Name FROM Group WHERE Id = '#{setting['userId']}'")
+                        puts "group#{group}"
+                        if group.nil? then 
+                          puts "No record found with given Group"
+                          allCriteriasChecked = true
+                        else
+                          puts "owner--> #{setting['userId']}"
+                          return group[0].fetch('Id')
+                        end
+                    else
+                        puts "Owner assigned is User"
+                        user = checkRecordCreated("User", "SELECT Id,Name FROM User WHERE Id = '#{setting['userId']}' and IsActive = true")
+                        if user.nil? then 
+                          puts "No active record found with given user"
+                          allCriteriasChecked = true
+                        else
+                          puts "owner--> #{setting['userId']}"
+                          return user[0].fetch('Id')
+                        end                    
+                    end
+                end
+            end
+        end
+
+        if allCriteriasChecked || (campaign[0].fetch('Lead_Owner__c').nil? && campaign[0].fetch('Email_Address__c').nil? && campaign[0].fetch('City__c').nil?) then
+            puts JSON.parse(@salesConsoleSetting[2]["Data__c"])
+            puts "owner--> #{JSON.parse(@salesConsoleSetting[2]["Data__c"])['UnassignedNMDUSQueue']}"
+            return JSON.parse(@salesConsoleSetting[2]['Data__c'])['UnassignedNMDUSQueue']
+        end
+    end
+  end
+
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def update_campaign(id,lead_owner=nil,email=nil,city=nil)
+    puts "id-->#{id}"
+    puts "id-->#{lead_owner}"
+    puts "id-->#{email}"
+    puts "id-->#{city}"
+      result = @restforce.updateRecord("Campaign",{"Id"=>id,"Lead_Owner__c" => lead_owner,"Email_Address__c" => email,"City__c"=>city})
+    puts "ressult #{result}"
+    return result
+    rescue Exception => e
+      puts e
+      return nil
+  end
+=begin
+def getExistingLead2(from, to, owner = nil, checkForActivity = nil)
+ index = from
+ userHasPermission = false
+ owner = " AND CreatedBy.Name = '#{owner}'" if !owner.nil?
+ checkForActivity = "(SELECT id FROM tasks)," if !checkForActivity.nil?
+ if !from.nil? || !to.nil?
+   leadInfo = @restForce.getRecords("SELECT id , #{checkForActivity} Owner.Name,Owner.id,LeadSource , Lead_Source_Detail__c , Building_Interested_In__c , Building_Interested_Name__c ,Journey_Created_On__c, Locations_Interested__c , Number_of_Full_Time_Employees__c , Interested_in_Number_of_Desks__c , Email , Phone , Company , Name , RecordType.Name , Status , Type__c FROM Lead WHERE CreatedBy.Name IN ('Veena Hegane','Ashotosh Thakur','Monika Pingale','Kishor Shinde') AND Email like '%@example.com' AND CreatedDate < #{from} AND CreatedDate  = LAST_N_DAYS:#{to} AND  isDeleted = false #{owner}")
+   allowedUsers = JSON.parse(@settings[3]['Data__c'])['allowedUsers']
+   leadInfo.each do |lead|
+     if allowedUsers.include?({"Id" => lead.fetch("Owner").fetch("Id")})
+       userHasPermission = true
+       leadInfo = lead
+       break;
+     end
+   end
+   if leadInfo.nil?
+     until !(index < to) || userHasPermission
+       puts index
+       if leadInfo[0].nil?
+         leadInfo = @restForce.getRecords("SELECT id , Owner.Name, Owner.id,LeadSource , Lead_Source_Detail__c , Building_Interested_In__c , Building_Interested_Name__c ,Journey_Created_On__c, Locations_Interested__c , Number_of_Full_Time_Employees__c , Interested_in_Number_of_Desks__c , Email , Phone , Company , Name , RecordType.Name , Status , Type__c FROM Lead WHERE CreatedBy.Name IN ('Veena Hegane','Ashotosh Thakur','Monika Pingale','Kishor Shinde') AND Email like '%@example.com' AND CreatedDate = LAST_N_DAYS:#{index} AND isDeleted = false #{owner}")
+         leadInfo.each do |lead|
+           if allowedUsers.include?({"Id" => lead.fetch("Owner").fetch("Id")})
+             userHasPermission = true
+             leadInfo = lead
+             break;
+           end
+         end
+ end
+ leadInfo if !leadInfo.nil?
+end
+=end
+
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def getExistingLead (from,to,owner,campaign,campaignId = nil)
+    journeyInfo = @restforce.getRecords("SELECT Id,Name,Primary_Lead__r.Email,CreatedDate,CampaignId__c FROM Journey__c WHERE Primary_Lead__r.Email like '%@example.com' AND CreatedDate < #{from} AND CreatedDate  = LAST_N_DAYS:#{to} AND  isDeleted = false order by Primary_Lead__r.Email asc")
+         index = 0
+         journeyInfo.each do |journey|
+          index += 1
+          #puts journey.fetch('Primary_Lead__r')['Email']
+          #puts journeyInfo[index].fetch('Primary_Lead__r')['Email']
+            puts journey.fetch('Primary_Lead__r')['Email'] != journeyInfo[index].fetch('Primary_Lead__r')['Email']
+            if campaign == 'same' then
+                if journey.fetch('CampaignId__c') == campaignId && journey.fetch('Primary_Lead__r')['Email'] != journeyInfo[index].fetch('Primary_Lead__r')['Email'] then
+                  journeys = @restforce.getRecords("SELECT Id,Name,Primary_Lead__r.Email,CreatedDate,CampaignId__c FROM Journey__c WHERE Primary_Lead__r.Email = '#{journey.fetch('Primary_Lead__r')['Email']}' order by Primary_Lead__r.Email asc")
+                  if !journeys.nil? && journeys.size == 1 then
+                      return journey.fetch('Primary_Lead__r')['Email']
+                  end                  
+                end
+            elsif campaign == 'diff' then
+              puts "differernt camp criteria---->"
+              puts journey.fetch('CampaignId__c') != campaignId
+                if journey.fetch('CampaignId__c') != campaignId && !journeyInfo[index].nil? && journey.fetch('Primary_Lead__r')['Email'] != journeyInfo[index].fetch('Primary_Lead__r')['Email'] then
+                  journeys = @restforce.getRecords("SELECT Id,Name,Primary_Lead__r.Email,CreatedDate,CampaignId__c FROM Journey__c WHERE Primary_Lead__r.Email = '#{journey.fetch('Primary_Lead__r')['Email']}' order by Primary_Lead__r.Email asc")
+                  if !journeys.nil? && journeys.size == 1 then
+                      return journey.fetch('Primary_Lead__r')['Email']
+                  end                  
+                end
+            elsif campaign == 'no' then
+              puts "no camp criteria---->"
+                if journey.fetch('CampaignId__c') == nil && !journeyInfo[index].nil? && journey.fetch('Primary_Lead__r')['Email'] != journeyInfo[index].fetch('Primary_Lead__r')['Email'] then
+                  journeys = @restforce.getRecords("SELECT Id,Name,Primary_Lead__r.Email,CreatedDate,CampaignId__c FROM Journey__c WHERE Primary_Lead__r.Email = '#{journey.fetch('Primary_Lead__r')['Email']}' order by Primary_Lead__r.Email asc")
+                  if !journeys.nil? && journeys.size == 1 then
+                      return journey.fetch('Primary_Lead__r')['Email']
+                  end                  
+                end
+            end
+            
+         end 
+         puts "No record found."
+         return nil
+  end
+
+
+=begin
+  def getExistingLead1(from,to,owner=nil,checkForActivity=nil)
+      index = from
+      userHasPermission = false
+      owner = " AND CreatedBy.Name = '#{owner}'" if !owner.nil?
+      checkForActivity = "(SELECT id FROM tasks),"if !checkForActivity.nil?
+      if !from.nil? || !to.nil?
+        until !(index < to) || userHasPermission
+          puts index
+          leadInfo = @restforce.getRecords("SELECT id , #{checkForActivity} Owner.Name,Owner.id,LeadSource , Lead_Source_Detail__c , Building_Interested_In__c , Building_Interested_Name__c ,Journey_Created_On__c, Locations_Interested__c , Number_of_Full_Time_Employees__c , Interested_in_Number_of_Desks__c , Email , Phone , Company , Name , RecordType.Name , Status , Type__c FROM Lead WHERE CreatedBy.Name IN ('Veena Hegane','Ashotosh Thakur','Monika Pingale','Kishor Shinde') AND Email like '%@example.com' AND CreatedDate > LAST_N_DAYS:#{from} AND CreatedDate < LAST_N_DAYS:#{from + to} AND isDeleted = false #{owner}")
+          allowedUsers = JSON.parse(@salesConsoleSetting[3]['Data__c'])['allowedUsers']
+          if leadInfo[0].nil?
+            leadInfo = @restforce.getRecords("SELECT id , Owner.Name, Owner.id,LeadSource , Lead_Source_Detail__c , Building_Interested_In__c , Building_Interested_Name__c ,Journey_Created_On__c, Locations_Interested__c , Number_of_Full_Time_Employees__c , Interested_in_Number_of_Desks__c , Email , Phone , Company , Name , RecordType.Name , Status , Type__c FROM Lead WHERE CreatedBy.Name IN ('Veena Hegane','Ashotosh Thakur','Monika Pingale','Kishor Shinde') AND Email like '%@example.com' AND CreatedDate = LAST_N_DAYS:#{index} AND isDeleted = false #{owner}")
+            leadInfo.each do |lead|
+            if allowedUsers.include?({"Id" => lead.fetch("Owner").fetch("Id")})
+              userHasPermission = true
+              leadInfo = lead
+              break;
+            end
+          end
+        else
+          leadInfo.each do |lead|
+          if allowedUsers.include?({"Id" => lead.fetch("Owner").fetch("Id")})
+            userHasPermission = true
+            leadInfo = lead
+            break;
+          end
+        end
+      end
+      index += 1
+      end
+      else
+      puts"Getting Records....."
+      leadInfo = @restforce.getRecords("SELECT id , #{checkForActivity} Owner.Name,Owner.id,LeadSource , Lead_Source_Detail__c , Building_Interested_In__c , Building_Interested_Name__c ,Journey_Created_On__c, Locations_Interested__c , Number_of_Full_Time_Employees__c , Interested_in_Number_of_Desks__c , Email , Phone , Company , Name , RecordType.Name , Status , Type__c FROM Lead WHERE Email like '%@example.com' AND isConverted = false AND isDeleted = false #{owner} LIMIT 10")
+      puts leadInfo
+      end
+      leadInfo if !leadInfo.nil?
+
+    rescue e
+puts e
+raise e
+end
+=end
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def fetchCampaignDetails(how,what)
+    return @helper.getSalesforceRecordByRestforce("SELECT id,Name,IsActive,City__c,Lead_Owner__c,Email_Address__c FROM Campaign Where #{how} = '#{what}'")
+
+  end
+
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def fetchBuildingDetail(how,what)
+    return checkRecordCreated("Building__c", "SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Email__c,Market__c,UUID__C FROM Building__c WHERE #{how} = '#{what}'")
+  end
+
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def createLeadFromStdSalesforce(email)
     puts @testDataJSON['Lead']
     records_to_insert = Hash.new
@@ -126,7 +506,19 @@ class LeadGeneration
     return record    
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def createLeadStdsalesforce
+
+    @helper.addLogs("[Step ]     : Login to salesforce")
+    loginToSalesforce()
+
     puts "in Lead::createLeadStdsalesforce"
     EnziUIUtility.wait(@driver, :link, "Leads", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])      
     @driver.find_element(:link, "Leads").click
@@ -156,6 +548,19 @@ class LeadGeneration
     @driver.find_element(:id, "lea3").click
     @driver.find_element(:id, "lea3").clear
     @driver.find_element(:id, "lea3").send_keys @testDataJSON['Lead'][0]['Company']
+
+    #enter phone number
+    @driver.find_element(:id, "lea8").clear
+    @driver.find_element(:id, "lea8").send_keys @testDataJSON['Lead'][0]['Phone']
+
+    #enter promo code
+    @driver.find_element(:id, "00NF000000D598h").clear
+    @driver.find_element(:id, "00NF000000D598h").send_keys @testDataJSON['Lead'][0]['Promo Code']
+
+    #select move in time frame
+    @driver.find_element(:id, "00N0G00000DjmNR").click
+    Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "00N0G00000DjmNR")).select_by(:text, @testDataJSON['Lead'][0]['Move In Time Frame'])
+
     #enter Org Acc name
     @driver.find_element(:id, "CF00N0G00000DkNxF").click
     @driver.find_element(:id, "CF00N0G00000DkNxF").clear
@@ -170,6 +575,13 @@ class LeadGeneration
     #select lead status
     @driver.find_element(:id, "lea13").click
     Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "lea13")).select_by(:text, @testDataJSON['Lead'][0]['Lead Status'])
+    
+    #set camapign
+    if !@testDataJSON['Lead'][0]['Campaign'].nil? then
+        @driver.find_element(:id, "lea20").clear
+        @driver.find_element(:id, "lea20").send_keys @testDataJSON['Lead'][0]['Campaign']
+    end
+
     #generate journey
     if @testDataJSON['Lead'][0]['Generate Journey'] then
       @driver.find_element(:id, "00NF000000DWYhq").click
@@ -206,17 +618,16 @@ class LeadGeneration
     Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "00NF000000DW97C")).select_by(:text, @testDataJSON['Lead'][0]['Country Code'])
 
     puts "select Market Interested"
-    sleep(10)
+    sleep(1)
     # ERROR: Caught exception [ERROR: Unsupported command [addSelection | id=00NF000000DSdDJ_unselected | label=Amsterdam]]
     @driver.find_element(:xpath, "//option[@value='0']").click
     @driver.find_element(:id, "00NF000000DSdDJ_right_arrow").click
     # ERROR: Caught exception [ERROR: Unsupported command [doubleClick | //option[@value='0'] | ]]
     # ERROR: Caught exception [ERROR: Unsupported command [addSelection | id=00NF000000DSdDJ_unselected | label=Atlanta]]
-    sleep(5)
+    sleep(1)
     @driver.find_element(:xpath, "//option[@value='2']").click
     @driver.find_element(:id, "00NF000000DSdDJ_right_arrow").click
     # ERROR: Caught exception [ERROR: Unsupported command [doubleClick | //option[@value='2'] | ]]
-
     #enter Number of Full Time Employees
     @driver.find_element(:id, "00N0G00000DKsrg").click
     @driver.find_element(:id, "00N0G00000DKsrg").clear
@@ -257,8 +668,39 @@ class LeadGeneration
     #@driver.find_element(:id, "CF00NF000000DVv35_lkid").click
     #Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "CF00NF000000DVv35_lkid")).select_by(:text, "John Snow")
     @driver.find_element(:xpath, "(//input[@name='save'])[2]").click
+
+    return true
+  rescue Exception => e
+    puts e
+    return false
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def getRecordType(fte)
+    if fte > 0 && fte < 20 then
+      return "Consumer"
+    elsif fte > 19 && fte < 200 then
+      return "Mid Market"
+    elsif fte > 199 then
+      return "Enterprise Solutions"
+    end
+  end
+
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def update(sObject, updated_values)
     #updated_account = Hash["name" => "Test Account -- Updated", "id" => "a00A0001009zA2m"] # Nearly identical to an insert, but we need to pass the salesforce id.
 
@@ -268,6 +710,14 @@ class LeadGeneration
     Salesforce.updateRecord(@salesforceBulk, sObject, updated_values)
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def self.getElementByAttribute(driver, elementFindBy, elementIdentity, attributeName, attributeValue)
     #puts "in accountAssignment::getElementByAttribute"
     driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(elementFindBy, elementIdentity))
@@ -283,19 +733,35 @@ class LeadGeneration
     end
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def loginToSalesforce()
     #puts "in AccountAssignmentFromLead:loginToSalesforce"
     @driver.get "https://test.salesforce.com/login.jsp?pw=#{@mapCredentials['Staging']['WeWork System Administrator']['password']}&un=#{@mapCredentials['Staging']['WeWork System Administrator']['username']}"
-    switchToClassic(@driver)
-    EnziUIUtility.wait(@driver,:id, "phHeaderLogoImage",@timeSettingMap['Wait']['Environment']['Lightening']['Max'])
+    #switchToClassic(@driver)
+    #EnziUIUtility.wait(@driver,:id, "phHeaderLogoImage",@timeSettingMap['Wait']['Environment']['Lightening']['Max'])
     return true
       #EnziUIUtility.wait(@driver,:id, "phHeaderLogoImage",60)
   rescue Exception => e
     puts e
-    return nil
+    return false
   end
 
   #Use: This function is Used to switching to classic from lightening
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def switchToClassic(driver)
     sleep(5)
     @driver = driver
@@ -310,10 +776,18 @@ class LeadGeneration
     end
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def fetchLeadDetails(leadEmailId)
     puts "in Lead::fetchLeadDetails"
     puts leadEmailId
-    #sleep(20)
+    sleep(20)
     lead = nil
     index = 0
     until !lead.nil? && lead[0] != nil do
@@ -322,10 +796,9 @@ class LeadGeneration
         break
       end
       puts index
-      puts "get lead record after 10 sec"      
-      #sleep(10)
-      lead = @helper.getSalesforceRecordByRestforce("SELECT Id,RecordType.Name,Type__c,Interested_in_Number_of_Desks__c,Generate_Journey__c,Account__c,Market__c,Has_Active_Journey__c,Markets_Interested__c,Referrer__c,Referral_Company_Name__c,Referrer_Name__c,Referrer_Email__c,RecordType.Id,Company,CreatedDate,Phone,Email,Company_Size__c,Status,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id,Owner.Name,Journey_Created_On__c,Locations_Interested__c,Building_Interested_Name__c,Building_Interested_In__c,Number_of_Full_Time_Employees__c FROM Lead WHERE email = '#{leadEmailId}'")
-      puts "*******"
+      puts "get lead record after 30 sec"      
+      sleep(30)
+      lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Locale__c,Move_In_Time_Frame__c,Promo_Code__c,Type__c,HasOptedOutOfEmail,Interested_in_Number_of_Desks__c,Generate_Journey__c,Account__c,Market__c,Has_Active_Journey__c,Markets_Interested__c,Referrer__c,Referral_Company_Name__c,Referrer_Name__c,Referrer_Email__c,RecordType.Id,RecordType.Name,Company,CreatedDate,Phone,Email,Company_Size__c,Status,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id,Owner.Name,Journey_Created_On__c,Locations_Interested__c,Building_Interested_Name__c,Building_Interested_In__c,Number_of_Full_Time_Employees__c,Country_Code__c,Marketing_Consent__c,Ts_and_Cs_Consent__c,Interested_in_Number_of_Desks_Range__c,Interested_in_Number_of_Desks_Min__c,Interested_in_Number_of_Desks_Max__c,Product_Line__c,Email_Quality__c FROM Lead WHERE email = '#{leadEmailId}'")
       index  = index + 1
     end
     if index != 3 then
@@ -340,7 +813,53 @@ class LeadGeneration
       return nil
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def checkCamapignMember(leadEmailId,campaignId)
+    puts "in Lead::checkCamapignMember"
+    puts "leadEmailId--> #{leadEmailId}"
+    puts "campaignId --> #{campaignId}"
+    #sleep(20)
+    camapign = nil
+    index = 0
+    until !camapign.nil? && camapign[0] != nil && camapign[0].fetch('Campaign')['Id'] == campaignId do
+      if index == 5 then
+        puts "breaking loop"
+        break
+      end
+      puts index
+      puts "get record after 10 sec"
+      sleep(30)
+      camapign = @helper.getSalesforceRecordByRestforce("select Campaign.Id, Campaign.Name,Lead.Email from CampaignMember where Lead.Email = '#{leadEmailId}' order by CreatedDate desc")
+      puts "record fetched"
+      index  = index + 1
+    end
+    if index != 5 then
+      puts "Record found successfully with given email"
+      return true
+    else
+      puts "Lead Not found with given email"
+      return false
+    end    
+    rescue Exception => e
+      puts e
+      return false
+  end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def isGenerateJourney(userId,leadSource,leadSourceDetail=nil,isGenerateJourney=nil)
     puts "userId ---> #{userId}"
     puts "leadSource---> #{leadSource}"
@@ -352,7 +871,7 @@ class LeadGeneration
     #puts @salesConsoleSetting[0]    
     #puts @salesConsoleSetting[1]["Data__c"]
     #settings = @helper.instance_variable_get(:@restForce).getRecords("SELECT name,Data__c FROM Setting__c WHERE name IN ('User/Queue Journey Creation','Lead:Lead and Lead Source Details')")
-      JSON.parse(@salesConsoleSetting[1]["Data__c"])["allowedUsers"].each do |user|
+      JSON.parse(@salesConsoleSetting[2]["Data__c"])["allowedUsers"].each do |user|
        if user["Id"].eql? userId
          userHasPermission = true
        end
@@ -386,23 +905,75 @@ class LeadGeneration
             
   end
 
-  def fetchJourneyDetails(leadEmailId)
-    return checkRecordCreated("Journey__c", "SELECT id,Owner.Name,Owner.Id,CreatedDate,Name,Building_Interested_In__c,Company_Name__c,Country_Code__c,Primary_Phone__c,Primary_Email__c,Email__c,Email_Opt_Out__c,First_Name__c,Full_Time_Employees__c,Interested_in_Number_of_Desks__c,Status__c,Lead_Contact_ID__c,Lead_Source__c,Lead_Source_Detail__c,Locale__c,Locations_Interested__c,Looking_For_Number_Of_Desk__c,Market__c,Markets_Interested__c,Mobile__c,Move_In_Time_Frame__c,NMD_Next_Contact_Date__c,Number_of_Desk__c FROM Journey__c WHERE Primary_Email__c = '#{leadEmailId}' order by CreatedDate")
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def fetchActivityDetails(whoId)
+    return checkRecordCreated("Task", "SELECT id ,Markets_Interested__c,Country_Code__c,Locale__c,Market__c, Subject , CreatedDate,Status , Owner.Name,Lead_Source__c , Lead_Source_Detail__c,Locations_Interested__c, Number_of_Full_Time_Employees__c,Interested_in_Number_of_Desks__c,Company__c,WhoId,Priority,Email__c,Who.Name,Type FROM Task WHERE WhoId = '#{whoId}' order by CreatedDate")
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def fetchJourneyDetails(leadEmailId)
+    return checkRecordCreated("Journey__c", "SELECT id,CampaignId__c,Marketing_Consent__c,Ts_and_Cs_Consent__c,Primary_Lead__c,Promo_Code__c,Record_Type__c,Owner.Name,Owner.Id,CreatedDate,Name,Building_Interested_In__c,Company_Name__c,Country_Code__c,Primary_Phone__c,Primary_Email__c,Email__c,Email_Opt_Out__c,First_Name__c,Full_Time_Employees__c,Interested_in_Number_of_Desks__c,Status__c,Lead_Contact_ID__c,Lead_Source__c,Lead_Source_Detail__c,Locale__c,Locations_Interested__c,Looking_For_Number_Of_Desk__c,Market__c,Markets_Interested__c,Mobile__c,Move_In_Time_Frame__c,NMD_Next_Contact_Date__c,Number_of_Desk__c FROM Journey__c WHERE Primary_Email__c = '#{leadEmailId}' order by CreatedDate")
+  end
+
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def fetchBuildingDetails(buildingName)
     return checkRecordCreated("Building__c", "SELECT id,Cluster_Sales_Lead_Name__c,name,Community_Lead__c,Market__c,UUID__C FROM Building__c WHERE Name = '#{buildingName}'")
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def fetchAccountDetails(primaryMember)
     #,Unomy_Location_Country__c,Unomy_Location_State__c,Unomy_Location_City__c,Primary_Member__c,Interested_in_Number_of_Desks__c,BillingCountry,BillingState,BillingCity
     return checkRecordCreated("Account", "SELECT id,Allow_Merge__c,Name,Owner.Id,Owner.Name,RecordType.Name,Number_of_Full_Time_Employees__c,Interested_in_Number_of_Desks__c,Unomy_Location_Country__c,Unomy_Location_State__c,Unomy_Location_City__c,BillingCountry,BillingState,BillingCity FROM Account WHERE Primary_Member__c = '#{primaryMember}'")
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def fetchContactDetails(leadEmailId)
     return checkRecordCreated("Contact", "SELECT id,Looking_For_Number_Of_Desk__c,Name,Owner.Id,Owner.Name,RecordType.Name,Number_of_Full_Time_Employees__c FROM Contact WHERE Email = '#{leadEmailId}'")
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def fetchOpportunityDetails(primaryMember)
     return checkRecordCreated("Opportunity", "SELECT id,Quantity__c,name,Owner.Id,Owner.Name,Primary_Member__c,Deal_Type__c,RecordType.Name,Interested_in_Number_of_Desks__c FROM Opportunity WHERE Primary_Member__c = '#{primaryMember}'")
     
@@ -430,6 +1001,14 @@ class LeadGeneration
 =end
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def fetAccOwnerQueue(portFolio, recordType)
     #puts "in AccountAssignmentFromLead:fetAccOwnerQueue"
     #puts "portFolio---> #{portFolio}"
@@ -453,12 +1032,27 @@ class LeadGeneration
     end
   end
 
-
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def fetchProductDetails(oppId)
     #puts "in fetchProductDetails"
     return checkRecordCreated("OpportunityLineItem", "SELECT Id,Quantity FROM OpportunityLineItem WHERE OpportunityId = '#{oppId}'")
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def fetchRecordTypeId(sObject)
     @mapRecordType = Hash.new
     recordTypeIds = @helper.getSalesforceRecordByRestforce("Select id,Name from RecordType where SObjectType = '#{sObject}'")
@@ -471,7 +1065,14 @@ class LeadGeneration
     return @mapRecordType
   end
 
-
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def updateProductAndOpp(oppid, quantityToUpdate, accId, recordTppeToUpdate)
     #puts "in updateProductAndOpp"
     product = fetchProductDetails(oppid)
@@ -492,6 +1093,14 @@ class LeadGeneration
     return true
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def checkRecordCreated(sObject, query)
     #puts "in AccountAssignmentFromLead:checkRecordCreated"
     result = @helper.getSalesforceRecordByRestforce("#{query}")
@@ -503,6 +1112,14 @@ class LeadGeneration
     return nil
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def goToDetailPage(sObjectId)
     begin
       #puts "in AccountAssignmentFromLead:goToDetailPage"
@@ -517,12 +1134,28 @@ class LeadGeneration
 
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def clickManageTour()
     EnziUIUtility.wait(@driver, :name, "lightning_manage_tours", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
     @driver.find_element(:name, "lightning_manage_tours").click
     EnziUIUtility.switchToWindow(@driver, @driver.current_url())
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def openManageTouFromJourney(sObjectId)
 
     begin
@@ -553,6 +1186,14 @@ class LeadGeneration
     end
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def goToDetailPageJourney(sObjectId)
     begin
       #puts "in AccountAssignmentFromLead:goToDetailPage"
@@ -580,6 +1221,14 @@ class LeadGeneration
 
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def bookTour(count, bookTour, isCreateOpp = nil)    
         if isCreateOpp then
             @testDataJSON["AccountAssignment"]["tour"][count]['opportunity'] = @testDataJSON["AccountAssignment"]["tour"][count]['opportunity'] + SecureRandom.random_number(10000000000).to_s
@@ -675,6 +1324,14 @@ class LeadGeneration
     raise e
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def addOpportunity()
     #puts "AccountAssignmentFromLead::addOpportunity"
 
@@ -736,6 +1393,14 @@ class LeadGeneration
     return false
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def self.setValue(driver, findBy, elementIdentification, val)
     #puts "in enziUtility:setValue #{val}"
 
@@ -748,6 +1413,14 @@ class LeadGeneration
     end
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def self.selectBuilding(container, value, waitTime, driver)
     wait = Selenium::WebDriver::Wait.new(:timeout => waitTime['Wait']['Environment']['Lightening']['Min'])
     if driver.find_elements(:class, "building").size > 0 then
@@ -777,6 +1450,14 @@ class LeadGeneration
     value[1].click
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def self.selectTourDate(container, waitTime, driver, selector)
     wait = Selenium::WebDriver::Wait.new(:timeout => waitTime['Wait']['Environment']['Lightening']['Min'])
     if driver.find_elements(:class, "tourDate").size > 0 then
@@ -797,6 +1478,14 @@ class LeadGeneration
     inputFieldInnerDiv[7].find_elements(:tag_name, "input")[0]
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def self.closeErrorAndSelectNextDate(noOfDaysToAdd)
     #puts "5"
     #@driver.find_elements(:class,"slds-theme--error")[0].text.eql? "No times slots available for the selected date" then
@@ -815,6 +1504,14 @@ class LeadGeneration
 
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def addDays(date)
 
     #puts 'in addDays'
@@ -834,6 +1531,14 @@ class LeadGeneration
     return date1
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def selectDate(driver, date, container)
     #puts 'in selectdate'
     sleep(1)
@@ -870,6 +1575,14 @@ class LeadGeneration
     end
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def selectDateFromDatePicker(container, driver)
     #puts "In selectDateFromDatePicker"
     @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
@@ -918,6 +1631,14 @@ class LeadGeneration
 
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def self.setElementValue(container, elementToset, value = nil)
     #puts elementToset
     #puts value
@@ -935,6 +1656,14 @@ class LeadGeneration
     #dropdown[0]
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def self.getElement(tagName, elementToset, container)
     #puts '21'
     innerDiv = container.find_elements(:class, "#{elementToset}")
@@ -943,6 +1672,14 @@ class LeadGeneration
     innerFieldDivContainer[4].find_elements(:tag_name, "#{tagName}")
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def duplicateAccountSelector(option, account)
     @wait.until {@driver.find_element(:id, "header43").displayed?}
     if account.eql? nil then
@@ -969,6 +1706,14 @@ class LeadGeneration
     return false
   end
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def getOwnerbasedOnAddress(account)
 
     portfolio = nil

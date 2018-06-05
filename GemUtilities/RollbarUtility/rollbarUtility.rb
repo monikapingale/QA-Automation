@@ -17,14 +17,14 @@ end
 
 class RollbarUtility
 	def postRollbarData(id, title, passedExpects)
+		#puts "UUUUUUUUUUUUU---> #{passedExpects}"
 		Rollbar.configure do |config| 
         	config.custom_data_method = lambda { { :Id => id, :Title => title, :PassExpects => passedExpects}}
       	end
 	end
 
 	def addLog(logMessage, specId = nil)
-	    puts logMessage
-	    
+	    puts logMessage	    
 	    if specId != nil
 	      @@sId = specId
 	      @@logHash = Hash.new()

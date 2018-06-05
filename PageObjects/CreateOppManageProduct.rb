@@ -1,3 +1,15 @@
+=begin
+************************************************************************************************************************************
+    Author      :   QaAutomationTeam
+    Description :   This class provides methods for Business logic related to lead.
+
+    History     :
+  ----------------------------------------------------------------------------------------------------------------------------------
+  VERSION            DATE             AUTHOR                  DETAIL
+  1                 24 May 2018     QaAutomationTeam        sprint-1.0
+**************************************************************************************************************************************
+=end
+
 require 'enziUIUtility'
 require 'enziSalesforce'
 require 'json'
@@ -8,29 +20,57 @@ require 'date'
 
 
 class CreateOppManageProduct
+  @mapRecordType = nil
+  @salesforceBulk = nil
+  @testDataJSON = nil
+  @timeSettingMap = nil
+  @mapCredentials = nil
+  @salesConsoleSetting = nil
 
-  def initialize(helper1,driver1)
-    @driver=driver1
-    @helper=helper1
-  @timeSettingMap = @helper.instance_variable_get(:@timeSettingMap)
-  #@verification_errors = []
-  #puts @helper.instance_variable_get(:@sObjectRecords)
-  @leadsTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][0]['lead']
-  @leadsTestData[0]['email'] = "test_johnsmith#{rand(99999999999999)}@example.com"
-  @leadEmailId=@leadsTestData[0]['email']
-  @leadsTestData[0]['company'] = "Test_johnsmith1#{rand(99999999999999)}"
-  @oppTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][1]['createOpp']
-  @oppTestData[0]['accountName']="test_Enterprise1#{rand(99999999999999)}"
-  @oppAccName=@oppTestData[0]['accountName']
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def initialize(helper,driver)
+    puts "in CreateOppManageProduct::initialize"
+    @driver=driver
+    @helper=helper
+    @sObjectRecords = @helper.getRecordJSON()
+    @timeSettingMap = @helper.instance_variable_get(:@timeSettingMap)
+    @mapCredentials = @helper.instance_variable_get(:@mapCredentials)
+    @verification_errors = []
+
+    #puts @helper.instance_variable_get(:@sObjectRecords)
+
+    #@leadsTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][0]['lead']
+    #@leadsTestData[0]['email'] = "test_johnsmith#{rand(99999999999999)}@example.com"
+    #@leadEmailId=@leadsTestData[0]['email']
+    #@leadsTestData[0]['company'] = "Test_johnsmith1#{rand(99999999999999)}"
+    #@oppTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][1]['createOpp']
+    #@oppTestData[0]['accountName']="test_Enterprise1#{rand(99999999999999)}"
+    #@oppAccName=@oppTestData[0]['accountName']
+
     @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
   end
 
-  def Salesforcelogin
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def salesforcelogin
     @driver.get "https://wework--staging.cs96.my.salesforce.com/"
     @driver.find_element(:id, "username").clear
-    @driver.find_element(:id, "username").send_keys @helper.instance_variable_get(:@mapCredentials)['Staging']['WeWork System Administrator']['username']
+    @driver.find_element(:id, "username").send_keys @mapCredentials['Staging']['WeWork System Administrator']['username']
     @driver.find_element(:id, "password").clear
-    @driver.find_element(:id, "password").send_keys @helper.instance_variable_get(:@mapCredentials)['Staging']['WeWork System Administrator']['password']
+    @driver.find_element(:id, "password").send_keys @mapCredentials['Staging']['WeWork System Administrator']['password']
     @driver.find_element(:id, "Login").click
     puts "Login sucessfully \n"
 
@@ -42,23 +82,39 @@ class CreateOppManageProduct
     puts result1.class
   end
 
-  def createRecord
-    puts @driver.current_url()
-    puts @leadsTestData
-    @result= @helper.createSalesforceRecord('Lead',@leadsTestData)
-    puts @result
-    url = @driver.current_url();
-    newUrl = url.split('/')
-    @driver.get "#{newUrl[0]}//#{newUrl[2]}/#{@result[0]['Id']}"
-    puts "Lead created suceessfully\n "
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def createLead
+    #@sObjectRecords['CreateOpportunity'][0]['lead'][0]['email'] = "test_johnsmith#{rand(99999999999999)}@example.com"
+
+    #puts @driver.current_url()
+    #puts @leadsTestData
+    #@result= @helper.createSalesforceRecord('Lead',@leadsTestData)
+    #puts @result
+    #url = @driver.current_url();
+    #newUrl = url.split('/')
+    #@driver.get "#{newUrl[0]}//#{newUrl[2]}/#{@result[0]['Id']}"
+    #puts "Lead created suceessfully\n "
   end
 
-
-
-
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
   def createOppEnt
     @driver.find_element(:name, "create_opportunity").click
     @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    #click on new organization
     @driver.find_element(:id, "OrgButton").click
     @driver.find_element(:id, "Account").click
     @driver.find_element(:id, "Account").clear
@@ -66,40 +122,41 @@ class CreateOppManageProduct
     @driver.find_element(:id, "Number_of_Full_Time_Employees__c").clear
     @driver.find_element(:id, "Number_of_Full_Time_Employees__c").send_keys "#{@oppTestData[0]['Number_of_Full_Time_Employees__c']}"
     @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div/div[3]/div/div/div[3]/button").click
-  #@driver.find_element(:id, "primaryBuilding").click
+    #@driver.find_element(:id, "primaryBuilding").click
     @driver.find_element(:id, "primaryBuilding").clear
     @driver.find_element(:id, "primaryBuilding").send_keys @oppTestData[0]['building']
 
-  #building selected on opportunity
-  building1 = @driver.find_element(:id,"primaryBuildinglist")
-  puts building1
-  @wait.until {building1.displayed?}
-  @wait.until {!@driver.find_element(:id,"spinner").displayed?}
-  @wait.until {!@driver.find_element(:id,"primaryBuildinglist").find_element(:id,"spinner").displayed?}
-  @wait.until {building1.find_elements(:tag_name,"ul")[0].displayed?}
-  ulist= building1.find_elements(:tag_name,"ul")[0]
-  list=ulist.find_elements(:tag_name,"li")[1]
-  @wait.until {!@driver.find_element(:id,"spinner").displayed?}
-  list.click
-  @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    #building selected on opportunity
+    building1 = @driver.find_element(:id,"primaryBuildinglist")
+    puts building1
+    @wait.until {building1.displayed?}
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    @wait.until {!@driver.find_element(:id,"primaryBuildinglist").find_element(:id,"spinner").displayed?}
+    @wait.until {building1.find_elements(:tag_name,"ul")[0].displayed?}
+    ulist= building1.find_elements(:tag_name,"ul")[0]
+    list=ulist.find_elements(:tag_name,"li")[1]
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    list.click
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
 
-  #@helper.getElementByAttribute(@driver,:tag_name ,"button","title",@oppTestData[0]['building'])[0].click
+    #@helper.getElementByAttribute(@driver,:tag_name ,"button","title",@oppTestData[0]['building'])[0].click
 
     @driver.find_element(:id, "closeDate").click
     @driver.find_element(:css, "lightning-icon.slds-icon-utility-right.slds-icon_container > lightning-primitive-icon > svg.slds-icon.slds-icon-text-default.slds-icon_xx-small > use").click
     @driver.find_element(:id, "2018-06-21").click
 
-  #@driver.find_element(:id, "Date.today.next_day(3)").click
+    #@driver.find_element(:id, "Date.today.next_day(3)").click
 
     @driver.find_element(:id, "description").click
     @driver.find_element(:id, "description").clear
     @driver.find_element(:id, "description").send_keys "test data"
 
+    #click on add product
     @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div/div[2]/div[9]/div/button[2]").click
 
     @driver.find_element(:id, "Family:0").click
-  resultData=@driver.find_element(:xpath,"//*[@id='Family:0']/option[2]").click
-  puts resultData
+    resultData=@driver.find_element(:xpath,"//*[@id='Family:0']/option[2]").click
+    puts resultData
 
     @driver.find_element(:id, "Family:0").click
     @driver.find_element(:id, "Product2Id:0").click
@@ -109,21 +166,21 @@ class CreateOppManageProduct
     @driver.find_element(:id, "Quantity:0").clear
     @driver.find_element(:id, "Quantity:0").send_keys "150"
     @driver.find_element(:id, "Geography__c:0").click
-  sleep(4)
+    sleep(4)
     @driver.find_element(:id, "Geography__c:0").send_keys  @oppTestData[0]['geography']
 
-  #geography on manage product is selected
+    #geography on manage product is selected
 
-  outerContainer = @driver.find_element(:id, "Geography__c:0list")
-  outerContainer = @driver.find_element(:id, "Geography__c:0list")
-  @wait.until {!outerContainer.find_element(:id,"spinner").displayed?}
-  geolist=outerContainer.find_elements(:tag_name,"ul")[0]
-  @wait.until {geolist.displayed?}
-  @wait.until {!outerContainer.find_element(:id,"spinner").displayed?}
-  geo= geolist.find_elements(:tag_name,"li")[1]
-  @wait.until {geo.displayed?}
-  geo.click
-  @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    outerContainer = @driver.find_element(:id, "Geography__c:0list")
+    outerContainer = @driver.find_element(:id, "Geography__c:0list")
+    @wait.until {!outerContainer.find_element(:id,"spinner").displayed?}
+    geolist=outerContainer.find_elements(:tag_name,"ul")[0]
+    @wait.until {geolist.displayed?}
+    @wait.until {!outerContainer.find_element(:id,"spinner").displayed?}
+    geo= geolist.find_elements(:tag_name,"li")[1]
+    @wait.until {geo.displayed?}
+    geo.click
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
  end
 
 end

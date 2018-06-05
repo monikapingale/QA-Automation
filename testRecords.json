@@ -14,18 +14,18 @@
       {
         "RecordType":"Consumer",
         "Salutation":"Mr.",
-        "FirstName":"john_QaAuto",
-        "LastName":"smith_QaAuto",
+        "FirstName":"john_qaauto",
+        "LastName":"smith_qaauto",
         "Email":"",
         "Company":"Enzigma Software pvt. ltd.",
         "Industry":"",
-        "Phone":"",
+        "Phone":"8888888888",
         "Mobile":"",
         "Do Not Call":"",
         "Email Quality":"",
         "WinOver Competitor":"",
         "Number of Journeys":"",
-        "Promo Code":"",
+        "Promo Code":"123454321",
         "Lease Expiration":"",
         "Last Event Name":"",
         "Journey Created On":"",
@@ -46,7 +46,7 @@
         "Has Active Journey":"",
         "Contact Broker Only":"",
         "Interested in Number of Desk(s)":"",
-        "Move In Time Frame":"",
+        "Move In Time Frame":"This Month",
         "Quick Quote Location":"",
         "Referral Fail Reason":"",
         "leadSource":"Broker",
@@ -62,7 +62,8 @@
         "Locations Interested":"",
         "Referrer":"",
         "Referrer Name":"",
-        "Referrer Email":""
+        "Referrer Email":"",
+        "Product Line":""
       }
     ],
   "CreateOpportunity":
@@ -71,12 +72,12 @@
     		"lead":
           [
       			{
-      				"lastName": "test_smithC",
-      				"firstName": "test_johnC",
-      				"website": "http://www.Testgmail.com",
-      				"email": "test_johnsmith@example.com",
+      				"lastName": "smith_qaauto",
+      				"firstName": "john_qaauto",
+      				"website": "http://www.testgmail.com",
+      				"email": "",
       				"phone": "8146185365",
-      				"company": "Test_johnsmith1",
+      				"company": "smith_company_qaauto",
       				"company_Size__c": "21-50",
       				"lead_Source_Detail__c": "Book A Tour Form",
       				"Interested_in_Number_of_Desks__c":"1000",
@@ -107,6 +108,14 @@
 	    }
 
     ],	
+  "MarketingLandingPage":
+    [
+      {"Name":"john.smith_camp_qaauto","Email":"","Phone":"8888888888","Company":"smith_company_qaauto","I need space for":"1-20 people","URL":"https://www-staging.wework.com/promos/apollo-offer"}
+    ],
+  "Campaign":
+    [
+      {"Id":"","Name":"","Email Address":"","Lead Owner":"","City":""}
+    ],
   "InboundLead" :
     [
       {"FirstName":"john","LastName":"smith","Email":"","Phone":"1234567890","Company":"Enzigma Software Pvt ltd","CompanySize":"12","NumberofDesks":"8","Building Interested":"MUM-BKC"}
