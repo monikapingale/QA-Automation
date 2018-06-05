@@ -41,13 +41,13 @@ describe "SendToEnterpriseManageProduct" do
 
 =end
 
-    @leadsTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][0]['lead']
-    @leadsTestData[0]['email'] = "test_johnsmith#{rand(99999999999999)}@example.com"
-    @leadEmailId=@leadsTestData[0]['email']
-    @leadsTestData[0]['company'] = "Test_johnsmith1#{rand(99999999999999)}"
-    @oppTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][1]['createOpp']
-    @oppTestData[0]['accountName']="test_Enterprise1#{rand(99999999999999)}"
-    @oppAccName=@oppTestData[0]['accountName']
+    #@leadsTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][0]['lead']
+    #@leadsTestData[0]['email'] = "test_johnsmith#{rand(99999999999999)}@example.com"
+    #@leadEmailId=@leadsTestData[0]['email']
+    #@leadsTestData[0]['company'] = "Test_johnsmith1#{rand(99999999999999)}"
+    #@oppTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][1]['createOpp']
+    #@oppTestData[0]['accountName']="test_Enterprise1#{rand(99999999999999)}"
+    #@oppAccName=@oppTestData[0]['accountName']
     #puts @oppAccName
     
     #@wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
@@ -81,8 +81,21 @@ describe "SendToEnterpriseManageProduct" do
         expect(@helper.go_to_app(@driver,'Sales Console')).to eq true
         @helper.addLogs('Success')
 
+        @helper.addLogs("[Step ]     : Fetch lead deatails")            
+        insertedLeadInfo = @objLeadGeneration.fetchLeadDetails(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
+        expect(insertedLeadInfo).to_not eq nil
+        expect(insertedLeadInfo.size).to eq 1
+        expect(insertedLeadInfo[0]).to_not eq nil  
+        insertedLeadInfo =  insertedLeadInfo[0]      
+        @helper.addLogs("[Result ]   : Success\n")
+
 
     @driver.get "https://wework--staging.cs96.my.salesforce.com/console?tsid=02uF00000011Ncb"
+    @createoppEnt.goToCreateOppPageFromJourney(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
+    sleep(10)
+    @createoppEnt.createOppEnt('newOrg','building','close')
+    sleep(100)
+=begin
     @driver.find_element(:id, "phSearchInput").clear
     @driver.find_element(:id, "phSearchInput").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Email']
 
@@ -118,7 +131,7 @@ EnziUIUtility.switchToWindow(@driver, @driver.current_url())
     puts @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[@size - 1].attribute('id')
     puts @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[@size - 1 - 1].attribute('id')
     
-    frameid2 = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[@size - 1 - 1].attribute('id')
+    frameid2 = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[@size -2].attribute('id')
     puts frameid2
     puts "switching to frame"
     sleep(0)
@@ -128,7 +141,7 @@ EnziUIUtility.switchToWindow(@driver, @driver.current_url())
     @driver.find_element(:id,'actionDropdown').click
     sleep(5)
     @driver.find_element(:xpath, "//li[@id='action:7']/a/span").click
-
+=end
 
     sleep(200)
     

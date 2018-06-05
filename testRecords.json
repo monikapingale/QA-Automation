@@ -67,7 +67,6 @@
       }
     ],
   "CreateOpportunity":
-   [
 	    {
     		"lead":
           [
@@ -90,10 +89,8 @@
       				"country_Code__c": "US",
       				"leadSource": "Event"
       			}
-    		  ]
-	    },
-	    {
-		    "createOpp":
+    		  ],
+		    "Opportunity":
           [
       			{
       				"accountName": "test_Enterprise1",
@@ -105,9 +102,7 @@
       				"opportunityRole": "Decision Maker"
       			}
 		      ]
-	    }
-
-    ],	
+	    },	
   "MarketingLandingPage":
     [
       {"Name":"john.smith_camp_qaauto","Email":"","Phone":"8888888888","Company":"smith_company_qaauto","I need space for":"1-20 people","URL":"https://www-staging.wework.com/promos/apollo-offer"}

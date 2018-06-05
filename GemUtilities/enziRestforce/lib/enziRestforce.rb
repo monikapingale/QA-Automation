@@ -73,6 +73,7 @@ class EnziRestforce
 =end
 
   def getRecords(query)
+    puts query
 
     puts "in getRecords"
     record = @client.query_all("#{query}") #where emailId = #{emailId}")
@@ -197,8 +198,7 @@ class EnziRestforce
          Issue No.        :
     **************************************************************************************************************************************
 =end
-  def updateRecord(sObject,updated_values)
-    
+  def updateRecord(sObject,updated_values)    
     puts updated_values
     @client.update("#{sObject}",updated_values)
   end
