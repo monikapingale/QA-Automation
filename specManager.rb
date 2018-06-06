@@ -35,9 +35,9 @@ if !ARGV.empty? then
 
         specMap.fetch('case').each do |caseId|
           if ENV['RUN_ID'].nil? && specMap.key?('profile') && specMap.fetch('profile').size > 0
-            specs.concat(testRailUtility.getSpecLocations(caseId,specMap.fetch('case'),specMap.fetch('suit'),nil,specMap.fetch('project'),nil))
-          else
             specs.concat(testRailUtility.getSpecLocations(caseId,specMap.fetch('case'),specMap.fetch('suit'),nil,specMap.fetch('project'),specMap.fetch('profile')))
+          else
+           specs.concat(testRailUtility.getSpecLocations(caseId,specMap.fetch('case'),specMap.fetch('suit'),nil,specMap.fetch('project'),nil))
           end
 
         end
