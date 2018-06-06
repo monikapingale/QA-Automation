@@ -41,15 +41,17 @@ module EnziTestRailUtility
 			tempRunHolder = []
 			if !caseId.nil? then
 				testCase = getCase(caseId)
-				if ENV['RUN_ID']
+				if !ENV['RUN_ID'].nil?
+					specLocations.push(Hash["path"=>testCase.fetch('custom_spec_location'),"isBrowserDependent"=>testCase.fetch('custom_is_browser_dependent')])
+					return specLocations.uniq
+				else
 					if !profiles.nil? && profiles.size > 0
 						profiles.each do |profile|
 							tempRunHolder.push(addRun("#{getSuite(suit)['name']}-#{profile}",projectId,suitId,[caseId])['id'].to_s)
 						end
-						specLocations.push(Hash["path"=>testCase.fetch('custom_spec_location'),"isBrowserDependent"=>testCase.fetch('custom_is_browser_dependent')],'runId':tempRunHolder)
+						specLocations.push(Hash["path"=>testCase.fetch('custom_spec_location'),"isBrowserDependent"=>testCase.fetch('custom_is_browser_dependent')],'runId'=>tempRunHolder)
 					end
-				else
-					specLocations.push(Hash["path"=>testCase.fetch('custom_spec_location'),"isBrowserDependent"=>testCase.fetch('custom_is_browser_dependent')])
+					
 				end
 			else
 				if !sectionId.nil? && getSuites(projectId).size == 1  then
@@ -57,7 +59,7 @@ module EnziTestRailUtility
 					tempCaseHolder = nil
 					getCases(projectId, nil, sectionId).each do |testCase|
 						if testCase.key?('custom_spec_location') && !testCase.fetch('custom_spec_location').nil? then
-							if ENV['RUN_ID']
+							if !ENV['RUN_ID'].nil?
 								specLocations.push(Hash["path"=>testCase.fetch('custom_spec_location'),"isBrowserDependent"=>testCase.fetch('custom_is_browser_dependent')])
 								break;
 							else
@@ -77,6 +79,7 @@ module EnziTestRailUtility
             end
 					end
 				else
+					puts "Gettingsssssssssssssssssss"
 					arrCaseIds = Array.new
 					tempCaseHolder = nil
 					#Getting cases from suit id only if project is operating in single suit mode otherwise required
@@ -84,7 +87,7 @@ module EnziTestRailUtility
 						if !sectionId.nil? then
 							getCases(projectId, suitId, sectionId).each do |testCase|
 								if testCase.key?('custom_spec_location') && !testCase.fetch('custom_spec_location').nil? then
-									if ENV['RUN_ID']
+									if !ENV['RUN_ID'].nil?
 										specLocations.push(Hash["path"=>testCase.fetch('custom_spec_location'),"isBrowserDependent"=>testCase.fetch('custom_is_browser_dependent')])
 										break;
 									else
@@ -102,13 +105,14 @@ module EnziTestRailUtility
 								specLocations.push(Hash["path"=>tempCaseHolder.fetch('custom_spec_location'),"isBrowserDependent"=>tempCaseHolder.fetch('custom_is_browser_dependent') , "runId" => tempRunHolder])
                 end
               end
+              puts specLocations
 						else
 							arrCaseIds = Array.new
 							tempCaseHolder = nil
 							getSections(suitId,projectId).each do |section|
 								getCases(projectId, suitId, section['id']).each do |testCase|
 									if testCase.key?('custom_spec_location') && !testCase.fetch('custom_spec_location').nil? then
-										if ENV['RUN_ID']
+										if !ENV['RUN_ID'].nil?
 											specLocations.push(Hash["path"=>testCase.fetch('custom_spec_location'),"isBrowserDependent"=>testCase.fetch('custom_is_browser_dependent')])
 											break;
 										else
@@ -167,7 +171,7 @@ end
 									getSections(suit['id'],projectId).each do |section|
 										getCases(projectId, suit['id'], section['id']).each do |testCase|
 											if testCase.key?('custom_spec_location') && !testCase.fetch('custom_spec_location').nil? then
-												if ENV['RUN_ID']
+												if !ENV['RUN_ID'].nil?
 													specLocations.push(Hash["path"=>testCase.fetch('custom_spec_location'),"isBrowserDependent"=>testCase.fetch('custom_is_browser_dependent')])
 													break;
 												else
