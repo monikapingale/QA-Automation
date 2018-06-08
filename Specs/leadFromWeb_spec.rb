@@ -1,8 +1,8 @@
 
 require "selenium-webdriver"
 require "rspec"
-#require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
-require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
+require_relative File.expand_path('',Dir.pwd )+"/specHelper.rb"
+#require_relative File.expand_path('..',Dir.pwd )+"/specHelper.rb"
 require_relative '../PageObjects/leadFromWeb.rb'
 include RSpec::Expectations
 

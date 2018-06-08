@@ -17,13 +17,13 @@
 require 'enziUIUtility'
 require 'enziSalesforce'
 require 'enziRestforce'
-#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-#require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
-#require_relative File.expand_path('',Dir.pwd)+"/GemUtilities/sfRESTService.rb"
+require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+require_relative File.expand_path('',Dir.pwd)+"/GemUtilities/sfRESTService.rb"
 
-require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
-require_relative File.expand_path('../',Dir.pwd)+"/GemUtilities/sfRESTService.rb"
+#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
+#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+#require_relative File.expand_path('../',Dir.pwd)+"/GemUtilities/sfRESTService.rb"
 
 #require_relative File.expand_path('',Dir.pwd )+ "/credentials.yaml"
 #require_relative File.expand_path(Dir.pwd+"/GemUtilities/testRecords.json")
@@ -39,17 +39,17 @@ class Helper
 =end
 def initialize()
   #@testRailUtility = EnziTestRailUtility::TestRailUtility.new('team-qa@enzigma.com','7O^dv0mi$IZHf4Cn')
-  #@runId = ENV['RUN_ID']
-  @runId = '1698'
+  @runId = ENV['RUN_ID']
+  #@runId = '1698'
   @objRollbar = RollbarUtility.new()
   
-  #@sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
-  #@timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
-  #@mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
+  @sObjectRecords = JSON.parse(File.read(File.expand_path('',Dir.pwd ) + "/testRecords.json"))
+  @timeSettingMap = YAML.load_file(Dir.pwd + '/timeSettings.yaml')
+  @mapCredentials = YAML.load_file(Dir.pwd + '/credentials.yaml')
 
-  @sObjectRecords = JSON.parse(File.read(File.expand_path('..',Dir.pwd ) + "/testRecords.json"))
-  @timeSettingMap = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/timeSettings.yaml')
-  @mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
+  #@sObjectRecords = JSON.parse(File.read(File.expand_path('..',Dir.pwd ) + "/testRecords.json"))
+  #@timeSettingMap = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/timeSettings.yaml')
+  #@mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
   @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
     
   @testRailUtility = EnziTestRailUtility::TestRailUtility.new(@mapCredentials['TestRail']['username'],@mapCredentials['TestRail']['password'])
