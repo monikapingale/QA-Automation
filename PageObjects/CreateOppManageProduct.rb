@@ -35,7 +35,7 @@ class CreateOppManageProduct
         Issue No.       :
   **************************************************************************************************************************************
 =end
-  def initialize(helper,driver)
+  def initialize(driver,helper)
     puts "in CreateOppManageProduct::initialize"
     @driver=driver
     @helper=helper
@@ -54,7 +54,28 @@ class CreateOppManageProduct
     #@testDataJSON['Opportunity'][0]['accountName']="test_Enterprise1#{rand(99999999999999)}"
     #@oppAccName=@testDataJSON['Opportunity'][0]['accountName']
 
-    @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
+    @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
+  end
+
+
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def loginToSalesforce()
+    #puts "in AccountAssignmentFromLead:loginToSalesforce"
+    @driver.get "https://test.salesforce.com/login.jsp?pw=#{@mapCredentials['Staging']['WeWork NMD User']['password']}&un=#{@mapCredentials['Staging']['WeWork NMD User']['username']}"
+    #switchToClassic(@driver)
+    #EnziUIUtility.wait(@driver,:id, "phHeaderLogoImage",@timeSettingMap['Wait']['Environment']['Lightening']['Max'])
+    return true
+      #EnziUIUtility.wait(@driver,:id, "phHeaderLogoImage",60)
+  rescue Exception => e
+    puts e
+    return false
   end
 
 =begin
@@ -104,23 +125,34 @@ class CreateOppManageProduct
   end
 
   def createNewOrg()
+    puts "in createNewOrg"
     #@testDataJSON['CreateOpportunity']['Opportunity'][0]['Number_of_Full_Time_Employees__c']
     @wait.until {!@driver.find_element(:id,"spinner").displayed?}
     @driver.find_element(:id, "OrgButton").click
     @testDataJSON['CreateOpportunity']['Opportunity'][0]['accountName'] = @testDataJSON['CreateOpportunity']['Opportunity'][0]['accountName'] + "#{rand(99999999999999)}"
-    puts @testDataJSON['CreateOpportunity']['Opportunity'][0]['accountName']
+    
     @driver.find_element(:id, "Account").clear
     @driver.find_element(:id, "Account").send_keys @testDataJSON['CreateOpportunity']['Opportunity'][0]['accountName']
     @driver.find_element(:id, "Number_of_Full_Time_Employees__c").clear
     @driver.find_element(:id, "Number_of_Full_Time_Employees__c").send_keys @testDataJSON['CreateOpportunity']['Opportunity'][0]['Number_of_Full_Time_Employees__c']
-    @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div/div[3]/div/div/div[3]/button").click
+    #//*[@id="lightning"]/div[3]/div/div[3]/div[1]/div/div[3]/button[1]
+    @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div/div[3]/div[1]/div/div[3]/button[1]").click
+    puts "Org account created with name-----> #{@testDataJSON['CreateOpportunity']['Opportunity'][0]['accountName']}"
   end
 
   def selectBuilding
-    @driver.find_element(:id, "input-1-radio-0").click
+    puts "selecting building"
+    #sleep(10)
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    #@wait.until {@driver.find_element(:id,"input-1-radio-0").displayed?}
+    #//*[@id="lightning"]/div[3]/div/div[2]/div[5]/fieldset/div/div/div[1]/lightning-radio-group/fieldset/div/span[1]/label
+    @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div/div[2]/div[5]/fieldset/div/div/div[1]/lightning-radio-group/fieldset/div/span[1]/label/span[2]").click
+    #@helper.getElementByAttribute(@driver, :tag_name, 'label', 'for', 'input-1-radio-0').click
+    #@driver.find_element(:id, "input-1-radio-0").click
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
 
     @driver.find_element(:id, "primaryBuilding").clear
-    @driver.find_element(:id, "primaryBuilding").send_keys @testDataJSON['CreateOpportunity']['Opportunity'][0]['building']
+    @driver.find_element(:id, "primaryBuilding").send_keys @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeographyName']
 
     #building selected on opportunity
     building1 = @driver.find_element(:id,"primaryBuildinglist")
@@ -131,15 +163,28 @@ class CreateOppManageProduct
     ulist= building1.find_elements(:tag_name,"ul")[0]
     list=ulist.find_elements(:tag_name,"li")[1]
     @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    sleep(3)
     list.click
     @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    puts "building selected---->"
+  rescue Exception => e
+    puts e
+    raise e
   end
 
   def selectGeography
-    @driver.find_element(:id, "input-1-radio-1").click
+    puts 'select geography'
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    #//*[@id="lightning"]/div[3]/div/div[2]/div[5]/fieldset/div/div/div[1]/lightning-radio-group/fieldset/div/span[2]/label
+    @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div/div[2]/div[5]/fieldset/div/div/div[1]/lightning-radio-group/fieldset/div/span[2]/label/span[2]").click
+
+    
+    #@driver.find_element(:id, "input-1-radio-1").click
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
 
     @driver.find_element(:id, "googleLocation").clear
-    @driver.find_element(:id, "googleLocation").send_keys @testDataJSON['CreateOpportunity']['Opportunity'][0]['building']
+    @driver.find_element(:id, "googleLocation").send_keys @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeographyName']
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
 
     #building selected on opportunity
     geography = @driver.find_element(:id,"googleLocationlist")
@@ -152,10 +197,152 @@ class CreateOppManageProduct
     @wait.until {!@driver.find_element(:id,"spinner").displayed?}
     list.click
     @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    puts 'geography selected--->' 
+  end
 
-   # //*[@id="googleLocationlist"]/ul/li[2]/span/div/div
-    
 
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def addProducts()
+    puts 'in add products'
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    @wait.until {@driver.find_element(:id,"Family:0").displayed?}
+
+    #select product family 
+    puts "select product family"
+    @driver.find_element(:id, "Family:0").click
+    Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "Family:0")).select_by(:text, @testDataJSON['CreateOpportunity']['Product'][0]['ProductFamily'])
+
+
+    #@driver.find_element(:id, "Family:0").click
+    #resultData=@driver.find_element(:xpath,"//*[@id='Family:0']/option[2]").click
+    #puts resultData
+
+    #@driver.find_element(:id, "Family:0").click
+    #@driver.find_element(:id, "Product2Id:0").click
+    #@driver.find_element(:xpath,"//*[@id='Product2Id:0']/option[2]").click
+    #@driver.find_element(:id, "Product2Id:0").click
+
+    #select product
+    puts 'select product'
+    @driver.find_element(:id, "Product2Id:0").click
+    Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "Product2Id:0")).select_by(:text, @testDataJSON['CreateOpportunity']['Product'][0]['Product'])
+
+
+    #if desk
+    if @testDataJSON['CreateOpportunity']['Product'][0]['Product'] == 'Desk' then
+      puts 'select product cateogory as Product is Desk'
+      @driver.find_element(:id, "Product_Category__c:0").click
+      Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "Product_Category__c:0")).select_by(:text, @testDataJSON['CreateOpportunity']['Product'][0]['ProductCategory'])
+    end
+
+    puts 'select quantity'
+    @driver.find_element(:id, "Quantity:0").click
+    @driver.find_element(:id, "Quantity:0").clear
+    @driver.find_element(:id, "Quantity:0").send_keys @testDataJSON['CreateOpportunity']['Product'][0]['Quantity']
+
+
+    if @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeography'] == 'Building' then
+      puts 'set building'
+      @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div[4]/div/div/div[7]/div/div[2]/div[3]/div[2]/div/div/span/label/span[2]").click
+      @driver.find_element(:id, "Building__c:0").click
+      @driver.find_element(:id, "Building__c:0").clear
+      puts "building---> #{@testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeographyName']}"
+      @driver.find_element(:id, "Building__c:0").send_keys @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeographyName']
+      puts @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeographyName']
+      sleep(1)
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      sleep(1)
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      sleep(1)
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      @driver.find_element(:xpath, "//div[@id='Building__c:0list']/ul/li[2]/span/div/div/mark").click
+
+    elsif @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeography'] == 'Geography' then
+
+        puts "set geography"
+
+        @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div[4]/div[1]/div/div[7]/div/div[2]/div[3]/div[2]/div[1]/div/span[2]/label/span").click
+        sleep(2)
+        #//*[@id="lightning"]/div[3]/div[4]/div[1]/div/div[7]/div/div[2]/div[3]/div[2]/div[1]/div/span[2]/label
+        @driver.find_element(:id, "Geography__c:0").click
+        @driver.find_element(:id, "Geography__c:0").clear
+        @driver.find_element(:id, "Geography__c:0").send_keys  @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeographyName']
+        puts "search"
+        #geography on manage product is selected
+        puts "78787877"
+        sleep(1)
+        @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+        sleep(1)
+        @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+        sleep(1)
+        @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+        @driver.find_element(:xpath, "//div[@id='Geography__c:0list']/ul/li[2]/span/div/div/mark").click
+        #//*[@id="Building__c:0list"]/ul/li[2]
+        
+        #geo = @helper.getElementByAttribute(@driver,:tag_name,'div','title',@testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeographyName'])
+        
+        #puts geo[0].attribute('title')
+        #puts geo[1].attribute('title')
+        #geo[0].click
+
+#puts "121215454545124"
+        #sleep(10)
+=begin
+        #geo = @helper.getElementByAttribute(@driver,:tag_name,'div','title',@testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeographyName'])
+        #puts geo[0].attribute('title')
+        #puts geo[1].attribute('title')
+        #geo[0].click
+        #geo[1].click
+        #outerContainer = @driver.find_element(:id, "Geography__c:0list")
+        puts 'outerContainer found'
+        #outerContainer = @driver.find_element(:id, "Geography__c:0list")
+        @wait.until {!outerContainer.find_element(:id,"spinner").displayed?}
+        puts "3"
+        geolist = outerContainer.find_elements(:tag_name,"ul")[0]
+        puts 'geolist found'
+        @wait.until {geolist.displayed?}
+        @wait.until {!outerContainer.find_element(:id,"spinner").displayed?}
+        geo= geolist.find_elements(:tag_name,"li")[1]
+        puts 'geo found'
+        @wait.until {geo.displayed?}
+        puts "78"
+        #geo.click
+        puts "89"
+=end
+        @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+        puts "completed"
+    end
+        
+    #select primary
+    if @testDataJSON['CreateOpportunity']['Product'][0]['isPrimaryProductToSet'] == 'true' then
+      @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div[4]/div[2]/div[1]/div[3]/div[2]/div[1]/div/div/span/label/span").click
+    end
+    #CLICK ON SAVE PRODUCT
+    if @testDataJSON['CreateOpportunity']['Product'][0]['Action'] == 'Save Product' then
+      puts 'click on save product'
+      sleep(5)
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      #//*[@id="lightning"]/div[3]/div[5]/button[1]
+      @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div[5]/button[1]").click
+    elsif @testDataJSON['CreateOpportunity']['Product'][0]['Action'] == 'Close' then
+      puts 'click on close'
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      #//*[@id="lightning"]/div[3]/div[5]/button[2]
+      @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div[5]/button[2]").click
+    end
+    puts "sleep for 200"
+    sleep(200)
+  rescue Exception => e
+    raise e
   end
 
 =begin
@@ -166,27 +353,38 @@ class CreateOppManageProduct
         Issue No.       :
   **************************************************************************************************************************************
 =end
-  def createOppEnt(org,buildingOrGeography,action)
+  def createOppEnt()
     puts "in createOppEnt"
     #@driver.find_element(:name, "create_opportunity").click
     @wait.until {!@driver.find_element(:id,"spinner").displayed?}
     
     #select org
-    if org == 'newOrg' then
+    if @testDataJSON['CreateOpportunity']['Opportunity'][0]['account'] == 'newOrg' then
       createNewOrg()
-    elsif org == 'searchOrg' then
+    elsif @testDataJSON['CreateOpportunity']['Opportunity'][0]['account'] == 'searchOrg' then
+      puts 'search for org'
       #searh and select
-    elsif org == 'checkOrg' then 
+      @driver.find_element(:id, "searchOrg").click
+      @driver.find_element(:id, "searchOrg").clear
+      @driver.find_element(:id, "searchOrg").send_keys @testDataJSON['CreateOpportunity']['Opportunity'][0]['accountName']
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      sleep(5)
+      puts 'select from list'
+      #@driver.find_element(:id, "searchOrg").click
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      @driver.find_element(:xpath, "//div[@id='searchOrglist']/ul/li[2]/span/div/div").click
+    elsif @testDataJSON['CreateOpportunity']['Opportunity'][0]['account'] == 'checkOrg' then 
       #check for correct org
     end
     
     #select opp role
+    puts "select opp role"
     Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "OppRole")).select_by(:text, @testDataJSON['CreateOpportunity']['Opportunity'][0]['opportunityRole'])
 
     #select building or geography
-    if buildingOrGeography == 'building' then
+    if @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeographyName'] == 'building' then
       selectBuilding()      
-    elsif buildingOrGeography == 'geography' then
+    elsif @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeographyName'] == 'geography' then
       selectGeography()
     end
       
@@ -196,26 +394,89 @@ class CreateOppManageProduct
     #@helper.getElementByAttribute(@driver,:tag_name ,"button","title",@testDataJSON['Opportunity'][0]['building'])[0].click
 
     #select close date
+    puts "set close date"
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
     @driver.find_element(:id, "closeDate").click
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    puts "#{Date.today.to_s}"
+    @wait.until {@driver.find_element(:id,"2018-06-21").displayed?}
     #@driver.find_element(:css, "lightning-icon.slds-icon-utility-right.slds-icon_container > lightning-primitive-icon > svg.slds-icon.slds-icon-text-default.slds-icon_xx-small > use").click
     @driver.find_element(:id, "2018-06-21").click
 
+
+    #lead source
+    if !@testDataJSON['CreateOpportunity']['Opportunity'][0]['LeadSource'] == '' ||  !@testDataJSON['CreateOpportunity']['Opportunity'][0]['LeadSource'] == nil then
+      puts "select lead source"
+      @driver.find_element(:id, "leadSource").click
+      Selenium::WebDriver::Support::Select.new(@driver.find_element(:id, "leadSource")).select_by(:text, @testDataJSON['CreateOpportunity']['Opportunity'][0]['LeadSource'])
+    end
+    
+
+    #lead source details
+    if !@testDataJSON['CreateOpportunity']['Opportunity'][0]['lead_Source_Detail'] == '' ||  !@testDataJSON['CreateOpportunity']['Opportunity'][0]['lead_Source_Detail'] == nil then
+      puts "set lead source details "
+      @driver.find_element(:id, "leadSourceDetail").click
+      @driver.find_element(:id, "leadSourceDetail").clear
+      @driver.find_element(:id, "leadSourceDetail").send_keys @testDataJSON['CreateOpportunity']['Opportunity'][0]['lead_Source_Detail']
+    end
+    
     #@driver.find_element(:id, "Date.today.next_day(3)").click
 
     #write description
+    puts "write description"
     @driver.find_element(:id, "description").clear
-    @driver.find_element(:id, "description").send_keys "test data"
-
+    @driver.find_element(:id, "description").send_keys @testDataJSON['CreateOpportunity']['Opportunity'][0]['Description']
+    puts "action--->"
     #click button save - add product - close
-    if action == 'save&close' then
-      @helper.getElementByAttribute(@driver, :tag_name, 'button', 'title', 'Save & Close').click
-    elsif action == 'addProducts' then
+    if @testDataJSON['CreateOpportunity']['Opportunity'][0]['Action'] == 'save&close' then
+      puts 'save&close'
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
 
-      @helper.getElementByAttribute(@driver, :tag_name, 'button', 'title', 'Add Products').click
+       @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div/div[2]/div[10]/div/button[1]").click
+       #//*[@id="lightning"]/div[3]/div/div[2]/div[11]/div/button[1]
+       #//*[@id="lightning"]/div[3]/div/div[2]/div[11]/div/button[1]
+       #//*[@id="lightning"]/div[3]/div/div[2]/div[10]/div/button[1]
+      #@helper.getElementByAttribute(@driver, :tag_name, 'button', 'title', 'Save & Close').click
+    elsif @testDataJSON['CreateOpportunity']['Opportunity'][0]['Action'] == 'addProducts' then
+      puts 'addProducts'
 
-    elsif action == 'close' then
-        @helper.getElementByAttribute(@driver, :tag_name, 'button', 'title', 'Close').click
-      
+      #//*[@id="lightning"]/div[3]/div/div[2]/div[10]/div/button[2]
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      #//*[@id="lightning"]/div[3]/div/div[2]/div[9]/div/button[2]
+      #//*[@id="lightning"]/div[3]/div/div[2]/div[11]/div/button[2]
+      @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div/div[2]/div[10]/div/button[2]").click
+      #@helper.getElementByAttribute(@driver, :tag_name, 'button', 'title', 'Add Products').click
+      addProducts()
+    elsif @testDataJSON['CreateOpportunity']['Opportunity'][0]['Action'] == 'close' then
+      puts 'close----->'
+      @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+      #//*[@id="lightning"]/div[3]/div/div[2]/div[11]/div/button[3]
+      #//*[@id="lightning"]/div[3]/div/div[2]/div[10]/div/button[3]
+      @driver.find_element(:xpath, "//div[@id='lightning']/div[3]/div/div[2]/div[10]/div/button[3]").click
+=begin
+        lightningDiv = @driver.find_element(:id, "lightning")
+
+        buttons = lightningDiv.find_elements(:tag_name, "button")
+        puts buttons.size
+
+        buttons.each do |button|
+          puts "121"
+          puts button.attribute('title')
+          if button.attribute('title') == 'Close' then
+            sleep(30)
+            puts button.attribute('title')
+            #@wait.until {button.displayed?}
+            puts 'clicking on button'
+            button.click
+            break
+          end
+        end
+=end   
+
+        #button = @helper.getElementByAttribute(@driver, :tag_name, 'button', 'title', 'Close')
+        #@wait.until {button.displayed?}
+        #sleep(10)
+        #button.click     
     end
         
 
@@ -223,43 +484,17 @@ class CreateOppManageProduct
     #click on add product
     
 
-    @driver.find_element(:id, "Family:0").click
-    resultData=@driver.find_element(:xpath,"//*[@id='Family:0']/option[2]").click
-    puts resultData
-
-    @driver.find_element(:id, "Family:0").click
-    @driver.find_element(:id, "Product2Id:0").click
-    @driver.find_element(:xpath,"//*[@id='Product2Id:0']/option[2]").click
-    @driver.find_element(:id, "Product2Id:0").click
-    @driver.find_element(:id, "Quantity:0").click
-    @driver.find_element(:id, "Quantity:0").clear
-    @driver.find_element(:id, "Quantity:0").send_keys "150"
-    @driver.find_element(:id, "Geography__c:0").click
-    sleep(4)
-    @driver.find_element(:id, "Geography__c:0").send_keys  @testDataJSON['Opportunity'][0]['geography']
-
-    #geography on manage product is selected
-
-    outerContainer = @driver.find_element(:id, "Geography__c:0list")
-    outerContainer = @driver.find_element(:id, "Geography__c:0list")
-    @wait.until {!outerContainer.find_element(:id,"spinner").displayed?}
-    geolist=outerContainer.find_elements(:tag_name,"ul")[0]
-    @wait.until {geolist.displayed?}
-    @wait.until {!outerContainer.find_element(:id,"spinner").displayed?}
-    geo= geolist.find_elements(:tag_name,"li")[1]
-    @wait.until {geo.displayed?}
-    geo.click
-    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    
  end
 
 
  def  goToCreateOppPageFromJourney(email)
-  puts "in goToCreateOppPageFromJourney"
-  puts "search email"
+    puts "in goToCreateOppPageFromJourney"
+    puts "search email"
     #@wait.until {!@driver.find_element(:id,"spinner").displayed?}
     @wait.until {@driver.find_element(:id,"phSearchInput").displayed?}
     @driver.find_element(:id, "phSearchInput").clear
-    @driver.find_element(:id, "phSearchInput").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Email']
+    @driver.find_element(:id, "phSearchInput").send_keys "#{email}"
     sleep(2)
     puts "select search output"
     #sleep(5)
@@ -302,7 +537,8 @@ class CreateOppManageProduct
     @driver.switch_to.frame(frameid2)
     puts "click on actionDropdown"
     #sleep(10)
-    #@wait.until {!@driver.find_element(:id,"spinner").displayed?}    
+    #@wait.until {!@driver.find_element(:id,"spinner").displayed?}
+    EnziUIUtility.wait(@driver,:id, "Primary_Email__c",@timeSettingMap['Wait']['Environment']['Lightening']['Max'])
     @wait.until {@driver.find_element(:id,"Primary_Email__c").displayed?}
     @wait.until {@driver.find_element(:id,"actionDropdown").displayed?}
     @driver.find_element(:id,'actionDropdown').click
@@ -315,13 +551,12 @@ class CreateOppManageProduct
 
     puts "sw to frame1111"
     EnziUIUtility.switchToWindow(@driver, @driver.current_url())
-    sleep(10)
+    sleep(0)
     @size = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]").size
     puts @size
     frameid3 = @driver.find_elements(:xpath, "//iframe[contains(@id, 'ext-comp-')]")[@size - 2].attribute('id')
     puts frameid3
     puts "switching to frame"
-    sleep(0)
     @driver.switch_to.frame(frameid3)
     puts "fill the form----"
   end

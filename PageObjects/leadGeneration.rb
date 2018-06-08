@@ -43,9 +43,11 @@ class LeadGeneration
     @timeSettingMap = @helper.instance_variable_get(:@timeSettingMap)
     @mapCredentials = @helper.instance_variable_get(:@mapCredentials)
     @salesforceBulk = @helper.instance_variable_get(:@salesforceBulk)
+
     @restforce = @helper.instance_variable_get(:@restForce)
     @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
-    #@objSFRest = SfRESTService.new(@mapCredentials['Staging']['WeWork System Administrator']['grant_type'],@mapCredentials['Staging']['WeWork System Administrator']['client_id'],@mapCredentials['Staging']['WeWork System Administrator']['client_secret'],@mapCredentials['Staging']['WeWork System Administrator']['username'],@mapCredentials['Staging']['WeWork System Administrator']['password'])
+    @objSFRest = @helper.instance_variable_get(:@sfRESTService)
+
     #recordTypeIds = Salesforce.getRecords(@salesforceBulk,'RecordType',"Select id,Name from RecordType where SObjectType = 'Account'")
     #@userInfo = @restForce.getUserInfo
     recordTypeIds = @helper.getSalesforceRecordByRestforce("Select id,Name from RecordType where SObjectType = 'Account'")
@@ -60,6 +62,27 @@ class LeadGeneration
     #puts "mapRecordType"
     #puts @mapRecordType
     #createCommonTestData()
+  end
+
+=begin
+  ************************************************************************************************************************************
+        Author          :   QaAutomationTeam
+        Description     :   This method authenticate user  and return @client object.
+        Created Date    :   21 April 2018
+        Issue No.       :
+  **************************************************************************************************************************************
+=end
+  def createLeadFromRestApi()  
+    payload =  @testDataJSON['LeadJSON'][0] 
+    puts "*********************************"
+    puts payload.to_json
+    puts "*********************************"
+
+    getResponse = @objSFRest.postData(''+payload.to_json,"#{@testDataJSON['ServiceURL'][0]['inboundlead']}")
+    puts "*********************************"
+    puts getResponse
+    puts "*********************************"
+    return getResponse['lead_sfid']
   end
 
 =begin
@@ -106,6 +129,49 @@ class LeadGeneration
 =end
   def leadCreateSfBulk()
     Salesforce.createRecords(@salesforceBulk, 'Lead', @testDataJSON["AccountAssignment"]["GenerateLeadFromWeb"][0]["BuildingName"])
+  end
+
+
+  def createLeadFromWebEnt(emailId)
+      @driver.get @testDataJSON["CreateLeadFromWebEnt"][0]["URL"]
+      sleep(10)
+      EnziUIUtility.wait(@driver, :name, "job_title", @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
+      #(driver, elementFindBy, elementIdentity, attributeName, attributeValue)
+      contactName = @helper.getElementByAttribute(@driver,:tag_name,'input','name','contact_name','id',nil)
+      puts contactName.attribute('placeholder')
+      contactName.click
+      contactName.send_keys @testDataJSON["CreateLeadFromWebEnt"][0]["Name"]
+
+      @driver.find_element(:xpath, "(//input[@name='contact_name'])[2]").click
+      @driver.find_element(:xpath, "(//input[@name='contact_name'])[2]").clear
+      @driver.find_element(:xpath, "(//input[@name='contact_name'])[2]").send_keys @testDataJSON["CreateLeadFromWebEnt"][0]["Name"]
+      @driver.find_element(:xpath, "(//input[@name='email'])[2]").click
+      @driver.find_element(:xpath, "(//input[@name='email'])[2]").clear
+      @driver.find_element(:xpath, "(//input[@name='email'])[2]").send_keys emailId
+      @driver.find_element(:xpath, "//input[@id='']").click
+      @driver.find_element(:xpath, "//input[@id='']").clear
+      @driver.find_element(:xpath, "//input[@id='']").send_keys @testDataJSON["CreateLeadFromWebEnt"][0]["Phone"]
+      @driver.find_element(:name, "job_title").click
+      @driver.find_element(:name, "job_title").clear
+      @driver.find_element(:name, "job_title").send_keys @testDataJSON["CreateLeadFromWebEnt"][0]["JobTitle"]
+      @driver.find_element(:xpath, "(//input[@name='company_name'])[2]").click
+      @driver.find_element(:xpath, "(//input[@name='company_name'])[2]").clear
+      @driver.find_element(:xpath, "(//input[@name='company_name'])[2]").send_keys @testDataJSON["CreateLeadFromWebEnt"][0]["Company"]
+      @driver.find_elements(:name, "notes")[@driver.find_elements(:name, "notes").size - 1].click
+      @driver.find_elements(:name, "notes")[@driver.find_elements(:name, "notes").size - 1].clear
+      @driver.find_elements(:name, "notes")[@driver.find_elements(:name, "notes").size - 1].send_keys @testDataJSON["CreateLeadFromWebEnt"][0]["Notes"]
+      @driver.find_element(:name, "move_in_location").click
+      @driver.find_element(:name, "move_in_location").clear
+      @driver.find_element(:name, "move_in_location").send_keys @testDataJSON["CreateLeadFromWebEnt"][0]["MoveInLocation"]
+      @driver.find_element(:name, "move_in_date").click
+      Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "move_in_date")).select_by(:text, @testDataJSON["CreateLeadFromWebEnt"][0]["MoveInDate"])
+      @driver.find_element(:name, "company_size").click
+      Selenium::WebDriver::Support::Select.new(@driver.find_element(:name, "company_size")).select_by(:text, @testDataJSON["CreateLeadFromWebEnt"][0]["CompanySize"])
+      return true
+    rescue Exception => e
+      puts e
+      raise e
+      return false
   end
 
 =begin
@@ -776,6 +842,16 @@ end
     end
   end
 
+  def checkJobStatus
+      checkJobStatus = 'k'
+      until checkJobStatus.nil?
+        @helper.addLogs("[Step ] : Waiting for apex job completion")
+        sleep(10)
+        checkJobStatus = @helper.instance_variable_get(:@restForce).getRecords("SELECT JobType,MethodName,TotalJobItems,ApexClassID,status FROM AsyncApexJob WHERE apexclassid = '01pF0000004PFaX' AND status != 'Completed'")[0]
+        !checkJobStatus.nil? ? @helper.addLogs("[Step ] : Status is - #{checkJobStatus.fetch('Status')}"): @helper.addLogs("[Result ] : Job Completed")
+      end
+end
+
 =begin
   ************************************************************************************************************************************
         Author          :   QaAutomationTeam
@@ -787,9 +863,10 @@ end
   def fetchLeadDetails(leadEmailId)
     puts "in Lead::fetchLeadDetails"
     puts leadEmailId
-    sleep(20)
+    #sleep(20)
     lead = nil
     index = 0
+    checkJobStatus()
     until !lead.nil? && lead[0] != nil do
       if index == 3 then
         puts "breaking loop"
@@ -797,8 +874,8 @@ end
       end
       puts index
       puts "get lead record after 30 sec"      
-      sleep(30)
-      lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Locale__c,Move_In_Time_Frame__c,Promo_Code__c,Type__c,HasOptedOutOfEmail,Interested_in_Number_of_Desks__c,Generate_Journey__c,Account__c,Market__c,Has_Active_Journey__c,Markets_Interested__c,Referrer__c,Referral_Company_Name__c,Referrer_Name__c,Referrer_Email__c,RecordType.Id,RecordType.Name,Company,CreatedDate,Phone,Email,Company_Size__c,Status,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id,Owner.Name,Journey_Created_On__c,Locations_Interested__c,Building_Interested_Name__c,Building_Interested_In__c,Number_of_Full_Time_Employees__c,Country_Code__c,Marketing_Consent__c,Ts_and_Cs_Consent__c,Interested_in_Number_of_Desks_Range__c,Interested_in_Number_of_Desks_Min__c,Interested_in_Number_of_Desks_Max__c,Product_Line__c,Email_Quality__c FROM Lead WHERE email = '#{leadEmailId}'")
+      sleep(20)
+      lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Locale__c,Move_In_Time_Frame__c,Promo_Code__c,Type__c,HasOptedOutOfEmail,Interested_in_Number_of_Desks__c,Generate_Journey__c,Account__c,Market__c,Has_Active_Journey__c,Markets_Interested__c,Referrer__c,Referral_Company_Name__c,Referrer_Name__c,Referrer_Email__c,RecordType.Id,RecordType.Name,Company,CreatedDate,Phone,Email,Company_Size__c,Status,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id,Owner.Name,Journey_Created_On__c,Locations_Interested__c,Building_Interested_Name__c,Industry,Quick_Quote_Location__c,Building_Interested_In__c,Number_of_Full_Time_Employees__c,Referral_Fail_Reason__c,Country_Code__c,Marketing_Consent__c,Ts_and_Cs_Consent__c,Interested_in_Number_of_Desks_Range__c,Interested_in_Number_of_Desks_Min__c,Affiliate_Consent__c,Interested_in_Number_of_Desks_Max__c,Product_Line__c,Email_Quality__c,Referrer__r.Id FROM Lead WHERE email = '#{leadEmailId}'")
       index  = index + 1
     end
     if index != 3 then

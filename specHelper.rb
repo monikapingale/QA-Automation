@@ -19,9 +19,11 @@ require 'enziSalesforce'
 require 'enziRestforce'
 #require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
 #require_relative File.expand_path('',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+#require_relative File.expand_path('',Dir.pwd)+"/GemUtilities/sfRESTService.rb"
 
 require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
 require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
+require_relative File.expand_path('../',Dir.pwd)+"/GemUtilities/sfRESTService.rb"
 
 #require_relative File.expand_path('',Dir.pwd )+ "/credentials.yaml"
 #require_relative File.expand_path(Dir.pwd+"/GemUtilities/testRecords.json")
@@ -50,11 +52,12 @@ def initialize()
   @mapCredentials = YAML.load_file(File.expand_path('..',Dir.pwd ) + '/credentials.yaml')
   @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
     
-
   @testRailUtility = EnziTestRailUtility::TestRailUtility.new(@mapCredentials['TestRail']['username'],@mapCredentials['TestRail']['password'])
   #puts @mapCredentials['Staging']['WeWork System Administrator']['username']
   #puts @mapCredentials['Staging']['WeWork System Administrator']['password']
   #@salesforceBulk = Salesforce.login(@mapCredentials['Staging']['WeWork System Administrator']['username'], @mapCredentials['Staging']['WeWork System Administrator']['password'], true)
+  #SfRESTService.new(@mapCredentials['Staging']['WeWork System Administrator']['grant_type'],@mapCredentials['Staging']['WeWork System Administrator']['client_id'],@mapCredentials['Staging']['WeWork System Administrator']['client_secret'],@mapCredentials['Staging']['WeWork System Administrator']['username'],@mapCredentials['Staging']['WeWork System Administrator']['password'])
+  @sfRESTService = SfRESTService.new(@mapCredentials['Staging']['WeWork System Administrator']['grant_type'],@mapCredentials['Staging']['WeWork System Administrator']['client_id'],@mapCredentials['Staging']['WeWork System Administrator']['client_secret'],@mapCredentials['Staging']['WeWork System Administrator']['username'],@mapCredentials['Staging']['WeWork System Administrator']['password'])
   @restForce = EnziRestforce.new(@mapCredentials['Staging']['WeWork System Administrator']['username'],@mapCredentials['Staging']['WeWork System Administrator']['password'],@mapCredentials['Staging']['WeWork System Administrator']['client_id'],@mapCredentials['Staging']['WeWork System Administrator']['client_secret'],true)
 end
 
@@ -98,16 +101,39 @@ end
         Issue No.       :
   **************************************************************************************************************************************
 =end
-  def getElementByAttribute(driver, elementFindBy, elementIdentity, attributeName, attributeValue)
-    #puts "in accountAssignment::getElementByAttribute"
+  def getElementByAttribute(driver, elementFindBy, elementIdentity, attributeName, attributeValue,attributeName2 = nil,attributeValue2=nil)
+    puts "in accountAssignment::getElementByAttribute"
     driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(elementFindBy, elementIdentity))
     #puts "in getElementByAttribute #{attributeValue}"
     elements = driver.find_elements(elementFindBy, elementIdentity)
     elements.each do |element|
       if element.attribute(attributeName) != nil then
-        if element.attribute(attributeName).include? attributeValue then
-          #puts "element found"
-          return element
+        if attributeName2.nil? then
+          if element.attribute(attributeName).include? attributeValue then
+            #puts "element found"
+            return element
+          end
+        elsif !attributeName2.nil? then
+          puts "2nd attribute check"
+          if attributeValue2.nil? then
+            puts "2nd value in nil"
+            puts "121--1"
+            puts element.attribute(attributeName)
+            puts "121--2"
+            puts element.attribute(attributeName2)
+            puts "121--2"
+            if (element.attribute(attributeName).include? attributeValue)  && (element[0].attribute(attributeName2).nil?) then
+              puts "2nd attributeValue -- nil"
+              #puts "element found"
+              return element
+            end
+          else
+            if (element.attribute(attributeName).include? attributeValue)  && (element.attribute(attributeName2).include? attributeValue2) then
+              #puts "element found"
+              puts '2nd attributeValue -- not nil'
+              return element
+            end
+          end
         end
       end
     end
@@ -298,7 +324,7 @@ end
         Created Date    :   21 April 2018
         Issue No.       :
   **************************************************************************************************************************************
-=end
+
 def getElementByAttribute(driver, elementFindBy, elementIdentity, attributeName, attributeValue)
     puts "in accountAssignment::getElementByAttribute"
     driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(elementFindBy, elementIdentity))
@@ -317,7 +343,6 @@ def getElementByAttribute(driver, elementFindBy, elementIdentity, attributeName,
   end
 
 
-
-
+=end
 end
 

@@ -17,14 +17,11 @@ describe "SendToEnterpriseManageProduct" do
     @testDataJSON = @helper.getRecordJSON()
 
     @objLeadGeneration = LeadGeneration.new(@driver,@helper)
-    @createoppEnt= CreateOppManageProduct.new(@helper,@driver)
-
-    
+    @createoppEnt= CreateOppManageProduct.new(@driver,@helper)    
     #@driver = ARGV[0]
     @accept_next_alert = true
     @driver.manage.timeouts.implicit_wait = 30
-    @verification_errors = []
-    
+    @verification_errors = []    
 
 =begin
     @timeSettingMap = YAML.load_file("D:/QAauto/timeSettings.yaml")
@@ -48,14 +45,12 @@ describe "SendToEnterpriseManageProduct" do
     #@oppTestData=@helper.instance_variable_get(:@sObjectRecords)['CreateOpportunity'][1]['createOpp']
     #@oppTestData[0]['accountName']="test_Enterprise1#{rand(99999999999999)}"
     #@oppAccName=@oppTestData[0]['accountName']
-    #puts @oppAccName
-    
+    #puts @oppAccName    
     #@wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
-
-
   end
 
   after(:all) do
+    
     @driver.quit
     @verification_errors.should == []
   end
@@ -69,32 +64,61 @@ describe "SendToEnterpriseManageProduct" do
         @testDataJSON['CreateLeadFromWeb'][0]["Building"]  = 'MUM-Marol'
         @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com"
 
-        @helper.addLogs('Go to Staging website and create lead')            
-        expect(@objLeadGeneration.createLeadFromWeb(@testDataJSON['CreateLeadFromWeb'][0]['Email'])).to eq true
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['account'] = 'newOrg'
+        #set org name to search
+        #@testDataJSON['CreateOpportunity']['Opportunity'][0]['accountName'] = 'test_Enterprise1'
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['Number_of_Full_Time_Employees__c'] = '1600'
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['opportunityRole'] = 'Decision Maker'        
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeography'] = 'building'
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeographyName'] = 'AMS-Metropool'
+
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['Action'] = 'addProducts'
+
+        @testDataJSON['CreateOpportunity']['Product'][0]['ProductFamily'] = 'WeWork'
+        @testDataJSON['CreateOpportunity']['Product'][0]['Product'] = 'Deal'
+        #@testDataJSON['CreateOpportunity']['Product'][0]['ProductCategory'] = 'Large Office(WWLO)'
+        @testDataJSON['CreateOpportunity']['Product'][0]['Quantity'] = '150'
+        @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeography'] = 'Geography'
+        @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeographyName'] = 'Baner Gaon, Baner, Pune, Maharashtra 411045, India'
+        @testDataJSON['CreateOpportunity']['Product'][0]['isPrimaryProductToSet'] = 'false'
+        @testDataJSON['CreateOpportunity']['Product'][0]['Action'] = 'Save Product'
+
+        @helper.addLogs('Go to Staging website and create lead')
+        @testDataJSON['MarketingLandingPage'][0]['Email'] = @testDataJSON['MarketingLandingPage'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com"            
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['MarketingLandingPage'][0]['Email']
+        expect(@objLeadGeneration.createLeadFromMarketingPage()).to eq true
         @helper.addLogs('Success')
       
         @helper.addLogs('Login to salesforce')            
-        expect(@objLeadGeneration.loginToSalesforce()).to eq true
+        expect(@createoppEnt.loginToSalesforce()).to eq true
         @helper.addLogs('Success')
 
         @helper.addLogs('Go to Sales Console App')            
         expect(@helper.go_to_app(@driver,'Sales Console')).to eq true
         @helper.addLogs('Success')
 
-        @helper.addLogs("[Step ]     : Fetch lead deatails")            
-        insertedLeadInfo = @objLeadGeneration.fetchLeadDetails(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
-        expect(insertedLeadInfo).to_not eq nil
-        expect(insertedLeadInfo.size).to eq 1
-        expect(insertedLeadInfo[0]).to_not eq nil  
-        insertedLeadInfo =  insertedLeadInfo[0]      
+        #@helper.addLogs("[Step ]     : Fetch lead deatails")            
+        #insertedLeadInfo = @objLeadGeneration.fetchLeadDetails(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
+        #expect(insertedLeadInfo).to_not eq nil
+        #expect(insertedLeadInfo.size).to eq 1
+        #expect(insertedLeadInfo[0]).to_not eq nil  
+        #insertedLeadInfo =  insertedLeadInfo[0]      
+        #@helper.addLogs("[Result ]   : Success\n")
+
+        #@testDataJSON['CreateLeadFromWeb'][0]['Email'] = 'john.sparrow4680545080@example.com'
+        #@driver.get "https://wework--staging.cs96.my.salesforce.com/console?tsid=02uF00000011Ncb"
+
+        @helper.addLogs("[Step ]     : Go to create opp page of created journey")
+        @createoppEnt.goToCreateOppPageFromJourney(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
         @helper.addLogs("[Result ]   : Success\n")
-
-
-    @driver.get "https://wework--staging.cs96.my.salesforce.com/console?tsid=02uF00000011Ncb"
-    @createoppEnt.goToCreateOppPageFromJourney(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
-    sleep(10)
-    @createoppEnt.createOppEnt('newOrg','building','close')
-    sleep(100)
+    
+        #sleep(10)
+        @helper.addLogs("[Step ]     : filling Create opp form")
+        @createoppEnt.createOppEnt()
+        @helper.addLogs("[Result ]   : Success\n")
+        
+        sleep(50)
+        #@driver.switch_to.default_content
 =begin
     @driver.find_element(:id, "phSearchInput").clear
     @driver.find_element(:id, "phSearchInput").send_keys @testDataJSON['CreateLeadFromWeb'][0]['Email']
@@ -143,18 +167,7 @@ EnziUIUtility.switchToWindow(@driver, @driver.current_url())
     @driver.find_element(:xpath, "//li[@id='action:7']/a/span").click
 =end
 
-    sleep(200)
-    
-    
-        
-
-        
-
-
-
-
-
-        
+            
 
 =begin
     #@helper.addLogs('C:2 To check opportunity is created from lead through Send to Enterprise','2')
@@ -413,12 +426,154 @@ EnziUIUtility.switchToWindow(@driver, @driver.current_url())
     @driver.get "#{newUrl[0]}//#{newUrl[2]}/#{@result[0]['Id']}"
     puts "Lead created suceessfully\n "
 =end
-
-
-   # @driver.close
+   
     @helper.postSuccessResult('2172')
     rescue Exception => e
       @helper.postFailResult(e,'2172')
+    end
+  end
+
+
+
+    it "Create opportunity and Save from lead", :"2173"=> true do
+    begin
+        @helper.addLogs('C:2172 Create opportunity and add product from lead.','2172')
+
+        @testDataJSON['CreateLeadFromWeb'][0]["BuildingName"]  = 'marol'
+        @testDataJSON['CreateLeadFromWeb'][0]["City"]  = 'mumbai'
+        @testDataJSON['CreateLeadFromWeb'][0]["Building"]  = 'MUM-Marol'
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com"
+
+        # newOrg   searchOrg   checkOrg
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['account'] = 'searchOrg'
+        #set org name to search
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['accountName'] = 'test_Enterprise1'
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['Number_of_Full_Time_Employees__c'] = '1600'
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['opportunityRole'] = 'Decision Maker'
+        #   building       geography      
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeography'] = 'geography'
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeographyName'] = 'Baner Gaon, Baner, Pune, Maharashtra 411045, India'
+
+        # save&close       addProducts   close
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['Action'] = 'addProducts'
+
+        @testDataJSON['CreateOpportunity']['Product'][0]['ProductFamily'] = 'WeWork'
+        @testDataJSON['CreateOpportunity']['Product'][0]['Product'] = 'Deal'
+        #set if product is Desk
+        #@testDataJSON['CreateOpportunity']['Product'][0]['ProductCategory'] = 'Large Office(WWLO)'
+        @testDataJSON['CreateOpportunity']['Product'][0]['Quantity'] = '150'
+        @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeography'] = 'Geography'
+        @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeographyName'] = 'Pune, Maharashtra, India'
+        @testDataJSON['CreateOpportunity']['Product'][0]['isPrimaryProductToSet'] = 'false'
+        @testDataJSON['CreateOpportunity']['Product'][0]['Action'] = 'Save Product'
+
+        @helper.addLogs('Go to Staging website and create lead') 
+        @testDataJSON['MarketingLandingPage'][0]['Email'] = @testDataJSON['MarketingLandingPage'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com"            
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['MarketingLandingPage'][0]['Email']         
+        expect(@objLeadGeneration.createLeadFromMarketingPage()).to eq true
+        @helper.addLogs('Success')
+      
+        @helper.addLogs('Login to salesforce')            
+        expect(@createoppEnt.loginToSalesforce()).to eq true
+        @helper.addLogs('Success')
+
+        @helper.addLogs('Go to Sales Console App')            
+        expect(@helper.go_to_app(@driver,'Sales Console')).to eq true
+        @helper.addLogs('Success')
+=begin
+        @helper.addLogs("[Step ]     : Fetch lead deatails")            
+        insertedLeadInfo = @objLeadGeneration.fetchLeadDetails(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
+        expect(insertedLeadInfo).to_not eq nil
+        expect(insertedLeadInfo.size).to eq 1
+        expect(insertedLeadInfo[0]).to_not eq nil  
+        insertedLeadInfo =  insertedLeadInfo[0]      
+        @helper.addLogs("[Result ]   : Success\n")
+=end
+        @helper.addLogs("[Step ]     : Go to create opp page of created journey")
+        @createoppEnt.goToCreateOppPageFromJourney(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
+        @helper.addLogs("[Result ]   : Success\n")
+    
+        @helper.addLogs("[Step ]     : filling Create opp form")
+        @createoppEnt.createOppEnt()
+        @helper.addLogs("[Result ]   : Success\n")
+        
+        sleep(50)
+        #@driver.switch_to.default_content
+
+    @helper.postSuccessResult('2172')
+    rescue Exception => e
+      @helper.postFailResult(e,'2172')
+    end
+  end
+
+  it "Create opportunity and Save from lead", :"2174"=> true do
+    begin
+        @helper.addLogs('C:2172 Create opportunity and add product from lead.','2174')
+
+        @testDataJSON['CreateLeadFromWeb'][0]["BuildingName"]  = 'marol'
+        @testDataJSON['CreateLeadFromWeb'][0]["City"]  = 'mumbai'
+        @testDataJSON['CreateLeadFromWeb'][0]["Building"]  = 'MUM-Marol'
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['CreateLeadFromWeb'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com"
+
+        # newOrg   searchOrg   checkOrg
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['account'] = 'searchOrg'
+        #set org name to search
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['accountName'] = 'test_Enterprise1'
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['Number_of_Full_Time_Employees__c'] = '1600'
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['opportunityRole'] = 'Decision Maker'
+        #   building       geography      
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeography'] = 'building'
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['BuildingOrGeographyName'] = 'MUM-BKC'
+
+        # save&close       addProducts   close
+        @testDataJSON['CreateOpportunity']['Opportunity'][0]['Action'] = 'addProducts'
+
+        @testDataJSON['CreateOpportunity']['Product'][0]['ProductFamily'] = 'WeWork'
+        @testDataJSON['CreateOpportunity']['Product'][0]['Product'] = 'Desk'
+        #set if product is Desk
+        @testDataJSON['CreateOpportunity']['Product'][0]['ProductCategory'] = 'Large Office(WWLO)'
+        @testDataJSON['CreateOpportunity']['Product'][0]['Quantity'] = '150'
+        @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeography'] = 'Building'
+        @testDataJSON['CreateOpportunity']['Product'][0]['BuildingOrGeographyName'] = 'MUM-Marol'
+        @testDataJSON['CreateOpportunity']['Product'][0]['isPrimaryProductToSet'] = 'false'
+        @testDataJSON['CreateOpportunity']['Product'][0]['Action'] = 'Save Product'
+
+        @helper.addLogs('Go to Staging website and create lead') 
+        @testDataJSON['MarketingLandingPage'][0]['Email'] = @testDataJSON['MarketingLandingPage'][0]['Name'] + SecureRandom.random_number(10000000000).to_s + "@example.com"            
+        @testDataJSON['CreateLeadFromWeb'][0]['Email'] = @testDataJSON['MarketingLandingPage'][0]['Email']         
+        expect(@objLeadGeneration.createLeadFromMarketingPage()).to eq true
+        @helper.addLogs('Success')
+      
+        @helper.addLogs('Login to salesforce')            
+        expect(@createoppEnt.loginToSalesforce()).to eq true
+        @helper.addLogs('Success')
+
+        @helper.addLogs('Go to Sales Console App')            
+        expect(@helper.go_to_app(@driver,'Sales Console')).to eq true
+        @helper.addLogs('Success')
+=begin
+        @helper.addLogs("[Step ]     : Fetch lead deatails")            
+        insertedLeadInfo = @objLeadGeneration.fetchLeadDetails(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
+        expect(insertedLeadInfo).to_not eq nil
+        expect(insertedLeadInfo.size).to eq 1
+        expect(insertedLeadInfo[0]).to_not eq nil  
+        insertedLeadInfo =  insertedLeadInfo[0]      
+        @helper.addLogs("[Result ]   : Success\n")
+=end
+        @helper.addLogs("[Step ]     : Go to create opp page of created journey")
+        @createoppEnt.goToCreateOppPageFromJourney(@testDataJSON['CreateLeadFromWeb'][0]['Email'])
+        @helper.addLogs("[Result ]   : Success\n")
+    
+        @helper.addLogs("[Step ]     : filling Create opp form")
+        @createoppEnt.createOppEnt()
+        @helper.addLogs("[Result ]   : Success\n")
+        
+        sleep(50)
+        #@driver.switch_to.default_content
+
+    @helper.postSuccessResult('2174')
+    rescue Exception => e
+      @helper.postFailResult(e,'2174')
     end
   end
 
