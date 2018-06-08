@@ -260,7 +260,9 @@ describe "LeadGenerete" do
 
             passedLogs = @helper.addLogs("[Step    ] get Activity details")
             leadId  =lead[0].fetch('Id')
-            activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            activity = @helper.getSalesforceRecordByRestforce("Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            
+            #activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
             expect(activity[0]).to_not eq nil
             expect(activity[0].fetch('Id')).to_not eq nil
             passedLogs = @helper.addLogs("[Result  ]  Success")
@@ -373,7 +375,9 @@ describe "LeadGenerete" do
 
             passedLogs = @helper.addLogs("[Step    ] get Activity details")
             leadId  =lead[lead.size - 1].fetch('Id')
-            activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            activity = @helper.getSalesforceRecordByRestforce("Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            
+            #activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
             #puts activity
             #puts activity.size
             #expect(activity.size == 1).to eq true
@@ -492,7 +496,9 @@ describe "LeadGenerete" do
 
             passedLogs = @helper.addLogs("[Step    ] get Activity details")
             leadId  =lead[0].fetch('Id')
-            activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            activity = @helper.getSalesforceRecordByRestforce("Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            
+            #activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
             #puts activity
             #puts activity.size
             #expect(activity.size == 1).to eq true
@@ -669,7 +675,9 @@ sleep(20)
 
             passedLogs = @helper.addLogs("[Step    ] get Activity details")
             whoId  = contact[0].fetch('Id')
-            activity  = @helper.getSalesforceRecord('Task',"Select Id,Status,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{whoId}' order by CreatedDate")
+            activity = @helper.getSalesforceRecordByRestforce("Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            
+            #activity  = @helper.getSalesforceRecord('Task',"Select Id,Status,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{whoId}' order by CreatedDate")
             puts activity
             puts activity.size
             #expect(activity.size == 1).to eq true
@@ -845,7 +853,9 @@ sleep(20)
 
             passedLogs = @helper.addLogs("[Step    ] get Activity details")
             contactId  =contact[0].fetch('Id')
-            oldActivity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{contactId}'")
+            oldActivity = @helper.getSalesforceRecordByRestforce("Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            
+            #oldActivity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{contactId}'")
             puts oldActivity
             puts oldActivity.size
             #expect(activity.size == 1).to eq true
@@ -874,7 +884,9 @@ sleep(20)
 
             passedLogs = @helper.addLogs("[Step    ] get Activity details")
             leadId  =contact[0].fetch('Id')
-            activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{emailId}'")
+            activity = @helper.getSalesforceRecordByRestforce("Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            
+            #activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhoId = '#{emailId}'")
             puts activity
             puts activity.size
             #expect(activity.size == 1).to eq true
