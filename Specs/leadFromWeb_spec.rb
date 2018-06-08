@@ -72,8 +72,8 @@ describe "LeadGenerete" do
             @helper.addLogs("[Step    ] get Activity details")
             #activity  = @helper.getSalesforceRecordByRestforce(journey[0].fetch('Id'))
             leadId = lead[0].fetch('Id')
-            #activity = @helper.getSalesforceRecordByRestforce("Select Id,Status,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type FROM Task WHERE WhatId = '#{leadId}'")
-            activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            activity = @helper.getSalesforceRecordByRestforce("Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
+            #activity  = @helper.getSalesforceRecord('Task',"Select Id,Owner.Name,Owner.Id, Subject, WhoId, Lead_Source__c, Lead_Source_Detail__c, Locations_Interested__c,Type,CreatedDate,Status FROM Task WHERE WhoId = '#{leadId}' order by CreatedDate")
             puts activity
             expect(activity[0]).to_not eq nil
             expect(activity.size == 1).to eq true
