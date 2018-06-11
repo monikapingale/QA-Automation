@@ -180,7 +180,7 @@ def postFailResult(exception,caseId)
   @objRollbar.postRollbarData(caseInfo['id'], caseInfo['title'], @passedLogs[caseInfo['id'].to_s])
   #puts "&&&&&&&&&&&&&&&&&&&"
   Rollbar.error(exception)
-  @testRailUtility.postResult(caseId,"Result for case #{caseId} is #{exception}",5,@runId)
+  @testRailUtility.postResult(caseId,"Result for case #{caseId} is #{@passedLogs[caseInfo['id'].to_s]}",5,@runId)
   raise exception
 end
 
