@@ -40,7 +40,7 @@ describe "LeadGenerete" do
 context "LeadFromStanderdSalesforce" do
     it "C:2175 To check lead is assigned to proper 'User' from lead assignment rule for 'Consumer' record type and journey,activity should be created for that lead.", :'2175' => 'true' do
         begin
-            @helper.addLogs("C:2016 To check lead is assigned to proper 'User' from lead assignment rule for 'Consumer' record type and journey,activity should be created for that lead.",'2175')
+            @helper.addLogs("C:2175 To check lead is assigned to proper 'User' from lead assignment rule for 'Consumer' record type and journey,activity should be created for that lead.",'2175')
             @testDataJSON['Lead'][0]['RecordType'] = 'Consumer'
             @testDataJSON['Lead'][0]['Email'] = @testDataJSON['Lead'][0]['LastName'] + SecureRandom.random_number(10000000000).to_s + "@example.com"
             @testDataJSON['Lead'][0]['leadSource'] = 'Event'
@@ -582,7 +582,7 @@ context "LeadFromStanderdSalesforce" do
 
     it "C:2554 To check lead is assigned to proper 'User' from lead assignment rule for 'Mid-Market' record type and journey,activity should be created for that lead.", :'2554' => 'true' do
         begin
-            @helper.addLogs("C:2016 To check lead is assigned to proper 'User' from lead assignment rule for 'Mid-Market' record type and journey,activity should be created for that lead.",'2554')
+            @helper.addLogs("C:2554 To check lead is assigned to proper 'User' from lead assignment rule for 'Mid-Market' record type and journey,activity should be created for that lead.",'2554')
             @testDataJSON['Lead'][0]['RecordType'] = 'Consumer'
             @testDataJSON['Lead'][0]['Email'] = @testDataJSON['Lead'][0]['LastName'] + SecureRandom.random_number(10000000000).to_s + "@example.com"
             @testDataJSON['Lead'][0]['leadSource'] = 'Event'
@@ -616,7 +616,7 @@ context "LeadFromStanderdSalesforce" do
             #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
-            @objLeadGeneration.createLeadStdsalesforce
+            expect(@objLeadGeneration.createLeadStdsalesforce).to eq true
             @helper.addLogs("[Validate ] : Checking Lead is created after form submission")
             @helper.addLogs("[Expected ] : Lead should create with name #{@testDataJSON['Lead'][0]['FirstName']} #{@testDataJSON['Lead'][0]['LastName']}")
             
@@ -1080,7 +1080,7 @@ context "LeadFromStanderdSalesforce" do
             #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
-            @objLeadGeneration.createLeadStdsalesforce
+            expect(@objLeadGeneration.createLeadStdsalesforce).to eq true
             @helper.addLogs("[Validate ] : Checking Lead is created after form submission")
             @helper.addLogs("[Expected ] : Lead should create with name #{@testDataJSON['Lead'][0]['FirstName']} #{@testDataJSON['Lead'][0]['LastName']}")
             
@@ -1547,7 +1547,7 @@ context "LeadFromStanderdSalesforce" do
             #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
-            @objLeadGeneration.createLeadStdsalesforce
+            expect(@objLeadGeneration.createLeadStdsalesforce).to eq true
             @helper.addLogs("[Validate ] : Checking Lead is created after form submission")
             @helper.addLogs("[Expected ] : Lead should create with name #{@testDataJSON['Lead'][0]['FirstName']} #{@testDataJSON['Lead'][0]['LastName']}")
             
@@ -2013,7 +2013,7 @@ context "LeadFromStanderdSalesforce" do
             #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
-            @objLeadGeneration.createLeadStdsalesforce
+            expect(@objLeadGeneration.createLeadStdsalesforce).to eq true
             @helper.addLogs("[Validate ] : Checking Lead is created after form submission")
             @helper.addLogs("[Expected ] : Lead should create with name #{@testDataJSON['Lead'][0]['FirstName']} #{@testDataJSON['Lead'][0]['LastName']}")
             
@@ -2479,7 +2479,7 @@ context "LeadFromStanderdSalesforce" do
             #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
-            @objLeadGeneration.createLeadStdsalesforce
+            expect(@objLeadGeneration.createLeadStdsalesforce).to eq true
             @helper.addLogs("[Validate ] : Checking Lead is created after form submission")
             @helper.addLogs("[Expected ] : Lead should create with name #{@testDataJSON['Lead'][0]['FirstName']} #{@testDataJSON['Lead'][0]['LastName']}")
             
@@ -2945,7 +2945,7 @@ context "LeadFromStanderdSalesforce" do
             #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
-            @objLeadGeneration.createLeadStdsalesforce
+            expect(@objLeadGeneration.createLeadStdsalesforce).to eq true
             @helper.addLogs("[Validate ] : Checking Lead is created after form submission")
             @helper.addLogs("[Expected ] : Lead should create with name #{@testDataJSON['Lead'][0]['FirstName']} #{@testDataJSON['Lead'][0]['LastName']}")
             
