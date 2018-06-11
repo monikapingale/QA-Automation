@@ -585,8 +585,9 @@ end
 =end
   def createLeadStdsalesforce
 
-    @helper.addLogs("[Step ]     : Login to salesforce")
-    loginToSalesforce()
+    #@helper.addLogs("[Step ]     : Login to salesforce")
+    #loginToSalesforce()
+    switchToClassic(@driver)
 
     puts "in Lead::createLeadStdsalesforce"
     EnziUIUtility.wait(@driver, :link, "Leads", @timeSettingMap['Wait']['Environment']['Lightening']['Max'])      

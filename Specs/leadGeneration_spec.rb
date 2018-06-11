@@ -10,8 +10,8 @@ describe "LeadGenerete" do
 
     before(:all) do
         @helper = Helper.new
-        @driver = Selenium::WebDriver.for :chrome
-        #@driver = ARGV[0]
+        #@driver = Selenium::WebDriver.for :chrome
+        @driver = ARGV[0]
         @testDataJSON = @helper.getRecordJSON()
         @objLeadGeneration = LeadGeneration.new(@driver,@helper)
         
@@ -70,7 +70,7 @@ context "LeadFromStanderdSalesforce" do
             expect(building[0]).to_not eq nil      
             @helper.addLogs("[Result ]   : Success\n")
 
-            @helper.addLogs("[Step ]     : Login to salesforce")
+            #@helper.addLogs("[Step ]     : Login to salesforce")
             #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
@@ -612,8 +612,8 @@ context "LeadFromStanderdSalesforce" do
             expect(building[0]).to_not eq nil      
             @helper.addLogs("[Result ]   : Success\n")
 
-            @helper.addLogs("[Step ]     : Login to salesforce")
-            @objLeadGeneration.loginToSalesforce
+            #@helper.addLogs("[Step ]     : Login to salesforce")
+            #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
             @objLeadGeneration.createLeadStdsalesforce
@@ -1076,8 +1076,8 @@ context "LeadFromStanderdSalesforce" do
             expect(building[0]).to_not eq nil      
             @helper.addLogs("[Result ]   : Success\n")
 
-            @helper.addLogs("[Step ]     : Login to salesforce")
-            @objLeadGeneration.loginToSalesforce
+            #@helper.addLogs("[Step ]     : Login to salesforce")
+            #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
             @objLeadGeneration.createLeadStdsalesforce
@@ -1543,8 +1543,8 @@ context "LeadFromStanderdSalesforce" do
             expect(building[0]).to_not eq nil      
             @helper.addLogs("[Result ]   : Success\n")
 
-            @helper.addLogs("[Step ]     : Login to salesforce")
-            @objLeadGeneration.loginToSalesforce
+            #@helper.addLogs("[Step ]     : Login to salesforce")
+            #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
             @objLeadGeneration.createLeadStdsalesforce
@@ -2009,8 +2009,8 @@ context "LeadFromStanderdSalesforce" do
             expect(building[0]).to_not eq nil      
             @helper.addLogs("[Result ]   : Success\n")
 
-            @helper.addLogs("[Step ]     : Login to salesforce")
-            @objLeadGeneration.loginToSalesforce
+            #@helper.addLogs("[Step ]     : Login to salesforce")
+            #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
             @objLeadGeneration.createLeadStdsalesforce
@@ -2475,8 +2475,8 @@ context "LeadFromStanderdSalesforce" do
             expect(building[0]).to_not eq nil      
             @helper.addLogs("[Result ]   : Success\n")
 
-            @helper.addLogs("[Step ]     : Login to salesforce")
-            @objLeadGeneration.loginToSalesforce
+            #@helper.addLogs("[Step ]     : Login to salesforce")
+            #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
             @objLeadGeneration.createLeadStdsalesforce
@@ -2941,8 +2941,8 @@ context "LeadFromStanderdSalesforce" do
             expect(building[0]).to_not eq nil      
             @helper.addLogs("[Result ]   : Success\n")
 
-            @helper.addLogs("[Step ]     : Login to salesforce")
-            @objLeadGeneration.loginToSalesforce
+            #@helper.addLogs("[Step ]     : Login to salesforce")
+            #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
             @objLeadGeneration.createLeadStdsalesforce
