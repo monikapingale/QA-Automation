@@ -54,6 +54,9 @@ class LeadGeneration
     @salesConsoleSetting = @helper.instance_variable_get(:@restForce).getRecords("SELECT name,Data__c FROM Setting__c WHERE name IN ('User/Queue Journey Creation','Lead:Lead and Lead Source Details','SplashEventJourney','Unassigned NMD US Queue')")
     #puts "sales conso;e setting--->"
     #puts @salesConsoleSetting
+    #puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$1"
+    #puts JSON.parse(@salesConsoleSetting[3]["Data__c"])["allowedUsers"]
+    #puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$2"
     if !recordTypeIds.nil? && recordTypeIds[0] != nil then
       recordTypeIds.each do |typeid|
         @mapRecordType.store(typeid.fetch('Name'),typeid.fetch('Id'))
@@ -810,7 +813,7 @@ end
   def loginToSalesforce()
     #puts "in AccountAssignmentFromLead:loginToSalesforce"
     @driver.get "https://test.salesforce.com/login.jsp?pw=#{@mapCredentials['Staging']['WeWork System Administrator']['password']}&un=#{@mapCredentials['Staging']['WeWork System Administrator']['username']}"
-    #switchToClassic(@driver)
+    switchToClassic(@driver)
     #EnziUIUtility.wait(@driver,:id, "phHeaderLogoImage",@timeSettingMap['Wait']['Environment']['Lightening']['Max'])
     return true
       #EnziUIUtility.wait(@driver,:id, "phHeaderLogoImage",60)
@@ -861,8 +864,8 @@ end
   **************************************************************************************************************************************
 =end
   def fetchLeadDetails(leadEmailId)
-    puts "in Lead::fetchLeadDetails"
-    puts leadEmailId
+    #puts "in Lead::fetchLeadDetails"
+    #puts leadEmailId
     #sleep(20)
     lead = nil
     index = 0
@@ -872,8 +875,8 @@ end
         puts "breaking loop"
         break
       end
-      puts index
-      puts "get lead record after 30 sec"      
+      #puts index
+      #puts "get lead record after 30 sec"      
       sleep(20)
       lead = @helper.getSalesforceRecordByRestforce("SELECT Id,Locale__c,Move_In_Time_Frame__c,Promo_Code__c,Type__c,HasOptedOutOfEmail,Interested_in_Number_of_Desks__c,Generate_Journey__c,Account__c,Market__c,Has_Active_Journey__c,Markets_Interested__c,Referrer__c,Referral_Company_Name__c,Referrer_Name__c,Referrer_Email__c,RecordType.Id,RecordType.Name,Company,CreatedDate,Phone,Email,Company_Size__c,Status,LeadSource,Lead_Source_Detail__c,isConverted,Name,Owner.Id,Owner.Name,Journey_Created_On__c,Locations_Interested__c,Building_Interested_Name__c,Industry,Quick_Quote_Location__c,Building_Interested_In__c,Number_of_Full_Time_Employees__c,Referral_Fail_Reason__c,Country_Code__c,Marketing_Consent__c,Ts_and_Cs_Consent__c,Interested_in_Number_of_Desks_Range__c,Interested_in_Number_of_Desks_Min__c,Affiliate_Consent__c,Interested_in_Number_of_Desks_Max__c,Product_Line__c,Email_Quality__c,Referrer__r.Id FROM Lead WHERE email = '#{leadEmailId}'")
       index  = index + 1
@@ -899,9 +902,9 @@ end
   **************************************************************************************************************************************
 =end
   def checkCamapignMember(leadEmailId,campaignId)
-    puts "in Lead::checkCamapignMember"
-    puts "leadEmailId--> #{leadEmailId}"
-    puts "campaignId --> #{campaignId}"
+    #puts "in Lead::checkCamapignMember"
+    #puts "leadEmailId--> #{leadEmailId}"
+    #puts "campaignId --> #{campaignId}"
     #sleep(20)
     camapign = nil
     index = 0
@@ -910,11 +913,11 @@ end
         puts "breaking loop"
         break
       end
-      puts index
-      puts "get record after 10 sec"
+      #puts index
+      #puts "get record after 10 sec"
       sleep(30)
       camapign = @helper.getSalesforceRecordByRestforce("select Campaign.Id, Campaign.Name,Lead.Email from CampaignMember where Lead.Email = '#{leadEmailId}' order by CreatedDate desc")
-      puts "record fetched"
+      #puts "record fetched"
       index  = index + 1
     end
     if index != 5 then
@@ -938,17 +941,18 @@ end
   **************************************************************************************************************************************
 =end
   def isGenerateJourney(userId,leadSource,leadSourceDetail=nil,isGenerateJourney=nil)
-    puts "userId ---> #{userId}"
-    puts "leadSource---> #{leadSource}"
-    puts "leadSourceDetail--->#{leadSourceDetail}"
-    puts "isGenerateJourney---> #{isGenerateJourney}"
+    #puts "userId ---> #{userId}"
+    #puts "leadSource---> #{leadSource}"
+    #puts "leadSourceDetail--->#{leadSourceDetail}"
+    #puts "isGenerateJourney---> #{isGenerateJourney}"
     userHasPermission = false
     isSourceHasPermission = false
     overrideLeadSource = false
     #puts @salesConsoleSetting[0]    
     #puts @salesConsoleSetting[1]["Data__c"]
     #settings = @helper.instance_variable_get(:@restForce).getRecords("SELECT name,Data__c FROM Setting__c WHERE name IN ('User/Queue Journey Creation','Lead:Lead and Lead Source Details')")
-      JSON.parse(@salesConsoleSetting[2]["Data__c"])["allowedUsers"].each do |user|
+      #puts JSON.parse(@salesConsoleSetting[3]["Data__c"])["allowedUsers"]
+      JSON.parse(@salesConsoleSetting[3]["Data__c"])["allowedUsers"].each do |user|
        if user["Id"].eql? userId
          userHasPermission = true
        end

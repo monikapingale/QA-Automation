@@ -70,6 +70,7 @@ end
   **************************************************************************************************************************************
 =end
 #Please provide exact app name displayed on app list
+
   def go_to_app(driver, app_name)
       @wait.until {driver.find_element(:id, "tsidButton")}
       appButton = driver.find_elements(:id, "tsidButton")
@@ -282,16 +283,16 @@ end
   **************************************************************************************************************************************
 =end
 def getSalesforceRecordByRestforce(query)
-    puts query
+    #puts query
     record = @restForce.getRecords("#{query}")
-    puts "record fetched....in helper"
+    #puts "record fetched....in helper"
     if record.size > 1 then
       puts "Multiple records handle carefully....!!!"
     elsif record.size == 0 then
       puts "No record found....!!!"
       return nil      
     end
-    puts record[0].attrs
+    #puts record[0].attrs
     return record
   rescue Exception => e 
     puts e
