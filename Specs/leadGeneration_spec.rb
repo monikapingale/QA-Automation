@@ -74,7 +74,7 @@ context "LeadFromStanderdSalesforce" do
             #@objLeadGeneration.loginToSalesforce
             
             @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
-            @objLeadGeneration.createLeadStdsalesforce
+            expect(@objLeadGeneration.createLeadStdsalesforce).to eq true
             @helper.addLogs("[Validate ] : Checking Lead is created after form submission")
             @helper.addLogs("[Expected ] : Lead should create with name #{@testDataJSON['Lead'][0]['FirstName']} #{@testDataJSON['Lead'][0]['LastName']}")
             

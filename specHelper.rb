@@ -175,6 +175,7 @@ def postFailResult(exception,caseId)
   #puts "$$$$$$$$$$$$$$$$$$$$$"
   #puts caseInfo['id']
   @passedLogs = @objRollbar.addLog("[Result  ]  Failed")
+  @passedLogs = @objRollbar.addLog("#{exception}")
   #puts "postResult---->#{@passedLogs[caseInfo['id'].to_s]}"
   #puts @passedLogs[caseInfo['id']]
   @objRollbar.postRollbarData(caseInfo['id'], caseInfo['title'], @passedLogs[caseInfo['id'].to_s])
