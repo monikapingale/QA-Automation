@@ -1,0 +1,22 @@
+<div class="slds-panel__section">
+    <form name="login">
+        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+            <label class="slds-form-element__label" for="username">Username</label>
+            <div class="slds-form-element__control">
+                <input id="username" ng-model="username" class="slds-input" required type="text" placeholder="e.g-name.sirname@domain.com.instance" ng-pattern=// />
+            </div>
+        </div>
+        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+            <label class="slds-form-element__label" for="password">Password</label>
+            <div class="slds-form-element__control">
+                <input id="password" type="password" ng-model="password" class="slds-input" placeholder="" required />
+            </div>
+        </div>
+        {{$error}}
+    </form>
+</div>
+</div>
+<div class="slds-modal__footer ">
+    <button class="slds-button slds-button--neutral" ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close' ; Test = {};">Cancel</button>
+    <button class="slds-button slds-button--brand" ng-click="addInstance(username+'&'+password);">Save</button>
+</div>

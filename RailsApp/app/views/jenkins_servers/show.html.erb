@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @jenkins_server.name %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @jenkins_server.username %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @jenkins_server.password %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @jenkins_server.url %>
+</p>
+
+<p>
+  <strong>Os:</strong>
+  <%= @jenkins_server.os %>
+</p>
+
+<p>
+  <strong>Browser:</strong>
+  <%= @jenkins_server.browser %>
+</p>
+
+<%= link_to 'Edit', edit_jenkins_server_path(@jenkins_server) %> |
+<%= link_to 'Back', jenkins_servers_path %>

@@ -1,0 +1,47 @@
+<%= form_with(model: jenkins_server, local: true) do |form| %>
+  <% if jenkins_server.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(jenkins_server.errors.count, "error") %> prohibited this jenkins_server from being saved:</h2>
+
+      <ul>
+      <% jenkins_server.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :jenkins_server_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :username %>
+    <%= form.text_field :username, id: :jenkins_server_username %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.text_field :password, id: :jenkins_server_password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :url %>
+    <%= form.text_field :url, id: :jenkins_server_url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :os %>
+    <%= form.text_field :os, id: :jenkins_server_os %>
+  </div>
+
+  <div class="field">
+    <%= form.label :browser %>
+    <%= form.text_field :browser, id: :jenkins_server_browser %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

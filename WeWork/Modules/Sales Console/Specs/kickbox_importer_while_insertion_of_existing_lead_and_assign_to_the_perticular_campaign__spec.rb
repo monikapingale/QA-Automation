@@ -1780,18 +1780,15 @@ describe 'Project' do
     end
   end
   def validate_case(object,actual,expected)
-    #isValidate = false
     expected.keys.each do |key|
       if actual.key? key
         @helper.addLogs("[Validate ] : Checking #{object} : #{key}")
         @helper.addLogs("[Expected ] : #{actual[key]}")
         @helper.addLogs("[Actual ]   : #{expected[key]}")
         expect(expected[key]).to eql actual[key]
-        #isValidate = true if expected[key].eql?
         @helper.addLogs("[Result ]   : #{key} checked successfully")
         puts "\n"
       end
     end
-    #isValidate
   end
 end

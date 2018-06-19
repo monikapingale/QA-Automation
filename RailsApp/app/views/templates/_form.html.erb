@@ -1,0 +1,54 @@
+<%= form_with(model: template, local: true) do |form| %>
+  <% if template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(template.errors.count, "error") %> prohibited this template from being saved:</h2>
+
+      <ul>
+      <% template.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Name %>
+    <%= form.text_field :Name, id: :template_Name %>
+  </div>
+
+  <div class="field">
+   <%= form.label :Project %>
+    <%= form.text_field :Project, id: :template_Project %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Suit %>
+    <%= form.text_field :Suit, id: :template_Suit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Section %>
+    <%= form.text_field :Section, id: :template_Section %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Browser %>
+    <%= form.text_field :Browser, id: :template_Browser %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Profile %>
+    <%= form.text_field :Profile, id: :template_Profile %>
+  </div>
+
+
+
+  <div class="field">
+    <%= form.label :Job %>
+    <%= form.text_field :Job, id: :template_Job %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,63 @@
+<div>
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" id="test-collection"
+         class="slds-modal slds-scrollable&#45;&#45;y ng-class: action">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close"
+                        ng-click="action = 'slds-slide-up-close slds-backdrop--close'; Test = {'Suit' : [] , 'Section' : [] , 'Browser' : [] , 'Profile' : [] , 'Project' : [] , 'Table' : 'Templates' , 'Name' : [{'name' : ''}]};">
+                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="header43" class="slds-text-heading--medium">{{table}} Record Details</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <!--<div class="demo-only" style="width: 30rem;">
+                    <article class="slds-tile slds-media slds-align_absolute-center">
+                        <div class="slds-media__body">
+                            <div class="slds-tile__detail" id="container">
+                                <dl class="slds-list_horizontal slds-wrap" ng-repeat="(key , value) in record">
+                                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">{{key}}  :</dt>
+                                    <dd class="slds-item_detail" title="Description for first label" ng-bind-html="value"></dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </article>
+                </div>-->
+                <div class="slds-section slds-m-top--medium">
+                    <div class="stage-main slds-grid slds-wrap" role="main">
+                        <div class="slds-grid slds-wrap" style="width:100%">
+                            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2"
+                                 ng-repeat="(key , value) in record">
+                                <div class="slds-form-element">
+                                    <span class="slds-form-element__label">{{key}}</span>
+                                    <div class="slds-form-element__control slds-has-divider--bottom ">
+                                    <div class=" slds-text-longform slds-form-element__static slds-wrap"
+                                         ng-bind-html="value">
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="slds-modal__footer slds-theme_default">
+                <button class="slds-button slds-button--neutral"
+                        ng-click="run();" ng-if="template">
+                    Run
+                </button>
+                <button class="slds-button slds-button--neutral"
+                        ng-click="schedule();" ng-if="template">
+                    Schedule
+                </button>
+                <button class="slds-button slds-button--destructive"
+                        ng-click="action = 'slds-slide-up-close slds-backdrop--close' ; ">
+                    Close
+                </button>
+            </footer>
+        </div>
+    </div>
+    <div class="slds-backdrop ng-class: action"></div>
+</div>

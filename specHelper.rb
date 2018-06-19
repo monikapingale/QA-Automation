@@ -1,32 +1,25 @@
-#require 'yaml'
-#require 'rspec'
-#require 'json'
-#require 'selenium-webdriver'
 require 'enziUIUtility'
 require 'salesforce'
+require 'selenium-webdriver'
 require 'faye'
+require 'test/unit'
+include Test::Unit::Assertions
 require_relative File.expand_path('../../../../', Dir.pwd) + "/GemUtilities/enziRestforce/lib/enziRestforce.rb"
 require_relative File.expand_path('../../../../', Dir.pwd) + "/GemUtilities/RollbarUtility/rollbarUtility.rb"
+require_relative File.expand_path('../../../../', Dir.pwd) + "/GemUtilities/EnziUIUtility/lib/enziUIUtility.rb"
 require_relative File.expand_path('../../../../', Dir.pwd) + "/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
-
-#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/RollbarUtility/rollbarUtility.rb"
-#require_relative File.expand_path('../',Dir.pwd )+"/GemUtilities/EnziTestRailUtility/lib/EnziTestRailUtility.rb"
-
-#require_relative File.expand_path('',Dir.pwd )+ "/credentials.yaml"
-#require_relative File.expand_path(Dir.pwd+"/GemUtilities/testRecords.json")
 class Helper
   def initialize()
-    #@testRailUtility = EnziTestRailUtility::TestRailUtility.new('team-qa@enzigma.com','7O^dv0mi$IZHf4Cn')
     @runId = ENV['RUN_ID']
-    #@runId = '1698'
     @objRollbar = RollbarUtility.new()
-
-    @sObjectRecords = JSON.parse(File.read(File.expand_path('../../../../', Dir.pwd) + "/testRecords.json"))
+    @testDataJSON = {}
+    @driver = Selenium::WebDriver.for :chrome
+    @sObjectRecords = ''
     @timeSettingMap = YAML.load_file(File.expand_path('../../../../', Dir.pwd) + '/timeSettings.yaml')
     @mapCredentials = YAML.load_file(File.expand_path('../../../../', Dir.pwd) + '/credentials.yaml')
-    @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Min'])
+    @wait = Selenium::WebDriver::Wait.new(:timeout => @timeSettingMap['Wait']['Environment']['Lightening']['Max'])
     @testRailUtility = EnziTestRailUtility::TestRailUtility.new(@mapCredentials['TestRail']['username'], @mapCredentials['TestRail']['password'])
-    @salesforceBulk = Salesforce.login(@mapCredentials['Staging']['WeWork System Administrator']['username'], @mapCredentials['Staging']['WeWork System Administrator']['password'], true)
+    #@salesforceBulk = Salesforce.login(@mapCredentials['Staging']['WeWork System Administrator']['username'], @mapCredentials['Staging']['WeWork System Administrator']['password'], true)
     @restForce = EnziRestforce.new(@mapCredentials['Staging']['WeWork System Administrator']['username'], @mapCredentials['Staging']['WeWork System Administrator']['password'], @mapCredentials['Staging']['WeWork System Administrator']['client_id'], @mapCredentials['Staging']['WeWork System Administrator']['client_secret'], true)
     @settings = @restForce.getRecords("SELECT name,Data__c FROM Setting__c WHERE name IN ('User/Queue Journey Creation','Lead:Lead and Lead Source Details','Unassigned NMD US Queue','SplashEventJourney')")
   end
@@ -220,10 +213,10 @@ class Helper
       puts "Getting Records....."
       leadInfo = @restForce.getRecords("SELECT id , #{checkForActivity} Owner.Name,Owner.id,LeadSource , Lead_Source_Detail__c , Building_Interested_In__c , Building_Interested_Name__c ,Journey_Created_On__c, Locations_Interested__c , Number_of_Full_Time_Employees__c , Interested_in_Number_of_Desks__c , Email , Phone , Company , Name , RecordType.Name , Status , Type__c FROM Lead WHERE Email like '%@example.com' AND isConverted = false AND isDeleted = false #{owner} LIMIT 10")
     end
-
     leadInfo if !leadInfo.nil?
   end
-  def createPushTopic(name,query)
+
+  def createPushTopic(name, query)
 # Create a PushTopic for subscribing to record changes.
     client.upsert! 'PushTopic', {
         ApiVersion: '23.0',
@@ -234,5 +227,147 @@ class Helper
         Query: query
     }
   end
-end
 
+  def loadVars(target, value)
+    lines = CSV.open(File.expand_path('../../../', Dir.pwd) + "/TestData/#{target}").readlines
+    keys = lines.delete lines.first
+
+    File.open('testData.json', 'a+') do |f|
+      data = lines.map do |values|
+         Hash[keys.zip(values)]
+      end
+      f.puts JSON.pretty_generate(data)
+      @testDataJSON[target.gsub('.csv','')] = JSON.parse(JSON.pretty_generate(data))[0]
+    end
+    @testDataJSON = @testDataJSON[target.gsub('.csv','')]
+  end
+
+  def find_element(target)
+    if target.include?('//') && !target.nil?
+       @driver.current_url().include?("lightning") && target.include?("id=") && target.include?(":") ? target = target.gsub(target[target.index(":")..(target.index("]"))],":')]").gsub('@id=',"starts-with(@id,") : target = target.gsub('xpath=', '')
+       @wait.until {@driver.find_element(:xpath, "#{target}").displayed?}
+       @driver.find_element(:xpath, "#{target}")
+    else
+      if @driver.current_url().include?("lightning") && target.include?("id=")
+        element = target.split('=')
+        @wait.until {@driver.find_element(:xpath, "//*[starts-with(@id, '#{element[1].split(':')[0]}')]").displayed?}
+        @driver.find_element(:xpath, "//*[starts-with(@id, '#{element[1].split(':')[0]}')]")
+      else
+        element = target.split('=')
+        @wait.until {@driver.find_element(element[0].to_sym, element[1]).displayed?}
+        @driver.find_element(element[0].to_sym, element[1])
+      end
+    end
+  end
+
+  def open(target, value)
+    @driver.get target
+  end
+
+  def click(target, value)
+    target = "#{target.split('=')[0]}=#{@testDataJSON["#{target.split('=')[1].delete('${}')}"]}" if target.include?('$') && target.include?('{')
+    find_element(target).click
+  end
+
+  def type(target, value)
+    @testDataJSON["#{value.delete('${}')}"] = eval('"' + @testDataJSON.fetch("#{value.delete('${}')}") + '"') if @testDataJSON.has_key?("#{value.delete('${}')}")
+    element = find_element(target)
+    element.clear
+    (value.include?('$') && value.include?('{')) ? element.send_keys(@testDataJSON["#{value.delete('${}')}"]) : element.send_keys("#{value.to_s}")
+    end
+  def echo(target, value)
+    addLogs(target)
+  end
+
+  def doubleClick(target, value)
+    element = find_element(target)
+    element.click
+    element.click
+  end
+
+  def waitForElementPresent(target, value)
+    find_element(target)
+  end
+
+  def selectFrame(target, value)
+    @driver.switch_to.default_content
+    puts "switching to frame"
+    @wait.until {@driver.find_elements(:tag_name, "iframe")[target.split('=')[1].to_i]}
+    EnziUIUtility.switchToFrame(@driver, @driver.find_elements(:tag_name, "iframe")[target.split('=')[1].to_i].attribute("name"))
+  end
+
+  def select(target, value)
+    Selenium::WebDriver::Support::Select.new(find_element(target).select_by(:text, val[1]))
+  end
+
+  def selectWindow(target, value)
+    @driver.window_handles
+    puts @driver.window_handles
+    puts target[target.length - 1]
+    @driver.switch_to.window @driver.window_handles.last
+  end
+
+  def openWindow(target, value)
+    @driver.get target
+  end
+
+  def lightening_click_row(target, value)
+    @wait.until {@driver.find_element(:xpath, "//span[contains(text(),#{target})]/../../../../../..").displayed?}
+    @driver.find_element(:xpath, "//span[contains(text(),#{target})]/../../../../../..").find_elements(:tag_name, 'tr')[value.to_i].find_elements(:tag_name, 'td')[2].find_elements(:tag_name, 'a')[0].click
+  end
+
+  def lightening_assert_form_element(target, value)
+    xpath = "//span[./text()=#{target}]/../following-sibling::div/descendant::"
+    @wait.until {@driver.find_element(:xpath, "#{xpath}a | #{xpath}input | #{xpath}span | #{xpath}select").displayed?}
+    puts @driver.find_element(:xpath, "#{xpath}a | #{xpath}input | #{xpath}span | #{xpath}select").text
+    assert_match(value, @driver.find_element(:xpath, "#{xpath}a | #{xpath}input | #{xpath}span | #{xpath}select").text)
+  end
+
+  def lightening_type(target, value)
+    @testDataJSON["#{value.delete('${}')}"] = eval('"' + @testDataJSON.fetch("#{value.delete('${}')}") + '"') if @testDataJSON.has_key?("#{value.delete('${}')}")
+    puts @testDataJSON["#{value.delete('${}')}"]
+    target.include?('list') ? target = "//label[./text()= '#{target.split(':')[0]}']/../parent::div//input | //span[./text()= '#{target.split(':')[0]}']/../parent::div//input" : target = "//span[./text()= '#{target}']/../following-sibling::input"
+    @wait.until {@driver.find_element(:xpath,  target).displayed?}
+    @driver.find_element(:xpath, target).clear
+    (value.include?('$') && value.include?('{')) ? @driver.find_element(:xpath, target).send_keys(@testDataJSON["#{value.delete('${}')}"]) : @driver.find_element(:xpath, target).send_keys("#{value.to_s}")
+  end
+
+  def lightening_click(target, value)
+    puts target
+    target = target.split('id=')[1].split(':')[0] if (target.include?("id=") && target.include?(':'))
+    @wait.until {@driver.find_element(:xpath, "//a[@title='#{target}'] | //button[@title='#{target}']| //*[starts-with(@id,'#{target}')] | //button/span[./text()='#{target}'] | //span[./text()= '#{target}']/../preceding-sibling::input").displayed?}
+    @driver.find_element(:xpath, "//a[@title='#{target}'] | //button[@title='#{target}']| //*[starts-with(@id,'#{target}')] | //button/span[./text()='#{target}'] | //span[./text()= '#{target}']/../preceding-sibling::input").click
+  end
+
+  def lightening_select(target, value)
+    value = "label=#{@testDataJSON.fetch(value.delete('${}').gsub('label=',''))}" if (value.include?('$') && value.include?('{'))
+    @wait.until {@driver.find_element(:xpath, "//option[@value='"+value.split('label=')[1]+"'] | //li[@title='"+value.split('label=')[1]+"']").displayed?}
+    @driver.find_element(:xpath, "//option[@value='"+value.split('label=')[1]+"'] | //li[@title='"+value.split('label=')[1]+"']").click
+=begin
+    if target.end_with?('list')
+      @wait.until {@driver.find_element(:xpath, "//input[starts-with(@id,'"+target.split('id=')[1].split(':')[0]+"')]").displayed?}
+      @driver.find_element(:xpath, "//input[starts-with(@id,'"+target.split('id=')[1].split(':')[0]+"')]").send_keys "#{value.split('label=')[1]}"
+      @wait.until {@driver.find_element(:xpath, "//div[starts-with(@id,'"+target.split('id=')[1].split(':')[0]+":') and contains(@id, 'list')]").displayed?}
+      @driver.find_element(:xpath, "//div[starts-with(@id,'"+target.split('id=')[1].split(':')[0]+"') and contains(@id, 'list')]").find_element(:tag_name,"ul").find_element(:xpath,"//li[@title='"+value.split('label=')[1]+"']").click
+    end
+=end
+=begin
+    @wait.until {@driver.find_element(:xpath, "//select[starts-with(@id,'"+target.split('id=')[1].split(':')[0]+"')]/option[@value='"+value.split('label=')[1]+"'] | //ul[starts-with(@id,'"+target.split('id=')[1].split(':')[0]+"')]/li[@title='"+value.split('label=')[1]+"']").displayed?}
+    @driver.find_element(:xpath, "//select[starts-with(@id,'"+target.split('id=')[1].split(':')[0]+"')]/option[@value='"+value.split('label=')[1]+"'] | //ul[starts-with(@id,'"+target.split('id=')[1].split(':')[0]+"')]/li[@title='"+value.split('label=')[1]+"']").click
+  end
+=end
+  end
+
+  def date_picker(target, value)
+    @wait.until {@driver.find_element(:xpath,"//label[./text()= '#{target.split(':')[0]}']/../parent::div//input")}
+    @driver.find_element(:xpath,"//label[./text()= '#{target.split(':')[0]}']/../parent::div//input").click
+    @wait.until {@driver.find_element(:xpath,"//label[./text()= '#{target.split(':')[0]}']/../parent::div//table//span[@id='#{Date.today.to_s}']")}
+    @driver.find_element(:xpath,"//label[./text()= '#{target.split(':')[0]}']/../parent::div//table//span[@id='#{Date.today.to_s}']").click
+    @wait.until {!@driver.find_element(:id,"spinner").displayed?}
+  end
+
+  def wait(target, value)
+    value.eql?('true') ? @wait.until {@driver.find_element(target.split('=')[0].to_sym, target.split('=')[1]).displayed?} : @wait.until {!@driver.find_element(target.split('=')[0].to_sym, target.split('=')[1]).displayed?}
+  end
+
+end

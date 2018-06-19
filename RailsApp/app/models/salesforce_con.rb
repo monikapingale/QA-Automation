@@ -1,0 +1,2 @@
+class SalesforceCon < ApplicationRecord
+end

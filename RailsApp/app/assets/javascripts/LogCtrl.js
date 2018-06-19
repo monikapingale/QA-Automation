@@ -1,0 +1,1 @@
+myApp.controller('LogCtrl',['$scope','$http','$interval',function($scope,$http,$interval){$interval(callAtInterval,10000);function callAtInterval(){console.log("Interval occurred");$http.get('http://localhost:3000/readFile').then(function(response){console.log('response',response.data['output']);$scope.logs=response.data['output']});}}]);

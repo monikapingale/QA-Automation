@@ -4,46 +4,68 @@
     <shared />
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/RailsApp/tmp/cache" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="enziJenkinsUtility (v0.1.0) [path][gem]">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/GemUtilities/EnziJenkinsUtility/lib" />
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/EnziJenkinsUtility/lib" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/GemUtilities/EnziJenkinsUtility/lib" />
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/EnziJenkinsUtility/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="enziMailUtility (v[path]) [path][gem]">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/EnziMailUtility/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/EnziMailUtility/lib" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library name="enziRestforce (v0.1.0) [path][gem]">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/GemUtilities/enziRestforce/lib" />
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/enziRestforce/lib" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/GemUtilities/enziRestforce/lib" />
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/enziRestforce/lib" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library name="enziUIUtility (v0.0.1) [path][gem]">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/GemUtilities/EnziUIUtility/lib" />
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/EnziUIUtility/lib" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/GemUtilities/EnziUIUtility/lib" />
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/EnziUIUtility/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="salesforce (v0.1.0) [path][gem]">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/Salesforce/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/Salesforce/lib" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library name="zipFileGenerator (v[path]) [path][gem]">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/GemUtilities/ZipFileGenerator/lib" />
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/ZipFileGenerator/lib" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/GemUtilities/ZipFileGenerator/lib" />
+          <root url="file://$MODULE_DIR$/RailsApp/src/GemUtilities/ZipFileGenerator/lib" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -82,7 +104,6 @@
     <orderEntry type="library" scope="PROVIDED" name="diff-lcs (v1.3, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="em-http-request (v1.1.5, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="em-socksify (v0.3.2, ruby-2.4.3-p205) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="enziMailUtility (v0.1.0, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubi (v1.7.1, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="eventmachine (v1.2.7, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="execjs (v2.7.0, ruby-2.4.3-p205) [gem]" level="application" />
@@ -127,6 +148,7 @@
     <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.8.2, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="os (v0.9.6, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pg (v1.0.0, ruby-2.4.3-p205) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="power_assert (v0.4.1, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pry (v0.11.3, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pry-rails (v0.3.6, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="public_suffix (v3.0.2, ruby-2.4.3-p205) [gem]" level="application" />
@@ -152,7 +174,6 @@
     <orderEntry type="library" scope="PROVIDED" name="rspec-support (v3.7.1, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby_dep (v1.5.0, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubyzip (v1.2.1, ruby-2.4.3-p205) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="salesforce (v0.1.0, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="salesforce_bulk (v1.0.3, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass (v3.5.6, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass-listen (v4.0.0, ruby-2.4.3-p205) [gem]" level="application" />
@@ -165,6 +186,7 @@
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v3.7.1, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets-rails (v3.2.1, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="terminal-table (v1.8.0, ruby-2.4.3-p205) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="test-unit (v3.2.3, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v0.20.0, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thread_safe (v0.3.6, ruby-2.4.3-p205) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tilt (v2.0.8, ruby-2.4.3-p205) [gem]" level="application" />

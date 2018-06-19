@@ -31,18 +31,7 @@ describe 'Project' do
     @isSourceHasPermission = nil
     @overrideLeadSource = nil
     @userHasPermission = nil
-    @helper.instance_variable_get(:@wait).until {@driver.find_element(:id, "tsidButton")}
-    appButton = @driver.find_elements(:id, "tsidButton")
-    @helper.addLogs("[Step ]     : Opening Sales Console app")
-    if !appButton.empty?
-      @driver.find_element(:id, "tsidButton").click
-      @helper.instance_variable_get(:@wait).until {@driver.find_element(:id, "tsid-menuItems")}
-      appsDrpDwn = @driver.find_element(:id, "tsid-menuItems").find_elements(:link, "Sales Console")
-      if !appsDrpDwn.empty?
-        appsDrpDwn[0].click
-        @helper.addLogs("[Result ] : Sales Console app opened successfully")
-      end
-    end
+    @helper.go_to_app(@driver,"Sales Console")
     @pageObject = Kickbox_Importer.new(@driver, @helper)
     button = EnziUIUtility.selectElement(@driver, "Lead/Contact Search", "button")
     @helper.instance_variable_get(:@wait).until {button.displayed?}
@@ -56,11 +45,6 @@ describe 'Project' do
   end
   it "To Check Journey Creation if user and queue permission is checked and lead source is checked and Override lead source detail checkbox is unchecked and lead source detail is checked.", :'2546' => 'true' do
     @helper.addLogs("[Step ]     : Create Lead record with consumer record type")
-    @testDataJSON['Lead'][0]['Email'] = "john.snow_qaauto-#{rand(99999999)}@example.com"
-    @testDataJSON['Lead'][0]['Number_of_Full_Time_Employees__c'] = 10
-    @testDataJSON['Lead'][0]['Interested_in_Number_of_Desks__c'] = 5
-    @testDataJSON['Lead'][0]['Lead_Source_Detail__c'] = "Inbound Call Page"
-    @testDataJSON['Lead'][0]['LeadSource'] = "Inbound Call Page"
     if !@driver.find_elements(:id, "scc_widget_Inbound_Call").empty?
       EnziUIUtility.switchToFrame @driver, "scc_widget_Inbound_Call"
     end

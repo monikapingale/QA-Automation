@@ -1,0 +1,70 @@
+<div tabindex="0" ng-blur="action = 'slds-is-close'">
+        <!--<div class="slds-pill_container" tabindex="0" style="width: 100% ;" id="pillC" ng-focus="action = 'slds-is-open'">
+            <a class="slds-pill" ng-repeat="pill in pills track by $index">
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-pill__icon">
+                    <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                </svg>
+                <span class="slds-pill__label">{{pill[fields[0]]}}</span>
+                <button class="close slds-button slds-button&#45;&#45;icon-bare slds-pill__remove"
+                        ng-click="pills.splice(pills.indexOf(pill),1); nodes.push(pill); " style="color:  blue">
+                    <svg aria-hidden="true" class="slds-button__icon">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Remove</span>
+                </button>
+            </a>
+        </div>-->
+    <div class="slds-pill_container " tabindex="0" id="container" style="width:100%; max-height: 85px; overflow-y: auto;display:block" data-aura-rendered-by="6:127;a" ng-focus="action = 'slds-is-open'">
+        <span class="slds-pill pill" data-aura-rendered-by="430:0" ng-repeat="pill in pills track by $index">
+            <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-pill__icon">
+                    <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+            </svg>
+            <a class="slds-pill__label" href="javascript:void(0);" data-aura-rendered-by="431:0">{{pill[fields[0]]}}</a>
+            <button class="close slds-button slds-button--icon-bare slds-pill__remove"
+                    ng-click="pills.splice(pills.indexOf(pill),1); nodes.push(pill); " style="color:  blue">
+                <svg aria-hidden="true" class="slds-button__icon">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Remove</span>
+            </button>
+        </span>
+    </div>
+        <div class="slds-form-element slds-lookup ng-class: action" data-select="multi" data-scope="single" data-typeahead="true" tabindex="0" ng-blur="action = 'slds-is-close'">
+            <div class="slds-lookup__menu" id="lookup-suit">
+            <span class="slds-lookup__item-action slds-media" role="option" id="lookup-option-suit" data-aura-rendered-by="12:191;a" >
+                <div class="slds-media__body slds-input-has-icon slds-input-has-icon--left" data-aura-rendered-by="13:191;a">
+                    <div class="slds-lookup__result-text" data-aura-rendered-by="14:191;a">
+                        <svg aria-hidden="true" class="slds-input__icon">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                        </svg>
+                        <input class="slds-input" type="text" placeholder="Search" ng-model="filter" id="suit-name" style="border: 1px solid rgb(216, 221, 230);box-shadow: none;" data-aura-rendered-by="15:191;a">
+                    </div>
+                    <div class="slds-lookup__result-text slds-hide" ng-show="nodes.length < 1" data-aura-rendered-by="16:191;a">
+                        No records found!
+                    </div>
+                </div>
+            </span>
+                <ul class="slds-lookup__list" role="listbox">
+                    <!--<div class="slds-spinner_container" ng-hide="(nodes.length > 0) || (action == 'slds-is-close')">
+                        <div class="slds-spinner--brand slds-spinner slds-spinner--small" role="alert">
+                            <span class="slds-assistive-text">Loading</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>-->
+                    <we-spinner ng-hide="(nodes.length != 0) || (pills.length != 0) "></we-spinner>
+                    <li role="presentation" ng-repeat="node in nodes | filter: filter track by $index ">
+                        <div ng-repeat="field in fields track by $index">
+                            <a class="slds-lookup__item-action slds-media slds-media--center" name="{{node[field]}}" id="{{node.id}}" ng-click="addNode(node); $event.stopPropagation();" role="option">
+                                <svg aria-hidden="true"
+                                     class="slds-icon slds-icon-standard-apps-admin slds-icon--small slds-media__figure">
+                                    <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                </svg>
+                                {{node[field]}}
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</div>

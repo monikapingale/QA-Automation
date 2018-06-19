@@ -1,0 +1,5 @@
+﻿<div class="slds-form-element" ng-form="form[name]" ng-class="{'slds-has-error':(!form[name].$valid && form[name].$dirty)}">
+    <label class="slds-form-element__label">{{label}}</label>
+    <div class="slds-form-element__control"></div>
+    <we-input-validator ng-if="(!form[name].$valid && form[name].$dirty)" errors="form[name].$error"></we-input-validator>
+</div>

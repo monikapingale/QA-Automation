@@ -1,0 +1,139 @@
+<div style="background : transparent;margin-left: 25%" class="slds-clearfix">
+    <form name="jenkins">
+        <div role="dialog" tabindex="-1" aria-labelledby="header43" id="test-collection"
+             class="slds-modal slds-scrollable&#45;&#45;y ng-class: action['modal']">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close"
+                            ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close'; form.reset();">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header43" class="slds-text-heading--medium">Jenkins Server</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="slds-panel__section">
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                            <label class="slds-form-element__label" for="username">
+                                <abbr class="slds-required"
+                                      title="required">*</abbr>Name
+                            </label>
+                            <div class="slds-form-element__control">
+                                <input id="name" ng-model="jenkins['name']" class="slds-input" required type="text"
+                                       placeholder="Enter Jenkins Server Name.." ng-pattern=''>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                            <label class="slds-form-element__label" for="username">
+                                <abbr class="slds-required"
+                                      title="required">*</abbr>Username
+                            </label>
+                            <div class="slds-form-element__control">
+                                <input id="username" ng-model="jenkins['username']" class="slds-input" required
+                                       type="text" placeholder="e.g-name.sirname@domain.com.instance" ng-pattern=''>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                            <label class="slds-form-element__label" for="password">
+                                <abbr class="slds-required"
+                                      title="required">*</abbr>Password
+                            </label>
+                            <div class="slds-form-element__control">
+                                <input id="password" type="password" ng-model="jenkins['password']" class="slds-input"
+                                       placeholder="Enter Password.." required/>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                            <label class="slds-form-element__label" for="url">
+                                <abbr class="slds-required"
+                                      title="required">*</abbr>Service Url
+                            </label>
+                            <div class="slds-form-element__control">
+                                <input id="url" ng-model="jenkins['url']" class="slds-input" required type="text"
+                                       placeholder="e.g-http://domain:port" ng-pattern=// />
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-border_top">
+                            <we-dropdown label="Select OS" options="['Windows','Mac']"
+                                         selected-item="jenkins['os']" required="true"></we-dropdown>
+                        </div>
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control slds-border_top">
+                                <div class="slds-panel__section">
+                                    <h4 class="slds-text-heading_small slds-m-bottom_medium">
+                                        <abbr class="slds-required" title="required">*</abbr>Select Browsers
+                                    </h4>
+                                    <span class="slds-form--inline slds-checkbox">
+                                        <span class="slds-form-element__label slds-m-right_large">{{jenkins['os']}} Browsers <b>:</b> </span>
+                                        <span ng-repeat="browser in jenkinsDetails['browserDetails'][jenkins['os']]">
+                                            <input type="checkbox" id="{{browser}}{{$index}}"
+                                                   ng-model="selectedBrowser"
+                                                   ng-change="selectedBrowser ? jenkins['browser'].push(browser) : jenkins['browser'].splice(jenkins['browser'].indexOf(browser))"/>
+                                            <label class="slds-checkbox__label " for="{{browser}}{{$index}}">
+                                                <span class="slds-checkbox--faux"></span>
+                                                <span class="slds-form-element__label slds-text-color--default">{{browser}}</span>
+                                            </label>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer ">
+                    <button class="slds-button slds-button--destructive"
+                            ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close' ;form.reset();">
+                        Cancel
+                    </button>
+                    <button class="slds-button slds-button--brand" ng-click="addJenkins(); form.reset();"
+                            ng-disabled="!(jenkins['name']&&jenkins['username']&&jenkins['password']&&jenkins['url'])">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop ng-class: action['modal']"></div>
+    </form>
+    <div class="slds-grid slds-grid--pull-padded">
+        <div class="slds-float_left">
+            <div class="slds-is-relative" style="height: 50%;width: 90%">
+                <article class="slds-card">
+                    <div class="slds-card__header">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                            </div>
+                            <div class="slds-media__body">
+                                <h2>
+                                    <button class="slds-button slds-button_icon slds-is-active">
+                                        <div class="slds-text-heading_small">Add jenkins Server</div>
+                                    </button>
+                                </h2>
+                            </div>
+                        </header>
+                        <div class="slds-no-flex">
+
+                        </div>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <div class="slds-align_absolute-center"
+                             style="padding: 0.5rem; background-color: rgb(244, 246, 249);fill-opacity: initial">
+                            <div class="slds-no-flex">
+                                <button class="slds-button slds-button_neutral"
+                                        ng-click="action['modal'] = 'slds-slide-up-open slds-backdrop--open' ; jenkins = {'name' : '','username' : '' , 'password' : '' ,'url' : '' , 'browser' : []}">
+                                    New
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <div class="slds-m-top&#45;&#45;large">
+        <we-data-table rows="entities['jenkins']" columns="['name']" table-name="jenkins_servers" identifier="'name'"
+                       show="action['modal']" record="jenkins"></we-data-table>
+    </div>
+</div>
+</div>

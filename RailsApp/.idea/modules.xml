@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/QA-Automation.iml" filepath="$PROJECT_DIR$/.idea/QA-Automation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/EnziTestRailUtility.iml" filepath="$PROJECT_DIR$/.idea/modules/EnziTestRailUtility.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/EnziTestRailUtility1.iml" filepath="$PROJECT_DIR$/.idea/modules/EnziTestRailUtility1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/EnziTestRailUtility2.iml" filepath="$PROJECT_DIR$/.idea/modules/EnziTestRailUtility2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/RailsApp.iml" filepath="$PROJECT_DIR$/.idea/RailsApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bootstrap.iml" filepath="$PROJECT_DIR$/.idea/modules/bootstrap.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,62 @@
+<div style="background : transparent;margin-left: 20%" class="slds-clearfix">
+    <div class="slds-scrollable--x slds-m-top&#45;&#45;xx-large">
+        <!--<we-data-table rows="allTemplates" columns="template_fields"></we-data-table>-->
+        <table class="slds-table  slds-table--cell-buffer table-wrapper slds-truncate slds-max-medium-table--stacked"
+               role="grid">
+            <thead>
+            <tr class="slds-text-title--caps " scope="col">
+                <th scope="col" class="slds-cell-shrink">
+                    Sr. No.
+                </th>
+                <th scope="col" ng-repeat="column in template_fields" class="slds-cell-shrink">
+                    <div class="slds-truncate">{{column}}</div>
+                </th>
+                <th scope="col" class="slds-cell-shrink">
+                    Action
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="template in entities['scheduledTemplates']" ng-model="modalaction$index" ng-model="templateDetails"
+                ng-model="showWarning$index">
+                <td>{{$index + 1}}</td>
+                <td>
+                    <!--<we-show-data-modal header="Details" action="modalaction$index" data="template"></we-show-data-modal> -->
+                    <we-show-data-modal table="'templates'" action="modalaction$index"
+                                        id="template[0]['job']" template="false"
+                                        run="buildJob(template[0]['job'])"></we-show-data-modal>
+                    <div>
+                    </div>
+                    <a href="javascript:void(0);"
+                       ng-click="modalaction$index = 'slds-slide-up-open slds-backdrop--open'">{{template[1]['value']}}</a>
+                    <we-prompt-warning header="Are You Sure?" message="Do you really want to delete this template.."
+                                       terminate="showWarning$index"
+                                       action-to-take="deleteTemplate(id)" id="template[0]['job']"></we-prompt-warning>
+                    <we-schedular generated-cron="schedule['cron']" action="openSchedular"></we-schedular>
+                </td>
+                <td>
+                    {{schedule}}
+                    <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Stop"
+                                aria-pressed="false" ng-click="pauseScheduledJob(template[0]['job']);">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#stop"/>
+                            </svg>
+                            <span class="slds-assistive-text">Stop</span>
+                        </button>
+                        <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
+                                title="Delete" ng-click="showWarning$index = 'slds-fade-in-open slds-backdrop--open'">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"/>
+                            </svg>
+                            <span class="slds-assistive-text">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

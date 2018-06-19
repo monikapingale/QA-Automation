@@ -1,0 +1,14 @@
+﻿<span>
+    <input name="{{name}}" placeholder="Enter {{label}}" type="search" class="slds-input" ng-model="keyword" ng-required="required=='true'" ng-change="getoptions({'success':getLookupOptions,'keyword':keyword})" onfocus="angular.element(this).scope().onfocus()" onblur="angular.element(this).scope().onblur()" />
+    <div class="slds-lookup__menu" style="display:{{show?'block':'none'}}">
+        <ul class="slds-lookup__list" role="listbox">
+            <li role="presentation" ng-repeat="option in options" ng-click="selectOption(option)">
+                <span class="slds-lookup__item-action slds-media" role="option">
+                    <div class="slds-media__body">
+                        <div class="slds-lookup__result-text">{{option.label}}</div>
+                    </div>
+                </span>
+            </li>
+        </ul>
+    </div>
+</span>

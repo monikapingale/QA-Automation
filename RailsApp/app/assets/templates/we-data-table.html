@@ -1,0 +1,78 @@
+<div>
+    <table class="slds-table  slds-table--cell-buffer table-wrapper slds-truncate slds-max-medium-table--stacked slds-table--bordered slds-max-medium-table--stacked-horizontal"
+           role="grid">
+        <thead>
+        <tr class="slds-text-title--caps " scope="col">
+            <th scope="col" class="slds-cell-shrink">
+                Sr. No.
+            </th>
+            <th scope="col" ng-repeat="column in columns" class="slds-cell-shrink">
+                <div class="slds-truncate">{{column}}</div>
+            </th>
+            <th scope="col" class="slds-cell-shrink">
+                Action
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in rows" ng-model="modalaction$index" ng-model="modaleditaction$index">
+            <td>{{$index + 1}}</td>
+            <td ng-repeat="column in columns">
+                <we-show-data-modal table="tableName" action="modalaction$index" id="row[identifier]"></we-show-data-modal>
+                <we-edit-data-modal table="tableName" action="show" id="row[identifier]" record="record"></we-edit-data-modal>
+                <div>
+                    <we-prompt-warning header="Are You Sure?" message="Do you really want to delete this record.."
+                                       terminate="prompt"
+                                       action-to-take="delete(row[identifier]);"></we-prompt-warning>
+                </div>
+                <a href="javascript:void(0);" ng-click="modalaction$index = 'slds-slide-up-open slds-backdrop--open'">{{row[column]}}</a>
+            </td>
+            <td>
+                <div class="slds-button-group" role="group">
+                    <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Edit"
+                            aria-pressed="false" ng-click="showForm(row[identifier]);">
+                        <svg class="slds-button__icon" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"/>
+                        </svg>
+                        <span class="slds-assistive-text">Edit</span>
+                    </button>
+                    <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
+                            title="Delete" ng-click="prompt = 'slds-fade-in-open slds-backdrop--open'">
+                        <svg class="slds-button__icon" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"/>
+                        </svg>
+                        <span class="slds-assistive-text">Delete</span>
+                    </button>
+                </div>
+            </td>
+            <!-- <td class="slds-cell-shrink" role="gridcell">
+                 <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps">{{template.Name.split('=>')[1].replace('}','').replace('"','').replace('"','')}}</div>
+             </td>
+             <td  class="slds-cell-shrink" role="gridcell">
+                 <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps" ng-repeat="value in template.Suit">{{value.name}}</div>
+             </td>
+             <td  class="slds-cell-shrink" role="gridcell">
+                 <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps" ng-repeat="value in template.Section">{{value.name}}</div>
+             </td>
+             <td  class="slds-cell-shrink" role="gridcell">
+                 <div class="slds-truncate slds-text-title&#45;&#45;caps" ng-repeat="value in template.Project">{{value.name}}</div>
+             </td>
+             <td  class="slds-cell-shrink" role="gridcell">
+                 <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps" ng-repeat="value in template.Browser">{{value.id.replace('{','').replace('}','')}}</div>
+             </td>
+             <td  class="slds-cell-shrink" role="gridcell">
+                 <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps" ng-repeat="value in template.Profile">{{value.Name}}</div>
+             </td>
+             <td  class="slds-cell-shrink" role="gridcell">
+                 <div class="slds-button-group" role="group">
+                     <button class="button special slds-button slds-button&#45;&#45;neutral slds-m-right_medium" ng-click="buildJob(template.Job+'&'+template.Project[0].id)">
+                         Run
+                     </button>
+                 </div>
+             </td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>

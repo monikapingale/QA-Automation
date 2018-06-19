@@ -7,6 +7,7 @@ module EnziTestRailUtility
 			@client = TestRail::APIClient.new('https://enzigma.testrail.io/')
 			@client.user = username
 			@client.password = password
+			puts @client.inspect
 		end
 		def getSuites(projectId)
 			url = "get_suites/#{projectId}"
@@ -20,12 +21,12 @@ module EnziTestRailUtility
 		def addRun(test_run_name,projectId,suiteId,caseIDs)
 			if !caseIDs.nil? && caseIDs.size > 0 then
 				data = {
-						"suite_id": suiteId,
-						"name": "#{test_run_name}- #{Time.now.asctime}",
-						"include_all": false,
-						"case_ids": caseIDs
+						"suite_id"=> suiteId,
+						"name"=> "#{test_run_name}- #{Time.now.asctime}",
+						"include_all"=> false,
+						"case_ids"=> caseIDs
 				}else
-					 data = {"suite_id": suiteId,"name": "#{test_run_name}- #{Time.now.asctime}","include_all": true}
+					 data = {"suite_id"=> suiteId,"name"=> "#{test_run_name}- #{Time.now.asctime}","include_all"=> true}
 			end
 			@client.send_post("add_run/#{projectId}", data)
     end

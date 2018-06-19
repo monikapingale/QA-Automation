@@ -1,0 +1,892 @@
+<div style="background : transparent;margin-left: 20%" class="slds-clearfix">
+    <!--<div class="demo-only slds-grid " style="background: rgb(244, 246, 249); padding: 1rem;margin-left: 30%">
+        <div class="slds-panel slds-grid slds-grid&#45;&#45;vertical slds-nowrap slds-is-editing">
+            <div class="slds-form&#45;&#45;stacked slds-grow slds-scrollable&#45;&#45;y">
+            <div class="slds-form slds-form_stacked slds-grow">
+                <div class="slds-panel__section slds-border_bottom ">
+                    <div class="slds-media slds-align_absolute-center">
+                        <h3 class="slds-text-heading_medium slds-m-bottom_medium ">Test Details</h3>
+                    </div>
+                </div>
+                <div class="slds-panel__section">
+                    <div>
+
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                            <span class="slds-form-element__label">Test Suits</span>
+                        <div class="slds-pill_container" ng-click="action['Suit'] = 'slds-is-open'"  id="pillC">
+
+                            <a class="slds-pill" ng-repeat="items in Test['Suit']">
+                                <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-pill__icon">
+                                    <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                </svg>
+                                <span class="slds-pill__label">{{items.name}}</span>
+                                <button class="slds-button slds-button&#45;&#45;icon-bare slds-pill__remove" name="{{items.name}}" id="{{items.id}}" ng-click="removeSelectedItem($event,'Suit'); $event.stopPropagation();">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Remove</span>
+                                </button>
+                            </a>
+                        </div>
+                        <div class="slds-form-element slds-lookup ng-class: action['Suit']" data-select="single" >
+                            <div class="slds-lookup__menu" id="lookup-suit">
+                                <span class="slds-lookup__item-action slds-media" role="option" id="lookup-option-suit" data-aura-rendered-by="12:191;a">
+                                    <div class="slds-media__body slds-input-has-icon slds-input-has-icon&#45;&#45;left" data-aura-rendered-by="13:191;a">
+                                        <div class="slds-lookup__result-text" data-aura-rendered-by="14:191;a">
+                                            <svg aria-hidden="true" class="slds-input__icon">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                            </svg>
+                                            <input class="slds-input" type="text" placeholder="Search" ng-model="suit" id="suit-name" style="border: 1px solid rgb(216, 221, 230);box-shadow: none;" data-aura-rendered-by="15:191;a">
+                                        </div>
+                                        <div class="slds-lookup__result-text slds-hide" data-aura-rendered-by="16:191;a">
+                                            No recods found!
+                                        </div>
+                                    </div>
+                                </span>
+                                <ul class="slds-lookup__list" role="listbox">
+                                    <div class="slds-spinner_container" ng-hide="data['Suit'].length > 0">
+                                        <div class="slds-spinner&#45;&#45;brand slds-spinner slds-spinner&#45;&#45;small" role="alert">
+                                            <span class="slds-assistive-text">Loading</span>
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>
+                                        </div>
+                                    </div>
+                                    <li role="presentation" ng-repeat="dataArr in data['Suit'] | filter: suit">
+                                    <a class="slds-lookup__item-action slds-media slds-media&#45;&#45;center" name="{{dataArr.data.name}}" id="{{dataArr.data.id}}" ng-click="addSelectedOptions($event,'Suit');" role="option">
+                            <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-icon&#45;&#45;small slds-media__figure">
+                               <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                            </svg>
+                                        {{dataArr.data.name}}
+                         </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;large" ng-show="Test['Suit'].length > 0">
+                            <span class="slds-form-element__label">Test Sections</span>
+                            <div class="slds-pill_container" ng-click="action['Section'] = 'slds-is-open'" id="pill-profile" >
+                                <a class="slds-pill" ng-repeat="items in Test['Section']">
+                                    <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-pill__icon">
+                                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                    </svg>
+                                    <span class="slds-pill__label">{{items.name}}</span>
+                                    <button class="slds-button slds-button&#45;&#45;icon-bare slds-pill__remove" name="{{items.name}}" id="{{items.id}}" ng-click="removeSelectedItem($event,'Section'); $event.stopPropagation();">
+                                        <svg aria-hidden="true" class="slds-button__icon">
+                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Remove</span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="slds-form-element slds-lookup ng-class: action['Section']" data-select="single" >
+                                <div class="slds-lookup__menu" id="lookup-section">
+                                <span class="slds-lookup__item-action slds-media" role="option" id="lookup-option-section" data-aura-rendered-by="12:191;a">
+                                    <div class="slds-media__body slds-input-has-icon slds-input-has-icon&#45;&#45;left" data-aura-rendered-by="13:191;a">
+                                        <div class="slds-lookup__result-text" data-aura-rendered-by="14:191;a">
+                                            <svg aria-hidden="true" class="slds-input__icon">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                            </svg>
+                                            <input class="slds-input" type="text" placeholder="Search" ng-model="section" id="section-name" style="border: 1px solid rgb(216, 221, 230);box-shadow: none;" data-aura-rendered-by="15:191;a">
+                                        </div>
+                                        <div class="slds-lookup__result-text slds-hide" data-aura-rendered-by="16:191;a">
+                                            No recods found!
+                                        </div>
+                                    </div>
+                                </span>
+                                    <ul class="slds-lookup__list" ng-repeat=" allData in Test['Suit'] | filter: section track by $index" role="listbox">
+                                        <div class="slds-spinner_container" ng-show="angular.equals(data['Section'],{})">
+                                            <div class="slds-spinner&#45;&#45;brand slds-spinner slds-spinner&#45;&#45;small" role="alert" >
+                                                <span class="slds-assistive-text">Loading</span>
+                                                <div class="slds-spinner__dot-a"></div>
+                                                <div class="slds-spinner__dot-b"></div>
+                                            </div>
+                                        </div>
+                                        <li role="presentation" ng-repeat="dataArr in data['Section'][allData['id']] | filter: section track by $index">
+                                            <a class="slds-lookup__item-action slds-media slds-media&#45;&#45;center" name="{{dataArr.name}}" id="{{dataArr.id}}" ng-click="addSelectedOptions($event,'Section');" role="option">
+                                                <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-icon&#45;&#45;small slds-media__figure">
+                                                    <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                                </svg>
+                                                {{dataArr.name}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+
+                            <div class="slds-form-element__control slds-border_top">
+                                <div class="slds-panel__section">
+                                    <h4 class="slds-text-heading_small slds-m-bottom_medium">Select Browsers</h4>
+                                    <span class="slds-form&#45;&#45;inline slds-checkbox">
+                                        <span class="slds-form-element__label slds-m-right_large" >Windows Browsers <b>:</b> </span>
+                                        <span ng-repeat="browser in browsers['windows']">
+                                        <input type="checkbox" name="windows" id="{{browser}} " ng-click="addSelectedOptions($event,'Browser')"/>
+                                        <label class="slds-checkbox__label " for="{{browser}} ">
+                                            <span class="slds-checkbox&#45;&#45;faux"></span>
+                                            <span class="slds-form-element__label slds-text-color&#45;&#45;default">{{browser}}</span>
+                                        </label>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-panel__section">
+                                        <span class="slds-form&#45;&#45;inline slds-checkbox">
+                                            <span class="slds-form-element__label slds-m-right_xx-large" >Mac Browsers <b>:</b> </span>
+                                             <span ng-repeat="macbrowser in browsers['mac']">
+                                        <input type="checkbox" name="mac" id="{{macbrowser}}" ng-click="addSelectedOptions($event,'Browser')"/>
+                                        <label class="slds-checkbox__label slds-text-color&#45;&#45;default" for="{{macbrowser}}">
+                                            <span class="slds-checkbox&#45;&#45;faux"></span>
+                                            <span class="slds-form-element__label slds-text-color&#45;&#45;default">{{macbrowser}}</span>
+                                        </label>
+                                        </span>
+                                        </span>
+                                    </div>
+                                </div>
+                        </div>
+                        </div>
+                        <div class="slds-form-element slds-border_top">
+                            <div class="slds-form-element__control">
+                                <div class="slds-panel__section">
+                                    <h4 class="slds-text-heading_small slds-m-bottom_medium">Salesforce Instance</h4>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="select-01">Select Instance</label>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-select_container">
+                                                        <select class="slds-select" required="" ng-model="selctedInstance" ng-change="getProfiles(selctedInstance);">
+                                                            <option ng-repeat="instance in salesforceInstances">{{instance}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                            </div>
+                        </div>
+                                <div class="slds-form-element slds-border_top">
+                                    <div class="slds-panel__section">
+                                        <h4 class="slds-text-heading_small slds-m-bottom_x-small">Select Profile</h4>
+                                    </div>
+                                    <div class="slds-form-element__control  slds-m-left_medium slds-m-right_medium">
+                                        <label class="slds-form-element__label">Select Profile</label>
+                                            <div class="slds-pill_container" ng-click="action['Profile'] = 'slds-is-open'" id="pill-section" >
+
+                                                <a class="slds-pill" ng-repeat="items in Test['Profile']">
+                                                    <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-pill__icon">
+                                                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                                    </svg>
+                                                    <span class="slds-pill__label">{{items.name}}</span>
+                                                    <button class="slds-button slds-button&#45;&#45;icon-bare slds-pill__remove" name="{{items.name}}" id="{{items.id}}" ng-click="removeSelectedItem($event,'Profile'); $event.stopPropagation();">
+                                                        <svg aria-hidden="true" class="slds-button__icon">
+                                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                                        </svg>
+                                                        <span class="slds-assistive-text">Remove</span>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div class="slds-form-element slds-lookup ng-class: action['Profile']" data-select="single" >
+                                                <div class="slds-lookup__menu" id="lookup-profile">
+                                <span class="slds-lookup__item-action slds-media" role="option" id="lookup-option-profile" data-aura-rendered-by="12:191;a">
+                                    <div class="slds-media__body slds-input-has-icon slds-input-has-icon&#45;&#45;left" data-aura-rendered-by="13:191;a">
+                                        <div class="slds-lookup__result-text" data-aura-rendered-by="14:191;a">
+                                            <svg aria-hidden="true" class="slds-input__icon">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                            </svg>
+                                            <input class="slds-input" type="text" placeholder="Search" ng-model="profile" id="profile-name" style="border: 1px solid rgb(216, 221, 230);box-shadow: none;" data-aura-rendered-by="15:191;a">
+                                        </div>
+                                        <div class="slds-lookup__result-text slds-hide" data-aura-rendered-by="16:191;a">
+                                            No recods found!
+                                        </div>
+                                    </div>
+                                </span>
+                                                    <ul class="slds-lookup__list" role="listbox">
+                                                        <div class="slds-spinner_container" ng-hide="angular.isDefined(profiles)">
+                                                            <div class="slds-spinner&#45;&#45;brand slds-spinner slds-spinner&#45;&#45;small" role="alert" >
+                                                                <span class="slds-assistive-text">Loading</span>
+                                                                <div class="slds-spinner__dot-a"></div>
+                                                                <div class="slds-spinner__dot-b"></div>
+                                                            </div>
+                                                        </div>
+                                                        <li role="presentation" ng-repeat="allData in profiles | filter: profile">
+                                                            <a class="slds-lookup__item-action slds-media slds-media&#45;&#45;center" name="{{allData.Name}}" id="{{allData.Name}}" ng-click="addSelectedOptions($event,'Profile');" role="option">
+                                                                <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-icon&#45;&#45;small slds-media__figure">
+                                                                    <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                                                </svg>
+                                                                {{allData.Name}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>-->
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" id="test-collection"
+         class="slds-modal slds-scrollable&#45;&#45;y ng-class: action['modal']">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close"
+                        ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close'; Test['Suit'] = []; Test['Section'] = []; Test['Browser'] = []; Test['Profile'] = []; Test['Project'] = []; Test['Name'] = {'name': ''} ; Test['jenkinsServer'] = '' ; Test['User'] = []; init();">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon_xx-small">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="header43" class="slds-text-heading--medium">Template Details</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div class="slds-panel__section">
+                    <div>
+                        <div class="slds-form-element slds-border_bottom is-required">
+                            <we-dropdown label="TestRail Server" options="data['TestRailServer']"
+                                         selected-item="Test['TestRailServer']" required="true"></we-dropdown>
+                        </div>
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium" ng-show="Test['TestRailServer'] is-required">
+                            <span class="slds-form-element__label slds-m-right_large "><abbr class="slds-required" title="required">*</abbr>Test Projects</span>
+                            <we-lookup-list nodes="data['Project']" pills="Test['Project']"
+                                            fields="['name']"></we-lookup-list>
+                        </div>
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium slds-border_top"
+                             ng-show="Test['Project'].length > 0 || data['Suit'].length > 0">
+                            <span class="slds-form-element__label slds-m-right_large">Test Suits</span>
+                            <we-lookup-list nodes="data['Suit']" pills="Test['Suit']"
+                                            fields="['name']"></we-lookup-list>
+                        </div>
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;large"
+                             ng-show="Test['Suit'].length > 0 || data['Section'].length > 0">
+                            <span class="slds-form-element__label slds-m-right_large">Test Sections</span>
+                            <we-lookup-list nodes="data['Section']" pills="Test['Section']"
+                                            fields="['name']"></we-lookup-list>
+                        </div>
+                        <div class="slds-form-element slds-border_top slds-m-bottom_medium is-required">
+                            <!--
+                            <span class="slds-form-element__label slds-m-right_large">Environment</span>-->
+                            <!-- <div class="slds-form-element__control">
+                                 <div class="slds-panel__section">
+                                     <h4 class="slds-text-heading_small slds-m-bottom_medium">Salesforce Instance</h4>
+                                     <div class="slds-form-element">
+                                         <label class="slds-form-element__label" for="select-01">Select Instance</label>
+                                         <div class="slds-select_container">
+                                             <select class="slds-select" required="" ng-model="selctedInstance" ng-change="getProfiles(selctedInstance);">
+                                                 <option ng-repeat="instance in salesforceInstances">{{instance}}
+                                                 </option>
+                                             </select>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>-->
+                            <we-dropdown label="Environment" options="salesforceInstances"
+                                         selected-item="Test['Environment']" required="true"></we-dropdown>
+                            <!-- <we-lookup-list nodes="salesforceInstances" pills="Test['Environment']"
+                                             fields="['hostName']"></we-lookup-list>-->
+                            <!--<we-dropdown label="Select Instance" options="salesforceInstances"
+                                         selected-item="selectedInstance"></we-dropdown>-->
+                        </div>
+                        <div class="slds-form-element slds-border_top slds-m-bottom_medium is-required"
+                             ng-show="Test['Environment']">
+                            <span class="slds-form-element__label slds-m-right_large"><abbr class="slds-required" title="required">*</abbr>Profile</span>
+                            <we-lookup-list nodes="profiles" pills="Test['Profile']"
+                                            fields="['name']"></we-lookup-list>
+                        </div>
+                        <div class="slds-form-element slds-border_top slds-m-bottom_medium"
+                             ng-show="Test['Environment']">
+                            <span class="slds-form-element__label slds-m-right_large">Users</span>
+                            <we-lookup-list nodes="users" pills="Test['User']"
+                                            fields="['name']"></we-lookup-list>
+                        </div>
+                        <div class="slds-form-element slds-border_top slds-m-top_medium is-required">
+                            <span class="slds-form-element__label slds-m-right_large"><abbr class="slds-required" title="required">*</abbr>Jenkins Servers</span>
+                            <!--<we-dropdown label="Select jenkins Server" options="data['JenkinsServer']"
+                                         selected-item="Test['jenkinsServer']"></we-dropdown>-->
+                            <we-lookup-list nodes="data['JenkinsServer']" pills="Test['jenkinsServer']"
+                                            fields="['name']"></we-lookup-list>
+                        </div>
+                        <div class="slds-form-element" ng-show="Test['jenkinsServer'] is-required">
+                            <div class="slds-form-element__control slds-border_top">
+                                <div class="slds-panel__section">
+                                    <span class="slds-form--inline slds-checkbox">
+                                        <div ng-repeat="browser in data['Browser']">
+                                            <span class="slds-form-element__label slds-m-right_large">Select Browser for {{browser['name']}}<b>:</b> </span>
+                                            <span ng-repeat="value in browser['value']">
+                                                <input type="checkbox" id="{{browser['value']}}{{$index}}"
+                                                       ng-model="selectedBrowser"
+                                                       ng-change="selectedBrowser ? Test['Browser'].push(browser) : Test['Browser'].splice(Test['Browser'].indexOf(browser))"/>
+                                                <label class="slds-checkbox__label "
+                                                       for="{{browser['value']}}{{$index}}">
+                                                    <span class="slds-checkbox--faux"></span>
+                                                    <span class="slds-form-element__label slds-text-color--default">{{value}}</span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button--destructive"
+                        ng-click="init(); action['modal'] = 'slds-slide-up-close slds-backdrop--close' ; Test['Suit'] = []; Test['Section'] = []; Test['Browser'] = []; Test['Profile'] = []; Test['Project'] = []; Test['Name'] = {'name': ''} ; Test['jenkinsServer'] = '' ; Test['User'] = [];">
+                    Cancel
+                </button>
+                <button class="slds-button slds-button--brand" ng-click="insertTest(); init(); Test['Suit'] = []; Test['Section'] = []; Test['Browser'] = []; Test['Profile'] = []; Test['Project'] = []; Test['Name'] = {'name': ''} ; Test['jenkinsServer'] = '' ; Test['User'] = [];"
+                        ng-disabled="(Test['Suit'].length == 0 && Test['Suit'].length == 0) || (Test['Browser'].length == 0) || Test['Profile'].length == 0">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="slds-backdrop ng-class: action['modal']"></div>
+    <div class="slds-grid slds-grid--pull-padded">
+        <div class="slds-float_left">
+            <div class="slds-is-relative" style="height: 50%; width: 90%">
+                <article class="slds-card">
+                    <div class="slds-card__header">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                            </div>
+                            <div class="slds-media__body">
+                                <h2>
+                                    <button class="slds-button slds-button_icon active">
+                                        <div class="slds-text-heading_small"> Create New Template</div>
+                                    </button>
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <div class="slds-align_absolute-center"
+                             style="padding: 0.5rem; background-color: rgb(244, 246, 249)">
+                            <div class="slds-no-flex">
+                                <button class="slds-button slds-button_neutral"
+                                        ng-click="action['modal'] = 'slds-slide-up-open slds-backdrop--open'">
+                                    New
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <!--<div class="slds-float_left" ng-repeat="template in allTemplates">
+            <div class="slds-is-relative " style="height: 50%; width: 90% ;">
+                <div class="slds-spinner_container" ng-hide="allTemplates.length > 0">
+                    <div class="slds-spinner&#45;&#45;brand slds-spinner slds-spinner&#45;&#45;medium" role="alert">
+                        <span class="slds-assistive-text">Loading</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+                &lt;!&ndash;<article class="slds-card slds-box slds-theme&#45;&#45;shade slds-theme&#45;&#45;alert-texture" >
+                    <div class="slds-card__header">
+                            &lt;!&ndash;<header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__figure">
+                                </div>
+                                <div class="slds-media__body">
+                                    <h2><button class="slds-button slds-button_icon">
+                                        <div class="slds-text-heading_small">{{template.Name['name']}}</div>
+                                    </button>
+                                    </h2>
+
+                                </div>
+                            </header>&ndash;&gt;
+                        </div>
+
+                        <div class="slds-no-flex">
+
+                        </div>
+                    <div class="slds-card__body slds-card__body_inner slds-text-align&#45;&#45;center "><div class="slds-align_absolute-center" >
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                        </div>
+                        <div class="slds-media__body">
+                            <h2><a class="slds-button slds-button_icon"  ng-mouseover="action['tooltip'] = false">
+                                <div class="slds-text-heading_small slds-text-title&#45;&#45;caps">{{template.Name['name']}}</div>
+                            </a>
+                            </h2>
+
+
+                        </div>
+                    </header>
+                    </div></div>
+                </article>&ndash;&gt;
+                <article class="slds-card">
+                    <header class="slds-card__header slds-grid slds-m-left_large">
+                        <div class="slds-text-title&#45;&#45;caps slds-text-heading&#45;&#45;medium">{{template.Name['name']}}</div>
+                        <button class="slds-button slds-modal__close slds-m-top_large" title="Close" ng-click="remove(template.Job)">
+                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon&#45;&#45;large" style="color: red">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </header>
+                    <div class="slds-card__body">
+                        <div class="slds-card__body&#45;&#45;inner slds-grid slds-wrap slds-grid&#45;&#45;pull-padded">
+                            <div class="slds-tile slds-media slds-card__tile slds-col&#45;&#45;padded slds-grow-none slds-size&#45;&#45;1-of-1 slds-small-size&#45;&#45;1-of-2 slds-medium-size&#45;&#45;1-of-3 slds-large-size&#45;&#45;1-of-4 slds-hint-parent">
+                                <div class="slds-media__figure">
+                                    <dl class="slds-dl&#45;&#45;horizontal" ng-repeat="(key,data) in template">
+                                        <dt class="slds-dl&#45;&#45;horizontal__label">
+                                            <p class="slds-truncate" title="Type">{{key}}:</p>
+                                        </dt>
+                                        <dd class="slds-dl&#45;&#45;horizontal__detail slds-tile__meta slds-text-longform">
+                                            <p class="slds-truncate" title="{{data.name}}">{{data.name}}</p>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-card__footer">
+                        <div class="slds-button-group" role="group">
+                            <button class="slds-button slds-button&#45;&#45;neutral slds-m-right_medium" ng-click="buildJob(template.Job.name+'&'+template.Project.id)">
+                                Run
+                            </button>
+                            <button class="slds-button slds-button&#45;&#45;neutral">Schedule</button>
+                        </div>
+                    </div>
+                </article>
+                &lt;!&ndash;
+                <div class="slds-popover slds-nubbin&#45;&#45;top slds-m-top_x-small" ng-if="!action['tooltip']" role="tooltip" style="width: 70%">
+                    <div class="slds-popover__body">
+                        <div class="slds-button-group" role="group">
+                            <button class="slds-button slds-button&#45;&#45;neutral">Run</button>
+                            <button class="slds-button slds-button&#45;&#45;neutral">Schedule</button>
+                        </div>
+                        <div class="slds-tile slds-media slds-m-top_x-small">
+                            <div class="slds-media__body">
+                                <h3 class="slds-truncate slds-text-heading&#45;&#45;label" title="Salesforce UX"><a href="javascript:void(0);">{{template.Name['name']}}</a></h3>
+                                <div class="slds-tile__detail slds-text-body&#45;&#45;small">
+                                    <dl class="slds-dl&#45;&#45;horizontal">
+                                        <dt class="slds-dl&#45;&#45;horizontal__label">
+                                            <p class="slds-truncate" title="Company">Project:</p>
+                                        </dt>
+                                        <dd class="slds-dl&#45;&#45;horizontal__detail slds-tile__meta">
+                                            <p class="slds-truncate" title="Salesforce">{{template.Project['name']}}</p>
+                                        </dd>
+                                        <dt class="slds-dl&#45;&#45;horizontal__label">
+                                            <p class="slds-truncate" title="Email">Browser:</p>
+                                        </dt>
+                                        <dd class="slds-dl&#45;&#45;horizontal__detail slds-tile__meta">
+                                            <p class="slds-truncate" title="salesforce-ux@salesforce.com">{{template.Browser['name']}}</p>
+                                        </dd>
+                                        <dt class="slds-dl&#45;&#45;horizontal__label">
+                                            <p class="slds-truncate" title="Email">OS:</p>
+                                        </dt>
+                                        <dd class="slds-dl&#45;&#45;horizontal__detail slds-tile__meta">
+                                            <p class="slds-truncate" title="salesforce-ux@salesforce.com">{{template.Browser['id']}}</p>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>&ndash;&gt;
+            </div>
+        </div>
+    </div>-->
+        <!--   <div class="slds-panel__section">
+                        <h3 class="slds-text-heading_small slds-m-bottom_medium">Additional Information</h3>
+                        <div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="non-text-input-01">Status</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <select class="slds-select" id="non-text-input-01">
+                                            <option>Not Started</option>
+                                            <option>Prospecting</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="non-text-input-02">Priority</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <select class="slds-select" id="non-text-input-02">
+                                            <option>Normal</option>
+                                            <option>Low</option>
+                                            <option>Medium</option>
+                                            <option>High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+        <!--</div>
+            </div>
+        </div>
+                    </div>
+                <div class="slds-panel__actions slds-border_top">
+                    <div class="slds-grid slds-grid_align-center">
+                        <button type="button" class="slds-button slds-button_neutral">Cancel</button>
+                        <button type="button" class="slds-button slds-button_brand" ng-click="insertTest();" ng-disabled="(Test['Suit'].length == 0 && Test['Suit'].length == 0) || (Test['Browser'].length == 0) || Test['Profile'].length == 0">Save</button>
+                    </div>
+                </div>
+                </div>
+
+            </form>
+            </div>
+        </div>-->
+        <!--
+        <div class="demo-only slds-grid" style="height: 845px; max-width: 100%; background: rgb(244, 246, 249); padding: 1rem;margin-left: 30%">
+            <div class="slds-panel slds-grid slds-grid_vertical slds-nowrap slds-is-editing">
+                <div class="slds-form slds-form_stacked slds-grow slds-scrollable_y">
+                    <div class="slds-panel__section slds-border_bottom  slds-text-title--caps">
+                        <div class="slds-media slds-align_absolute-center">
+                            <h3 class="slds-text-heading_small slds-m-bottom_medium ">Test Details</h3>
+                        </div>
+                    </div>
+                    <div class="slds-panel__section">
+
+                        <div>
+                            <div class="slds-form-element">
+                                <span class="slds-form-element__label">Test Suits</span>
+                                    <div class="slds-pill_container" ng-click="action['suits'] = 'slds-is-open'" id="text-input-01">
+                                        <a class="slds-pill" ng-repeat="items in Test['suits']">
+                                            <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-pill__icon">
+                                                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                            </svg>
+                                            <span class="slds-pill__label">{{items.name}}</span>
+                                            <button class="slds-button slds-button--icon-bare slds-pill__remove" name="{{items.name}}" id="{{items.id}}" ng-click="removeSelectedItem($event,'suits'); $event.stopPropagation();">
+                                                <svg aria-hidden="true" class="slds-button__icon">
+                                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Remove</span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="slds-form-element slds-lookup slds-has-selection ng-class: action['suits']" data-select="single" >
+                                        <div class="slds-lookup__menu" >
+                                            zdlghwlistgebewuirbtgewzdlghwlistgebewuirbtgewzdlghwlistgebewuirbtgew
+                                            <span class="slds-lookup__item-action slds-media" role="option" id="lookup-option-507">
+                                                <div class="slds-media__body slds-input-has-icon slds-input-has-icon--left">
+                                                    <div class="slds-lookup__result-text" data-aura-rendered-by="14:191;a">
+                                                        <svg aria-hidden="true" class="slds-input__icon">
+                                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                                        </svg>
+                                                    <input class="slds-input" type="text" placeholder="Search" id="building:txt" style="border: 1px solid rgb(216, 221, 230);box-shadow: none;">
+                                                </div>
+                                                <div class="slds-lookup__result-text slds-hide" data-aura-rendered-by="16:191;a">
+                                                    No recods found!
+                                                </div>
+                                        </div>
+                                    </span>
+                                            <ul class="slds-lookup__list" role="listbox">
+                                                <li role="presentation" ng-repeat="allData in data">
+                                                    <a class="slds-lookup__item-action slds-media slds-media--center" name="{{allData.name}}" id="{{allData.id}}" ng-click="addSelectedOptions($event,'suits');" role="option">
+                                                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-icon--small slds-media__figure">
+                                                            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                                        </svg>
+                                                        {{allData.name}}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <span class="slds-form-element__label">Test Sections</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-pill_container" ng-click="action['sections'] = 'slds-is-open'" id="text-input-02">
+                                        <a class="slds-pill" ng-repeat="items in Test['sections']">
+                                            <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-pill__icon">
+                                                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                            </svg>
+                                            <span class="slds-pill__label">{{items.name}}</span>
+                                            <button class="slds-button slds-button--icon-bare slds-pill__remove" name="{{items.name}}" id="{{items.id}}" ng-click="removeSelectedItem($event,'sections'); $event.stopPropagation();">
+                                                <svg aria-hidden="true" class="slds-button__icon">
+                                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Remove</span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="slds-form-element slds-lookup slds-has-selection ng-class: action['sections']" data-select="single" >
+                                        <div class="slds-lookup__menu" id="lookup">
+                                    <span class="slds-lookup__item-action slds-media" role="option" id="lookup-item" data-aura-rendered-by="12:191;a">
+                                        <div class="slds-media__body slds-input-has-icon slds-input-has-icon--left" data-aura-rendered-by="13:191;a">
+                                            <div class="slds-lookup__result-text" data-aura-rendered-by="14:191;a">
+                                                <svg aria-hidden="true" class="slds-input__icon">
+                                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                                </svg>
+                                                <input class="slds-input" type="text" placeholder="Search" id="building:txt" style="border: 1px solid rgb(216, 221, 230);box-shadow: none;" data-aura-rendered-by="15:191;a">
+                                            </div>
+                                            <div class="slds-lookup__result-text slds-hide" data-aura-rendered-by="16:191;a">
+                                                No recods found!
+                                            </div>
+                                        </div>
+                                    </span>
+                                            <ul class="slds-lookup__list" role="listbox">
+                                                <li role="presentation" ng-repeat="allData in data">
+                                                    <a class="slds-lookup__item-action slds-media slds-media--center" name="{{allData.name}}" id="{{allData.id}}" ng-click="addSelectedOptions($event,'sections');" role="option">
+                                                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-icon--small slds-media__figure">
+                                                            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+                                                        </svg>
+                                                        {{allData.name}}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-lookup slds-has-selection">
+                                <span class="slds-form-element__label">Assigned To</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-pill_container">
+                        <span class="slds-pill slds-pill_link">
+                          <span class="slds-icon_container slds-icon-standard-avatar slds-pill__icon_container">
+                            <svg class="slds-icon" aria-hidden="true">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#avatar" />
+                            </svg>
+                            <span class="slds-assistive-text">Person</span>
+                          </span>
+                          <a href="javascript:void(0);" class="slds-pill__action" title="Jason Dewar">
+                            <span class="slds-pill__label">Jason Dewar</span>
+                          </a>
+                          <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close" />
+                            </svg>
+                            <span class="slds-assistive-text">Remove</span>
+                          </button>
+                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-lookup slds-has-selection">
+                                <span class="slds-form-element__label">Name</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-pill_container">
+                        <span class="slds-pill slds-pill_link">
+                          <span class="slds-icon_container slds-icon-standard-avatar slds-pill__icon_container">
+                            <svg class="slds-icon" aria-hidden="true">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#avatar" />
+                            </svg>
+                            <span class="slds-assistive-text">Person</span>
+                          </span>
+                          <a href="javascript:void(0);" class="slds-pill__action" title="Adam Choi">
+                            <span class="slds-pill__label">Adam Choi</span>
+                          </a>
+                          <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close" />
+                            </svg>
+                            <span class="slds-assistive-text">Remove</span>
+                          </button>
+                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-lookup slds-has-selection">
+                                <span class="slds-form-element__label">Related To</span>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-pill_container">
+                        <span class="slds-pill slds-pill_link">
+                          <span class="slds-icon_container slds-icon-standard-account slds-pill__icon_container">
+                            <svg class="slds-icon" aria-hidden="true">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account" />
+                            </svg>
+                            <span class="slds-assistive-text">Account</span>
+                          </span>
+                          <a href="javascript:void(0);" class="slds-pill__action" title="Tesla Cloudhub + Anypoint Connectors">
+                            <span class="slds-pill__label">Tesla Cloudhub + Anypoint Connectors</span>
+                          </a>
+                          <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close" />
+                            </svg>
+                            <span class="slds-assistive-text">Remove</span>
+                          </button>
+                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-05">Comments</label>
+                                <div class="slds-form-element__control">
+                                    <textarea class="slds-textarea" id="text-input-05">Adam was open to doing more business in the 4th quarter. Follow up with marketing demo and email @users.</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-panel__section">
+                        <h3 class="slds-text-heading_small slds-m-bottom_medium">Additional Information</h3>
+                        <div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="non-text-input-01">Status</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <select class="slds-select" id="non-text-input-01">
+                                            <option>Not Started</option>
+                                            <option>Prospecting</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="non-text-input-02">Priority</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <select class="slds-select" id="non-text-input-02">
+                                            <option>Normal</option>
+                                            <option>Low</option>
+                                            <option>Medium</option>
+                                            <option>High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-panel__actions slds-border_top">
+                    <div class="slds-grid slds-grid_align-center">
+                        <button type="button" class="slds-button slds-button_neutral">Cancel</button>
+                        <button type="button" class="slds-button slds-button_brand">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div class="slds-scrollable--x slds-m-top&#45;&#45;xx-large">
+        <!--<we-data-table rows="allTemplates" columns="template_fields"></we-data-table>-->
+        <table class="slds-table  slds-table--cell-buffer table-wrapper slds-truncate slds-max-medium-table--stacked slds-table--bordered slds-max-medium-table--stacked-horizontal"
+               role="grid">
+            <thead>
+            <tr class="slds-text-title--caps " scope="col">
+                <th scope="col" class="slds-cell-shrink">
+                    Sr. No.
+                </th>
+                <th scope="col" ng-repeat="column in template_fields" class="slds-cell-shrink">
+                    <div class="slds-truncate">{{column}}</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="template in allTemplates" ng-model="modalaction$index" ng-model="templateDetails"
+                ng-model="showWarning$index" ng-model="showRunPrompt$index">
+                <td>{{$index + 1}}</td>
+
+                <td>
+                    <we-show-data-modal table="'templates'" action="modalaction$index"
+                                        id="template[0]['job']" template="true"
+                                        run="buildJob(template[0]['job'])"></we-show-data-modal>
+                    <a href="javascript:void(0);"
+                       ng-click="modalaction$index = 'slds-slide-up-open slds-backdrop--open'">{{template[1]['value']}}</a>
+                    <we-prompt-warning header="Are You Sure?" message="Do you really want to delete this template.."
+                                       terminate="showWarning$index"
+                                       action-to-take="deleteTemplate(id)" id="template[0]['job']"></we-prompt-warning>
+                    <we-schedular generated-cron="schedule['cron']" action="openSchedular"></we-schedular>
+                    <div role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-modal--prompt ng-class: showRunPrompt$index">
+                        <div class="slds-modal__container" style="width: fit-content">
+                            <div class="slds-modal__header slds-theme--inverse slds-theme--alert-texture">
+                                <button class="slds-button slds-modal__close" title="Close" ng-click="showRunPrompt$index = 'slds-slide-up-close slds-backdrop--close'">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="header43" class="slds-text-heading--small slds-text-color--inverse-weak">Run Template</h2>
+                            </div>
+                            <div class="slds-modal__content slds-p-around--medium">
+                                <div class="slds-align--absolute-center">
+                                        <span class="slds-form--inline slds-checkbox">
+                                            <input type="checkbox" id="isHeadless" ng-model="Test['Headless']"/>
+                                            <label class="slds-checkbox__label " for="isHeadless">
+                                                <span class="slds-checkbox--faux"></span>
+                                                <span class="slds-form-element__label slds-text-color--default">Headless Execution</span>
+                                            </label>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="slds-modal__footer slds-theme--default">
+                                <button class="slds-button slds-button_neutral" ng-click="buildJob(template[0]['job']) ; showRunPrompt$index = 'slds-slide-up-close slds-backdrop--close';">Run
+                                </button>
+                                <button class="slds-button slds-button_destructive" ng-click="showRunPrompt$index = 'slds-slide-up-close slds-backdrop--close';" >Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-backdrop ng-class: showRunPrompt$index"></div>
+                </td>
+                <td>
+                    <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Run"
+                                aria-pressed="false" ng-click="showRunPrompt$index = 'slds-slide-up-open slds-backdrop--open';">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#right"/>
+                            </svg>
+                            <span class="slds-assistive-text">Run</span>
+                        </button>
+                        <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
+                                title="Schedule"
+                                ng-click="openSchedular  = 'slds-slide-up-open slds-backdrop--open' ; schedule['job'] = template[0]['job'];">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#event"/>
+                            </svg>
+                            <span class="slds-assistive-text">Schedule</span>
+                        </button>
+                        <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Edit"
+                                aria-pressed="false" ng-click="editTemplate(template[0]['job'])">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"/>
+                            </svg>
+                            <span class="slds-assistive-text">Edit</span>
+                        </button>
+                        <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
+                                title="Clone" ng-click="cloneTemplate(template[0]['job'])">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#copy"/>
+                            </svg>
+                            <span class="slds-assistive-text">Clone</span>
+                        </button>
+                        <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true"
+                                title="Delete" ng-click="showWarning$index = 'slds-fade-in-open slds-backdrop--open'">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"/>
+                            </svg>
+                            <span class="slds-assistive-text">Delete</span>
+                        </button>
+                    </div>
+                </td>
+                <!-- <td class="slds-cell-shrink" role="gridcell">
+                     <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps">{{template.Name.split('=>')[1].replace('}','').replace('"','').replace('"','')}}</div>
+                 </td>
+                 <td  class="slds-cell-shrink" role="gridcell">
+                     <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps" ng-repeat="value in template.Suit">{{value.name}}</div>
+                 </td>
+                 <td  class="slds-cell-shrink" role="gridcell">
+                     <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps" ng-repeat="value in template.Section">{{value.name}}</div>
+                 </td>
+                 <td  class="slds-cell-shrink" role="gridcell">
+                     <div class="slds-truncate slds-text-title&#45;&#45;caps" ng-repeat="value in template.Project">{{value.name}}</div>
+                 </td>
+                 <td  class="slds-cell-shrink" role="gridcell">
+                     <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps" ng-repeat="value in template.Browser">{{value.id.replace('{','').replace('}','')}}</div>
+                 </td>
+                 <td  class="slds-cell-shrink" role="gridcell">
+                     <div class="slds-truncate slds-resizable slds-text-title&#45;&#45;caps" ng-repeat="value in template.Profile">{{value.Name}}</div>
+                 </td>
+                 <td  class="slds-cell-shrink" role="gridcell">
+                     <div class="slds-button-group" role="group">
+                         <button class="button special slds-button slds-button&#45;&#45;neutral slds-m-right_medium" ng-click="buildJob(template.Job+'&'+template.Project[0].id)">
+                             Run
+                         </button>
+                     </div>
+                 </td>-->
+            </tr>
+            </tbody>
+        </table>
+        <div class="slds-backdrop ng-class:action['warning']"></div>
+    </div>
+</div>
+</div>
+
+</div>

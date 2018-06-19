@@ -1,0 +1,186 @@
+<div class="slds-grid" style="margin-left: 20%">
+  <div role="dialog" tabindex="-1" aria-labelledby="header43" id="test-collection"
+       class="slds-modal slds-scrollable&#45;&#45;y ng-class: action['modal']">
+    <div class="slds-modal__container">
+      <div class="slds-modal__header">
+        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close"
+                ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close'; Test = {'Suit' : [] , 'Section' : [] , 'Browser' : [] , 'Profile' : [] , 'Project' : [] , 'Table' : 'Templates' , 'Name' : [{'name' : ''}]};">
+          <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+          </svg>
+          <span class="slds-assistive-text">Close</span>
+        </button>
+        <h2 id="header43" class="slds-text-heading--medium">Test Details</h2>
+      </div>
+      <div class="slds-modal__content slds-p-around--medium">
+        <div class="slds-panel__section">
+          <div>
+            <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+              <span class="slds-form-element__label">Test Projects</span>
+              <we-lookup-list nodes="data['Project']" pills="Test['Project']"
+                              fields="['name']"></we-lookup-list>
+            </div>
+            <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+              <span class="slds-form-element__label">Test Suits</span>
+              <we-lookup-list nodes="data['Suit']" pills="Test['Suit']"
+                              fields="['name']"></we-lookup-list>
+            </div>
+            <div class="slds-form-element slds-m-bottom&#45;&#45;large"
+                 ng-show="Test['Suit'].length > 0 || Test['Section'].length > 0">
+              <span class="slds-form-element__label">Test Sections</span>
+              <we-lookup-list nodes="data['Section']" pills="Test['Section']"
+                              fields="['name']"></we-lookup-list>
+            </div>
+            <div class="slds-form-element">
+              <div class="slds-form-element__control slds-border_top">
+                <div class="slds-panel__section">
+                  <h4 class="slds-text-heading_small slds-m-bottom_medium">Select Browsers</h4>
+                  <span class="slds-form--inline slds-checkbox">
+                    <span class="slds-form-element__label slds-m-right_large">Windows Browsers <b>:</b> </span>
+                    <span ng-repeat="browser in browsers['Windows']">
+                      <input type="checkbox" name="windows" id="{{browser}} "
+                             ng-click="addSelectedOptions($event,'Browser')"/>
+                      <label class="slds-checkbox__label " for="{{browser}} ">
+                        <span class="slds-checkbox--faux"></span>
+                        <span class="slds-form-element__label slds-text-color--default">{{browser.label}}</span>
+                      </label>
+                    </span>
+                  </span>
+                </div>
+                <div class="slds-form-element__control">
+                  <div class="slds-panel__section">
+                    <span class="slds-form&#45;&#45;inline slds-checkbox">
+                      <span class="slds-form-element__label slds-m-right_xx-large">Mac Browsers <b>:</b> </span>
+                      <span ng-repeat="macbrowser in browsers['Mac']">
+                        <input type="checkbox" name="mac" id="{{macbrowser}}"
+                               ng-click="addSelectedOptions($event,'Browser')"/>
+                        <label class="slds-checkbox__label slds-text-color&#45;&#45;default"
+                               for="{{macbrowser}}">
+                          <span class="slds-checkbox&#45;&#45;faux"></span>
+                          <span class="slds-form-element__label slds-text-color&#45;&#45;default">{{macbrowser.label}}</span>
+                        </label>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slds-form-element slds-border_top">
+              <we-dropdown label="Select jenkins Server" options="data['JenkinsServer']"
+                           selected-item="Test['jenkinsServer']"></we-dropdown>
+            </div>
+            <div class="slds-form-element slds-border_top">
+
+              <we-dropdown label="Select Instance" options="salesforceInstances"
+                           selected-item="selectedInstance"></we-dropdown>
+            </div>
+            <div class="slds-form-element slds-border_top">
+              <div class="slds-panel__section">
+                <h4 class="slds-text-heading_small slds-m-bottom_x-small">Select Profile</h4>
+              </div>
+              <div class="slds-form-element__control  slds-m-left_medium slds-m-right_medium">
+                <label class="slds-form-element__label">Select Profile</label>
+                <we-lookup-list nodes="profiles" pills="Test['Profile']"
+                                fields="['name']"></we-lookup-list>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-modal__footer">
+        <button class="slds-button slds-button--destructive"
+                ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close' ; Test = {'Suit' : [] , 'Section' : [] , 'Browser' : [] , 'Profile' : [] , 'Project' : [] , 'Table' : 'Templates' , 'Name' : [{'name' : ''}]};">
+          Cancel
+        </button>
+        <button class="slds-button slds-button--brand" ng-click="insertTest();"
+                ng-disabled="(Test['Suit'].length == 0 && Test['Suit'].length == 0) || (Test['Browser'].length == 0) || Test['Profile'].length == 0">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="slds-backdrop ng-class: action['modal']"></div>
+  <div class="slds-grid slds-grid--pull-padded slds-m-bottom--xx-large">
+    <div class="slds-float_left">
+      <div class="slds-is-relative" style="height: 50%; width: 90%">
+        <article class="slds-card">
+          <div class="slds-card__header">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+              <div class="slds-media__figure">
+              </div>
+              <div class="slds-media__body">
+                <h2>
+                  <button class="slds-button slds-button_icon">
+                    <div class="slds-text-heading_small"> Create New Template</div>
+                  </button>
+                </h2>
+              </div>
+            </header>
+          </div>
+          <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-align_absolute-center"
+                 style="padding: 0.5rem; background-color: rgb(244, 246, 249);fill-opacity: initial">
+              <div class="slds-no-flex">
+                <button class="slds-button slds-button_neutral"
+                        ng-click="action['modal'] = 'slds-slide-up-open slds-backdrop--open'">
+                  New
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+  <div class="slds-grid--overflow">
+    <p id="notice"><%= notice %></p>
+
+
+    <div>
+      <table class="slds-table slds-table--bordered " style="margin-left: 40%">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @templates.each do |template| %>
+          <tr>
+            <td><%= template.Name%>
+              <we-show-data-modal header="Details" action="modalaction$index" data="templateDetails"></we-show-data-modal>
+            </td>
+            <td>
+              <div class="slds-button-group" role="group">
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Open" aria-pressed="false" ng-click="modalaction$index = 'slds-slide-up-open slds-backdrop--open'">
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#open"/>
+                  </svg>
+                  <span class="slds-assistive-text">Open</span>
+                </button>
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Edit" aria-pressed="false">
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"/>
+                  </svg>
+                  <span class="slds-assistive-text">Edit</span>
+                </button>
+                <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="Delete">
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"/>
+                  </svg>
+                  <span class="slds-assistive-text">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <br>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </div>
+</div>

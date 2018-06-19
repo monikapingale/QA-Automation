@@ -1,0 +1,14 @@
+<div class="slds-pill_container" id="pillC">
+    <a class="slds-pill" ng-repeat="pill in pills">
+        <svg aria-hidden="true" class="slds-icon slds-icon-standard-apps-admin slds-pill__icon">
+            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#apps_admin"></use>
+        </svg>
+        <span class="slds-pill__label">{{pill.name}}</span>
+        <button class="slds-button slds-button&#45;&#45;icon-bare slds-pill__remove" ng-click="pills.splice(pill,1);">
+            <svg aria-hidden="true" class="slds-button__icon">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text">Remove</span>
+        </button>
+    </a>
+</div>

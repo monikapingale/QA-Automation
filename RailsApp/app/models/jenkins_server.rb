@@ -1,0 +1,2 @@
+class JenkinsServer < ApplicationRecord
+end

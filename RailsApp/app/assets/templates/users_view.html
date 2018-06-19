@@ -1,0 +1,149 @@
+<div style="background : transparent;margin-left: 20%" class="slds-clearfix">
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" id="test-collection"
+         class="slds-modal slds-scrollable&#45;&#45;y ng-class: action['modal']">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close"
+                        ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close';  username = '' ; password='';">
+                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="header43" class="slds-text-heading--medium">Add New User</h2>
+            </div>
+            <form name="env">
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="slds-panel__section">
+                            <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                                <label class="slds-form-element__label" for="email">
+                                    <abbr class="slds-required" title="required">*</abbr>Email
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <input id="email" type="email" ng-model="user['email']" name="useremail"
+                                           class="slds-input" placeholder="e.g-name.sirname@domain.com" required />
+                                </div>
+                            </div>
+                            <we-dropdown options="type" selected-item="user['type']" ng-model="user['type']"
+                                         label="Type" required="true"></we-dropdown>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--destructive"
+                            ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close' ;  user['email'] = '' ; user['type'] = '';">
+                        Cancel
+                    </button>
+                    <button class="slds-button slds-button--brand" ng-click="env.useremail.$valid ? addUser(user) : user['email']"
+                       ng-disabled="(user['email'] == '' || user['type'] == '') ">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="slds-backdrop ng-class: action['modal']"></div>
+    <div class="slds-grid slds-grid--pull-padded">
+        <div class="slds-float_left">
+            <div class="slds-is-relative" style="height: 50%; width: 90%">
+                <article class="slds-card">
+                    <div class="slds-card__header">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                            </div>
+                            <div class="slds-media__body">
+                                <h2>
+                                    <button class="slds-button slds-button_icon">
+                                        <div class="slds-text-heading_small">Add New User</div>
+                                    </button>
+                                </h2>
+
+                            </div>
+                        </header>
+                        <div class="slds-no-flex">
+
+                        </div>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <div class="slds-align_absolute-center"
+                             style="padding: 0.5rem; background-color: rgb(244, 246, 249);fill-opacity: initial">
+                            <div class="slds-no-flex">
+                                <button class="slds-button slds-button_neutral"
+                                        ng-click="action['modal'] = 'slds-slide-up-open slds-backdrop--open'">New
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <div class="slds-scrollable--x slds-m-top&#45;&#45;xx-large">
+        <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
+            <thead>
+            <tr class="slds-text-heading--label">
+                <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate">Sr. No.
+                    </div>
+                </th>
+                <th class="slds-is-sortable" scope="col" ng-repeat="column in columns">
+                    <div class="slds-truncate">{{column}}
+                    </div>
+                </th>
+                <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate">
+                    </div>
+                </th>
+                <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate">Actions
+                    </div>
+                </th>
+                <th class="slds-cell-shrink"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="slds-hint-parent" ng-repeat="row in entities['Users']" ng-model="showWarning$index">
+                <td class="slds-truncate" data-label="{{$index+1}}">{{$index+1}}</td>
+                <td class="slds-truncate" data-label="{{column}}" ng-repeat="column in columns">
+                    {{row[column]}}
+                </td>
+                <td class="slds-truncate" data-label="{{}}">
+                        <div class="slds-form-element ">
+                            <label class="slds-checkbox_toggle">
+                                <input type="checkbox" name="checkbox" aria-describedby="toggle-desc" ng-model="row['status']" ng-change="editUser(row);">
+                                <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-checkbox_on">Activated</span>
+                                    <span class="slds-checkbox_off">Deactivated</span>
+                                </span>
+                            </label>
+                        </div>
+                </td>
+                <td>
+                    <we-prompt-warning header="Are You Sure?" message="Do you really want to delete this user?"
+                                       terminate="showWarning$index"
+                                       action-to-take="deleteUser(id)" id="row['id']"></we-prompt-warning>
+                    <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Edit"
+                                aria-pressed="false"
+                                ng-click="editUser(row['id'])">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"/>
+                            </svg>
+                            <span class="slds-assistive-text">Edit</span>
+                        </button>
+                        <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Delete"
+                                aria-pressed="false"
+                                ng-click="showWarning$index = 'slds-slide-up-open slds-backdrop--open';">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"/>
+                            </svg>
+                            <span class="slds-assistive-text">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="slds-backdrop ng-class:action['warning']"></div>
+    </div>
+</div>

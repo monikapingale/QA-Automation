@@ -1,0 +1,90 @@
+
+<div style="background : transparent;margin-left: 25%;margin-right: 25%" class="slds-clearfix">
+    <div class="slds-form--compound">
+        <div class="slds-form-element slds-border_bottom slds-m-bottom--medium">
+            <we-dropdown label="TestRail Server" options="entities['TestRailServer']"
+                         selected-item="Test['TestRailServer']" required="true"></we-dropdown>
+        </div>
+        <div class="slds-form-element slds-border_bottom slds-m-bottom--medium">
+            <we-dropdown label="Select Project" options="entities['Project']"
+                         selected-item="Test['Project']" required="true"></we-dropdown>
+        </div>
+        <div class="slds-form-element slds-border_bottom slds-m-bottom--medium" ng-if="Test['Project'].length > 0">
+            <we-dropdown label="Select Suit" options="entities['Suit']"
+                         selected-item="Test['Suit']" required="true"></we-dropdown>
+        </div>
+        <div class="slds-form-element slds-border_bottom slds-m-bottom--medium" ng-if="Test['Suit'].length > 0">
+            <span class="slds-form-element__label slds-m-right_large"><abbr class="slds-required" title="required">*</abbr>Select Section</span>
+            <we-lookup-list nodes="entities['Section']" pills="Test['Section']"
+                            fields="['name']"></we-lookup-list>
+        </div>
+       <!-- <div class="slds-form-element slds-border_bottom slds-m-bottom&#45;&#45;medium" ng-if="Test['Project'].length > 0 && Test['Suit'].length > 0 && Test['Section'].length > 0">
+            <input type="file" class="slds-file-selector__input slds-assistive-text"  id="FileUpload" onchange="angular.element(this).scope().selectFolder(event)" webkitdirectory=true directory multiple />
+            <label class="slds-file-selector__body" for="FileUpload" id="file-selector-secondary-label">
+                <span class="slds-file-selector__button slds-button slds-button_neutral">Choose path</span>
+            </label>
+            <a href="xlink:javascript(0);" FolderBrowserDialog download="images">Download</a>
+            &lt;!&ndash; <input name="files" id="files" type="file" data-role="upload" ng-change="getPath($event);" ng-model="files" webkitdirectory="true" directory="true" multiple="multiple" autocomplete="on">&ndash;&gt;
+       &lt;!&ndash;     <div class="slds-form-element">
+                <span class="slds-form-element__label" id="file-selector-primary-label">Attachment</span>
+                <div class="slds-form-element__control">
+                    <div class="slds-file-selector slds-file-selector_files">
+                        <div class="slds-file-selector__dropzone">
+                            <input type="file" class="slds-file-selector__input slds-assistive-text" accept=""
+                                   id="file-upload-input-01"
+                                   aria-labelledby="file-selector-primary-label file-selector-secondary-label"/>
+                            <label class="slds-file-selector__body" for="file-upload-input-01"
+                                   id="file-selector-secondary-label">
+                                <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                    <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#upload"/>
+                                    </svg>
+                                    Generate spec template
+                                </span>
+                                <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>&ndash;&gt;
+        </div>-->
+        <div class="slds-modal__footer">
+            <div class="slds-form-element">
+                <button class="slds-button slds-button--neutral"
+                        ng-click="generateSpec();" ng-disabled="(Test['Project'] == '')  || (Test['Suit'] == '') || (Test['Section'].length == 0)">
+                    Generate Spec
+                </button>
+            </div>
+        </div>
+    </div>
+    <div role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-modal--prompt ng-class: action['download']">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header slds-theme--info slds-theme--alert-texture">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" ng-click="action['download'] = 'slds-slide-up-close slds-backdrop--close'">
+                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div class="slds-align--absolute-center">
+                    <p>Download Zip - {{generatedSpec}}</p>
+                </div>
+            </div>
+            <div class="slds-modal__footer slds-theme--default">
+                <a class="slds-button slds-button_neutral" href="downloadZip/{{generatedSpec}}" Content-Disposition="attachment" download ng-click="action['download'] = 'slds-slide-up-close slds-backdrop--close'; Test['Project'] = '' ; Test['Suit'] = '' ; Test['Section'] = [] ; Test['specPath'] = '';">Download
+                    <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#download"></use>
+                    </svg>
+                </a>
+                <button class="slds-button slds-button_neutral" ng-click="action['download'] = 'slds-slide-up-close slds-backdrop--close'; generatedSpec = '' ; Test['Project'] = '' ; Test['Suit'] = '' ; Test['Section'] = [] ; Test['specPath'] = '';" >Cancel
+                    <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="slds-backdrop ng-class: action['download']"></div>
+</div>

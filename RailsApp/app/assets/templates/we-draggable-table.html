@@ -1,0 +1,19 @@
+﻿<div>
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col" ng-repeat="column in meta">
+                    <div class="slds-truncate" title="{{column.label}}">{{column.label}}</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="record in data">
+                <th data-label="{{column.name}}" ng-repeat="column in meta">
+                    <div class="slds-truncate" title="{{record[column.name]}}">{{record[column.name]}}</div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

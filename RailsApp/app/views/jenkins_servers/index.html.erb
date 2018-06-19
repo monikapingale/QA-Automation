@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Jenkins Servers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Url</th>
+      <th>Os</th>
+      <th>Browser</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jenkins_servers.each do |jenkins_server| %>
+      <tr>
+        <td><%= jenkins_server.name %></td>
+        <td><%= jenkins_server.username %></td>
+        <td><%= jenkins_server.password %></td>
+        <td><%= jenkins_server.url %></td>
+        <td><%= jenkins_server.os %></td>
+        <td><%= jenkins_server.browser %></td>
+        <td><%= link_to 'Show', jenkins_server %></td>
+        <td><%= link_to 'Edit', edit_jenkins_server_path(jenkins_server) %></td>
+        <td><%= link_to 'Destroy', jenkins_server, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Jenkins Server', new_jenkins_server_path %>

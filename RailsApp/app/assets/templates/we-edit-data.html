@@ -1,0 +1,73 @@
+<div>
+<div role="dialog" tabindex="-1" aria-labelledby="header43" id="test-collection" class="slds-modal slds-scrollable&#45;&#45;y ng-class: action">
+    <div class="slds-modal__container">
+        <div class="slds-modal__header">
+            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" ng-click="action = 'slds-slide-up-close slds-backdrop--close'; isEdit=false">
+                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="header43" class="slds-text-heading--medium">Jenkins Server</h2>
+        </div>
+        <div class="slds-modal__content slds-p-around--medium">
+            <div class="slds-panel__section">
+                <form name="login">
+                    <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                        <label class="slds-form-element__label" for="username">Name</label>
+                        <div class="slds-form-element__control">
+                            <input  ng-model="name" class="slds-input" required type="text" placeholder="Enter Jenkins Server Name.." ng-pattern=''>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                        <label class="slds-form-element__label" for="username">Username</label>
+                        <div class="slds-form-element__control">
+                            <input  ng-model="username" class="slds-input" required type="text" placeholder="e.g-name.sirname@domain.com.instance" ng-pattern=''>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                        <label class="slds-form-element__label" for="password">Password</label>
+                        <div class="slds-form-element__control">
+                            <input  type="password" ng-model="password" class="slds-input" placeholder="Enter Password.." required />
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                        <label class="slds-form-element__label" for="username">Service Url</label>
+                        <div class="slds-form-element__control">
+                            <input id="url" ng-model="url" class="slds-input" required type="text" placeholder="e.g-http://domain" ng-pattern=// />
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-border_top">
+                        <we-dropdown label="Select OS" options="['Windows','Mac']"
+                                     selected-item="jenkinsDetails['OS']"></we-dropdown>
+                    </div>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control slds-border_top">
+                            <div class="slds-panel__section">
+                                <h4 class="slds-text-heading_small slds-m-bottom_medium">Select Browsers</h4>
+                                <span class="slds-form--inline slds-checkbox">
+                                        <span class="slds-form-element__label slds-m-right_large">{{jenkinsDetails['OS']}} Browsers <b>:</b> </span>
+                                        <span ng-repeat="browser in jenkinsDetails['browserDetails'][jenkinsDetails['OS']]">
+                                            <input type="checkbox" id="{{browser}}{{$index}}"
+                                                   ng-model="selectedBrowser" ng-change="selectedBrowser ? jenkinsDetails['Browser'].push(browser) : jenkinsDetails['Browser'].splice(jenkinsDetails['Browser'].indexOf(browser))"/>
+                                            <label class="slds-checkbox__label " for="{{browser}}{{$index}}">
+                                                <span class="slds-checkbox--faux"></span>
+                                                <span class="slds-form-element__label slds-text-color--default">{{browser}}</span>
+                                            </label>
+                                        </span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="slds-modal__footer ">
+            <button class="slds-button slds-button--destructive" ng-click="action = 'slds-slide-up-close slds-backdrop--close' ;">Cancel</button>
+            <button class="slds-button slds-button--brand" ng-click="insert();">Save</button>
+        </div>
+    </div>
+
+</div>
+<div class="slds-backdrop ng-class: action"></div>
+</div>

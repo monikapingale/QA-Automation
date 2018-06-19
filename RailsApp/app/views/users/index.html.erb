@@ -1,0 +1,123 @@
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<div class="slds-grid" style="margin-left: 20%">
+  <div class="slds-grid--overflow">
+
+    <p id="notice"><%= notice %></p>
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" id="test-collection" class="slds-modal slds-scrollable&#45;&#45;y ng-class: action['modal']">
+      <div class="slds-modal__container">
+        <div class="slds-modal__header">
+          <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close';  username = '' ; password='';">
+            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 id="header43" class="slds-text-heading--medium">Add New User</h2>
+        </div>
+        <div class="slds-modal__content slds-p-around--medium">
+          <div class="slds-panel__section">
+            <form name="login">
+              <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                <label class="slds-form-element__label" for="name">Email</label>
+                <div class="slds-form-element__control">
+                  <input class="slds-input_height" id="name" type="text" ng-model="email" class="slds-input" placeholder="e.g-name.sirname@domain.com" required/>
+                </div>
+              </div>
+              <we-dropdown options="type" selected-item="userType" ng-model="userType" label="Type"></we-dropdown>
+              {{$error}}
+            </form>
+          </div>
+        </div>
+        <div class="slds-modal__footer">
+          <button class="slds-button slds-button--destructive" ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close' ;  name = '' ; value = '';">Cancel</button>
+          <a class="slds-button slds-button--brand" ng-click="addUser(email,userType)" ng-disabled="!(email && userType) ">Save</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="slds-backdrop ng-class: action['modal']"></div>
+    <div class="slds-grid slds-grid--pull-padded slds-m-bottom--xx-large">
+      <div class="slds-float_left">
+        <div class="slds-is-relative" style="height: 50%;width: 90%">
+          <article class="slds-card">
+            <div class="slds-card__header">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                </div>
+                <div class="slds-media__body">
+                  <h2>
+                    <button class="slds-button slds-button_icon">
+                      <div class="slds-text-heading_small">Add New User</div>
+                    </button>
+                  </h2>
+
+                </div>
+              </header>
+              <div class="slds-no-flex">
+
+              </div>
+            </div>
+            <div class="slds-card__body slds-card__body_inner">
+              <div class="slds-align_absolute-center" style="padding: 0.5rem; background-color: rgb(244, 246, 249);fill-opacity: initial">
+                <div class="slds-no-flex">
+                  <button class="slds-button slds-button_neutral" ng-click="action['modal'] = 'slds-slide-up-open slds-backdrop--open'">New</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <h1>Users</h1>
+    <table class="slds-table slds-max-medium-table_stacked-horizontal">
+      <thead>
+      <tr>
+        <th>Email</th>
+        <th>Admin</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.email %></td>
+          <td class="slds-checkbox">
+            <div class="slds-form-element">
+              <div class="slds-form-element__control">
+              <span class="slds-checkbox slds-form-element__static">
+                <%= check_box_tag '', '', user.admin, disabled: false, name: 'admin?' %>
+                <label class="slds-checkbox__label" for="checkbox-2">
+                  <span class="slds-checkbox_faux"></span>
+                  <span class="slds-form-element__label"></span>
+                </label>
+              </span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="slds-form-element">
+              <div class="slds-form-element__control">
+              <span class="slds-checkbox slds-form-element__static">
+                <%= check_box_tag '', '', user.status, disabled: false, name: 'admin?' %>
+                <label class="slds-checkbox__label" for="checkbox-2">
+                  <span class="slds-checkbox_faux"></span>
+                  <span class="slds-form-element__label"></span>
+                </label>
+              </span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <%= link_to user.status ? "Deactivate" : "Activate", "deactivate/#{user.id}", method: :get, data: {confirm: 'Are you sure?'} %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <br>
+
+  </div>
+</div>

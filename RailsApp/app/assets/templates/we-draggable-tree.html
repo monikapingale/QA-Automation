@@ -1,0 +1,21 @@
+﻿<div class="slds-tree_container" role="application">
+    <ul data-parent="{{parent}}" data-depth="{{depth}}" class="slds-tree" role="tree" aria-labelledby="treeheading" ondrop="angular.element(this).scope().drop(event)" ondragover="angular.element(this).scope().allowDrop(event)" ondragleave="angular.element(this).scope().dragLeave(event)">
+        <li ng-if="!data || data.lengt==0" style="padding:10px 10px">No child records found!</li>
+        <li id="{{node.uniqueId}}" role="treeitem" aria-level="1" aria-expanded="false" aria-label="Tree Branch" ng-repeat="node in data" aria-expanded="false" draggable="true" ondragstart="angular.element(this).scope().drag(event)" data-record="{{node}}" data-parent="{{parent}}">
+            <div class="slds-tree__item">
+                <button class="slds-button slds-button_icon slds-button_icon slds-m-right_x-small" aria-hidden="true" tabindex="-1" title="Expand Tree Branch" ng-click="nodeClick(node.uniqueId)">
+                    <svg class="slds-button__icon slds-button__icon_small" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ng-slds/resource/slds/assets/icons/utility-sprite/svg/symbols.svg#chevronright" />
+                    </svg>
+                    <span class="slds-assistive-text">{{node.label}}</span>
+                </button>
+                <span class="slds-size_1-of-1">
+                    <span class="slds-tree__item-label slds-truncate" title="Tree Branch">{{node.label}}</span>
+                </span>
+            </div>
+            <div ng-if="data" ng-show="mapExpandedNode[node.uniqueId]" style="margin-left:50px">
+                <we-draggable-tree data="node.childs" expanded="false" parent="{{node.uniqueId}}" depth="{{depth+''+($index+1)}}"></we-draggable-tree>
+            </div>
+        </li>
+    </ul>
+</div>

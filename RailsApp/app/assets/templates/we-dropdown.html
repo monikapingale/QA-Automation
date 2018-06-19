@@ -1,0 +1,12 @@
+<div class="slds-form-element__control slds-m-bottom--medium">
+    <div class="slds-form-element">
+        <span class="slds-form-element__label"><abbr class="slds-required" title="required" ng-if="required">*</abbr>{{label}}</span>
+        <div class="slds-select_container">
+            <select class="slds-select" required="" ng-model="selectedItem">
+                <option value="{{option}}" ng-repeat="option in options track by $index">{{option}}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
+</div>

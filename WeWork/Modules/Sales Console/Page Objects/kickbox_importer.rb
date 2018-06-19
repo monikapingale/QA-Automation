@@ -12,6 +12,7 @@ class Kickbox_Importer
     @testDataJSON['Lead'][0]['lead_Source_Detail__c'] = "Inbound Call Page"
     @testDataJSON['Lead'][0]['Locale__c'] = "en-US"
     @testDataJSON['Lead'][0]['Country_Code__c'] = "IN"
+    @testDataJSON['Lead'][0]['Building_Interested_In__c'] = "LA-Santa Monica"
     @timeSettingMap = @helper.instance_variable_get(:@timeSettingMap)
     @mapCredentials = @helper.instance_variable_get(:@mapCredentials)
     @salesforceBulk = @helper.instance_variable_get(:@salesforceBulk)
@@ -184,14 +185,17 @@ class Kickbox_Importer
   end
   def getExistingContact(owner,isJourneyPresent,isActivityPresent)
     contactInfo = nil
-    @helper.instance_variable_get(:@restForce).getRecords("select id,Email,(select id from tasks) from contact where Has_Active_Journey__c = #{isJourneyPresent} and CreatedBy.Name IN ('Veena Hegane','Ashotosh Thakur','Monika Pingale','Kishor Shinde') AND Email != null").each do |contact|
+    owner = " AND CreatedBy.Name = '#{owner}'" if !owner.nil?
+    @helper.instance_variable_get(:@restForce).getRecords("SELECT id,email,(SELECT id FROM tasks) FROM contact WHERE Has_Active_Journey__c = #{isJourneyPresent} AND CreatedBy.Name IN ('Veena Hegane','Ashotosh Thakur','Monika Pingale','Kishor Shinde') AND isDeleted = false AND email != null #{owner}").each do |contact|
       if isActivityPresent
         if !contact['Tasks'].nil?
           contactInfo = contact
           break;
         end
       else
-        if contact['Tasks'].nil?
+        if contact['Tasks'].nil? || (contact['Tasks'].size == 1)
+          contact['Count_of_Activities__c'] = contact['Tasks'].size if !contact['Tasks'].nil?
+          @helper.instance_variable_get(:@restForce).updateRecord("Task",{"Id"=>contact.fetch("Tasks").to_a[0]['Id'],"Status"=>"Completed"}) if (!contact['Tasks'].nil?)
           contactInfo = contact
           break;
         end
@@ -207,7 +211,7 @@ class Kickbox_Importer
       checkJobStatus = @helper.instance_variable_get(:@restForce).getRecords("SELECT JobType,MethodName,TotalJobItems,ApexClassID,status FROM AsyncApexJob WHERE apexclassid = '01p0G000004TXQj' AND status != 'Completed'")[0]
       !checkJobStatus.nil? ? @helper.addLogs("[Step ]  : Status is  - #{checkJobStatus.fetch('Status')}"): @helper.addLogs("[Result ] : Job Completed")
     end
-    sleep(40)
+    sleep(30)
   end
 
 end

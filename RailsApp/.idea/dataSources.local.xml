@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails RailsApp: test" uuid="d3c9f0d7-a28c-485c-8011-80167670f640">
+      <database-info product="PostgreSQL" version="9.5.3" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <user-name>QA</user-name>
+      <introspection-schemas>QAAuto:public</introspection-schemas>
+    </data-source>
+    <data-source name="Rails RailsApp: default" uuid="294b3669-7774-4577-a0d3-879e9c7ff688">
+      <database-info product="PostgreSQL" version="9.5.3" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <user-name>QA</user-name>
+      <introspection-schemas>QAAuto:public</introspection-schemas>
+    </data-source>
+    <data-source name="Rails RailsApp: development" uuid="e148c4b0-c078-4e0c-a699-085b88d1dd0e">
+      <database-info product="PostgreSQL" version="9.5.3" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <user-name>QA</user-name>
+      <introspection-schemas>QAAuto:public</introspection-schemas>
+    </data-source>
+    <data-source name="Rails RailsApp: production" uuid="ad63a46b-4fa4-413e-9efd-a2ed9a1ddf81">
+      <database-info product="PostgreSQL" version="9.5.3" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <user-name>QA</user-name>
+      <introspection-schemas>QAAuto:public</introspection-schemas>
+    </data-source>
+  </component>
+</project>

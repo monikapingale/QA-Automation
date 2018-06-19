@@ -1,0 +1,268 @@
+<div>
+<div role="dialog" tabindex="-1" aria-labelledby="header43" id="test-schedule"
+     class="slds-modal slds-scrollable&#45;&#45;y ng-class: action">
+    <div class="slds-modal__container">
+        <div class="slds-modal__header">
+            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close"
+                    ng-click="action = 'slds-slide-up-close slds-backdrop--close'">
+                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="header4" class="slds-text-heading--medium">Schedule Job</h2>
+        </div>
+        <div class="slds-modal__content slds-p-around--medium">
+            <div class="slds-panel__section">
+                <div>
+                    <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                        <div class="slds-tabs--default" ng-init="tabSelected = 1">
+                            <ul class="slds-tabs--default__nav" role="tablist">
+                                <li class="slds-tabs--default__item slds-text-title--caps" title="Item One"
+                                    role="presentation">
+                                    <a class="slds-tabs--default__link"
+                                       href="javascript:void(0);" role="tab"
+                                       [attr.tabindex]="(tabSelected == 1) ? 0: -1"
+                                       tabindex="-1" aria-selected="false"
+                                       aria-controls="tab-default-1" id="tab-default-1__item"
+                                       ng-model="tabSelected" value='1'
+                                       ng-click="tabSelected = 1">Hours</a>
+                                </li>
+                                <li class="slds-tabs--default__item slds-text-title--caps" title="Item Two"
+                                    role="presentation">
+                                    <a class="slds-tabs--default__link"
+                                       href="javascript:void(0);" role="tab" tabindex="0"
+                                       aria-selected="true" aria-controls="tab-default-2"
+                                       id="tab-default-2__item" ng-model="tabSelected" value='2'
+                                       ng-click="tabSelected = 2">Day</a>
+                                </li>
+                                <li class="slds-tabs--default__item slds-text-title--caps" title="Item Three"
+                                    role="presentation">
+                                    <a class="slds-tabs--default__link"
+                                       href="javascript:void(0);" role="tab" tabindex="-1"
+                                       aria-selected="false" aria-controls="tab-default-3"
+                                       id="tab-default-3__item" ng-model="tabSelected" value="3"
+                                       ng-click="tabSelected = 3">Month</a>
+                                </li>
+                                <li class="slds-tabs--default__item slds-text-title--caps" title="Item Four"
+                                    role="presentation">
+                                    <a class="slds-tabs--default__link"
+                                       href="javascript:void(0);" role="tab" tabindex="-1"
+                                       aria-selected="false" aria-controls="tab-default-3"
+                                       id="tab-default-4__item" ng-model="tabSelected" value="4"
+                                       ng-click="tabSelected = 4">Year</a>
+                                </li>
+                            </ul>
+                            <div ng-if="tabSelected === 1" id="tab-default-1" class="slds-tabs--default__content"
+                                 role="tabpanel" aria-labelledby="tab-default-1__item">
+
+                                <fieldset class="slds-form-element">
+                                    <div class="slds-form-element__control" ng-init="temp='perHour'">
+                                            <span class="slds-radio">
+                                              <input type="radio" id="radio-306" name="options" value="perHour" ng-model='temp' ng-click='setHours(temp)'/>
+                                              <label class="slds-radio__label" for="radio-306">
+                                                <span class="slds-radio--faux"></span>
+                                                <span class="slds-form-element__label slds-m-left--medium">Per Hour</span>
+                                              </label>
+                                            </span>
+                                        <span class="slds-form--inline slds-grid slds-wrap slds-grid--pull-padded">
+                                            <span class="slds-radio slds-col--padded slds-size--0.3-of-2">
+                                              <input type="radio" id="radio-307" name="options" value="specificHour1" ng-model='temp' ng-click='setHours(temp)'/>
+                                              <label class="slds-radio__label" for="radio-307">
+                                                <span class="slds-radio--faux"></span>
+                                              </label>
+                                            </span>
+                                                <span class="slds-col--padded slds-form-element__label nofloat">
+                                                    <span class="slds-form-element__label">Every</span>
+                                                    <input id="specificHour1" class="slds-input slds-size--1-of-2" style="width: 20%" type="number" min="1" max="24" ng-model="hourFrequency" ng-change="setHourFrequency(hourFrequency)"/>
+                                                    <span class="slds-form-element__label">Hour</span>
+                                                </span>
+                                            </span>
+                                        <span class="slds-form--inline slds-grid slds-wrap slds-grid--pull-padded">
+                                        <span class="slds-radio slds-col--padded slds-size--0.3-of-2">
+                                              <input type="radio" id="radio-308" name="options" value="specificHour2"
+                                                     ng-model='temp' ng-click='setHours(temp)' />
+                                              <label class="slds-radio__label" for="radio-308">
+                                                <span class="slds-radio--faux"></span>
+                                              </label>
+                                        </span>
+                                            <span class="slds-col--padded ">
+                                                <span class="slds-form-element__label">Run at</span>
+                                                <input id="specificHour2" class="slds-input" style="width: 20%" type="number" min="1" max="24" ng-model="specificHour" ng-change="setHourFrequency(specificHour)"/>
+
+                                            </span>
+                                        </span>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div ng-if="tabSelected === 2" id="tab-default-2" class="slds-tabs--default__content" role="tabpanel" aria-labelledby="tab-default-2__item">Select Day
+                                <fieldset class="slds-form-element">
+                                    <div class="slds-form-element__control" ng-init="day='everyday'">
+                                            <span class="slds-radio">
+                                              <input type="radio" id="radio-506" name="options" checked="true" value="everyday" ng-model='day' ng-click='setDays(day)'/>
+                                              <label class="slds-radio__label" for="radio-506">
+                                                <span class="slds-radio&#45;&#45;faux"></span>
+                                                <span class="slds-form-element__label">Everyday</span>
+                                              </label>
+                                            </span>
+                                        <span class="slds-radio">
+                                              <input type="radio" id="specific_day_of_week" name="options" value="specific_day_of_week" ng-model='day' ng-click='setDays(day)'/>
+                                              <label class="slds-radio__label" for="specific_day_of_week">
+                                                <span class="slds-radio&#45;&#45;faux"></span>
+                                                <span class="slds-form-element__label">Specific day of week (choose one or many):</span>
+                                              </label>
+                                                 <div class="slds-grid slds-wrap slds-box" style="margin-left:50px;">
+                                                    <div ng-repeat="day in WeekDays">
+                                                        <div class="slds-col slds-size_1-of-10">
+                                                            <span class="slds-checkbox">
+                                                                  <input type="checkbox" name="options"
+                                                                         id="day_{{day.Name}}" value="day"
+                                                                         ng-model="day.Selected"/>
+                                                                  <label class="slds-checkbox__label"
+                                                                         for="day_{{day.Name}}">
+                                                                    <span class="slds-checkbox_faux"></span>
+                                                                    <span class="slds-form-element__label">{{day.Name}}</span>
+                                                                  </label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        <span class="slds-radio">
+                                              <input type="radio" id="specific_day_of_month" name="options" value="specific_day_of_month" ng-model='day' ng-click='setDays(day)'/>
+                                              <label class="slds-radio__label" for="specific_day_of_month">
+                                                <span class="slds-radio&#45;&#45;faux"></span>
+                                                <span class="slds-form-element__label">
+                                                    Specific day of month (choose one or many):
+                                                </span>
+                                              </label>
+                                                <div class="slds-grid slds-wrap slds-box" style="margin-left:50px;">
+                                                    <div ng-repeat="day in Days">
+                                                            <div class="slds-col slds-size_1-of-10">
+                                                                <span class="slds-checkbox">
+                                                                      <input type="checkbox" name="options"
+                                                                             id="day_{{day.Id}}" value="day"
+                                                                             ng-model="day.Selected"/>
+                                                                      <label class="slds-checkbox__label"
+                                                                             for="day_{{day.Id}}">
+                                                                        <span class="slds-checkbox_faux"></span>
+                                                                        <span class="slds-form-element__label">{{day.Id}}</span>
+                                                                      </label>
+                                                                </span>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div ng-if="tabSelected === 3" id="tab-default-3" class="slds-tabs--default__content"
+                                 role="tabpanel" aria-labelledby="tab-default-3__item">
+                                <fieldset class="slds-form-element">
+                                    <div class="slds-form-element__control" ng-init="month='everyMonth'">
+                                            <span class="slds-radio">
+                                              <input type="radio" id="radio-311" name="options" checked="true" value="everyMonth" ng-model='month' ng-click='setMonths(month)'/>
+                                              <label class="slds-radio__label" for="radio-311">
+                                                <span class="slds-radio&#45;&#45;faux"></span>
+                                                <span class="slds-form-element__label">Every Month</span>
+                                              </label>
+                                            </span>
+                                        <span class="slds-radio">
+                                              <input type="radio" id="radio-312" name="options" value="specificMonth" ng-model='month' ng-click='setMonths(month)'/>
+                                              <label class="slds-radio__label" for="radio-312">
+                                                <span class="slds-radio&#45;&#45;faux"></span>
+                                                <span class="slds-form-element__label">Specific Month (choose one or many):</span>
+                                              </label>
+                                                 <div class="slds-grid slds-wrap slds-box" style="margin-left:25px;">
+                                                    <div ng-repeat="month in Months">
+                                                        <div class="slds-col slds-size_1-of-10">
+                                                            <span class="slds-checkbox">
+                                                                  <input type="checkbox" name="options"
+                                                                         id="month_{{month.Name}}" value="day"
+                                                                         ng-model="month.Selected"/>
+                                                                  <label class="slds-checkbox__label"
+                                                                         for="month_{{month.Name}}">
+                                                                    <span class="slds-checkbox_faux"></span>
+                                                                    <span class="slds-form-element__label">{{month.Name}}</span>
+                                                                  </label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div ng-if="tabSelected === 4" id="tab-default-4" class="slds-tabs--default__content"
+                                 role="tabpanel" aria-labelledby="tab-default-4__item">
+                                <fieldset class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                            <span class="slds-radio">
+                                              <input type="radio" id="radio-606" name="options" checked="true"
+                                                     value="perDay" ng-model='day'/>
+                                              <label class="slds-radio__label" for="radio-606">
+                                                <span class="slds-radio&#45;&#45;faux"></span>
+                                                <span class="slds-form-element__label">Any year</span>
+                                              </label>
+                                            </span>
+                                        <span class="slds-radio">
+                                              <input type="radio" id="radio-607" name="options" value="specificHour1"
+                                                     ng-model='hour'
+                                                     ng-click="document.getElementById('number-input-09').focus();"/>
+                                              <label class="slds-radio__label" for="radio-607">
+                                                <span class="slds-radio&#45;&#45;faux"></span>
+                                                <span class="slds-form-element__label">
+                                                    <label for="radio-607" class="nofloat">Every
+										                <select id="cronYearIncrementIncrement" style="width:70px;">
+											                    <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                                <option value="6">6</option>
+                                                                <option value="7">7</option>
+                                                                <option value="8">8</option>
+                                                                <option value="9">9</option>
+                                                                <option value="10">10</option>
+                                                                <option value="11">11</option>
+                                                                <option value="12">12</option>
+                                                                <option value="13">13</option>
+										                </select> years(s) starting in
+										                <select id="cronYearIncrementStart" style="width:80px;">
+											                <option value="2018">2018</option>
+                                                            <option value="2019">2019</option>
+                                                            <option value="2020">2020</option>
+                                                            <option value="2021">2021</option>
+                                                            <option value="2022">2022</option>
+                                                            <option value="2023">2023</option>
+                                                            <option value="2024">2024</option>
+                                                            <option value="2025">2025</option>
+                                                            <option value="2026">2026</option>
+                                                            <option value="2027">2027</option>
+                                                            <option value="2028">2028</option>
+                                                            <option value="2029">2029</option>
+										                </select>
+									                </label>
+                                                </span>
+                                              </label>
+                                            </span>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-modal__footer">
+            <button class="slds-button slds-button_destructive"
+                    ng-click="action = 'slds-slide-up-close slds-backdrop--close'">Cancel
+            </button>
+            <button class="slds-button slds-button--brand"
+                    ng-click="generateCron();">Schedule
+            </button>
+        </div>
+    </div>
+</div>
+    <div class="slds-backdrop ng-class:action"></div>
+</div>

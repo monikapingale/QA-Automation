@@ -1,0 +1,101 @@
+<div style="background : transparent;margin-left: 25%" class="slds-clearfix">
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" id="test-collection"
+         class="slds-modal slds-scrollable&#45;&#45;y ng-class: action['modal']">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close"
+                        ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close'; Test = {'Suit' : [] , 'Section' : [] , 'Browser' : [] , 'Profile' : [] , 'Project' : [{'id' : '4' , 'name' : 'wework'}] , 'Table' : 'Templates' , 'Name' : [{'name' : ''}]};">
+                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="header43" class="slds-text-heading--medium">Environment</h2>
+            </div>
+            <form name="login">
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="slds-panel__section">
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                            <label class="slds-form-element__label" for="name">
+                                <abbr class="slds-required"
+                                      title="required">*</abbr>Name
+                            </label>
+                            <div class="slds-form-element__control">
+                                <input id="name" ng-model="salesforce['name']" class="slds-input" required type="text"
+                                       placeholder="Enter name..." ng-pattern=// />
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                            <label class="slds-form-element__label" for="type">
+                                <abbr class="slds-required"
+                                      title="required">*</abbr>Type
+                            </label>
+                            <div class="slds-form-element__control">
+                                <input id="type" ng-model="salesforce['env_type']" class="slds-input" required
+                                       type="text" placeholder="Enter type...">
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-m-bottom&#45;&#45;medium">
+                            <label class="slds-form-element__label" for="param">
+                                <abbr class="slds-required"
+                                      title="required">*</abbr>Parameters
+                            </label>
+                            <div class="slds-form-element__control">
+                                <textarea id="param" ng-model="salesforce['parameters']"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer ">
+                    <button class="slds-button slds-button--destructive"
+                            ng-click="action['modal'] = 'slds-slide-up-close slds-backdrop--close' ; salesforce['parameters'] = ''; salesforce['name'] = '';">
+                        Cancel
+                    </button>
+                    <button class="slds-button slds-button--brand" ng-click="add('salesforce'); "
+                            ng-disabled="!(salesforce['parameters'] && salesforce['name'])">Save
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="slds-backdrop ng-class: action['modal']"></div>
+    <div class="slds-grid slds-grid--pull-padded">
+        <div class="slds-float_left">
+            <div class="slds-is-relative" style="height: 50%;width: 90%">
+                <article class="slds-card">
+                    <div class="slds-card__header">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                            </div>
+                            <div class="slds-media__body">
+                                <h2>
+                                    <button class="slds-button slds-button_icon slds-is-active">
+                                        <div class="slds-text-heading_small">Add New Environment</div>
+                                    </button>
+                                </h2>
+
+                            </div>
+                        </header>
+                        <div class="slds-no-flex">
+                        </div>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <div class="slds-align_absolute-center"
+                             style="padding: 0.5rem; background-color: rgb(244, 246, 249);fill-opacity: initial">
+                            <div class="slds-no-flex">
+                                <button class="slds-button slds-button_neutral"
+                                        ng-click="action['modal'] = 'slds-slide-up-open slds-backdrop--open'">New
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <div class="slds-m-top&#45;&#45;large">
+        <we-data-table rows="entities['salesforce']" columns="['name']" table-name="environments" identifier="'name'"
+                       show="action['modal']" record="salesforce"></we-data-table>
+    </div>
+</div>

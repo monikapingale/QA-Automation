@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>test</title>
+    <link href="resource/slds/assets/styles/salesforce-lightning-design-system.min.css" rel="stylesheet" />
+    <link href="application_css/application.css" rel="stylesheet" />
+    <script src="resource/jquery/jquery-3.3.1.min.js"></script>
+    <script src="resource/angular/angular.min.js"></script>
+    <script src="application_js/directive-factory.js"></script>
+    <script src="application_js/service-factory.js"></script>
+    <script src="test.js"></script>
+</head>
+<body ng-app="testapp" ng-controller="testcontroller">
+    <we-icon icon="standard:account"></we-icon>
+    <we-form-validator form-name="testForm">
+        {{value}}
+        <we-input-field name="test" label="test" type="text" required="true" value="value" form="testForm"></we-input-field>
+        {{value2}}
+        <we-input-field name="test2" label="test2" type="lookup" options="options" required="true" value="value2" form="testForm"></we-input-field>
+    </we-form-validator>
+    <!--<we-draggable-table data="data" meta="meta"></we-draggable-table>-->
+    <we-draggable-tree data="treedata"></we-draggable-tree>
+</body>
+</html>

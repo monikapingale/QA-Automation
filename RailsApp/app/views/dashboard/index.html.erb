@@ -1,0 +1,374 @@
+<html>
+<head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.10/angular-sanitize.js"></script>
+  <style>
+    .transform {
+      border-radius: 25px;
+      background: black;
+      padding: 20px;
+      width: 80px;
+      height: 0.05px;
+      transition: width 2s;
+      -webkit-transition: width 2s; /* Safari 3.1 to 6.0 */
+    }
+
+    .transform:hover {
+      width: 150px;
+    }
+  </style>
+</head>
+<body ng-app="myApp" style="background-color: white ;">
+<div class="slds-grid" ng-controller="EventCtrl">
+  <header class="slds-global-header_container">
+    <a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text--focus">Skip to Navigation</a>
+    <a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text--focus">Skip to Main Content</a>
+    <div class="slds-global-header slds-grid slds-grid--align-spread">
+      <div class="slds-media slds-no-space slds-grow slds-media_center">
+        <div class="slds-media__figure slds-size--0.5-of-1 slds-m-left--xx-large">
+          <img src="<%= image_path "images/QA.png" %>" alt="person name" style="height: 70%; width:60%"/>
+        </div>
+      </div>
+      <ul class="slds-global-header__item slds-grid slds-grid--vertical-align-center">
+        <div class="slds-text-title_caps"><h1><%= session[:userProfile]["display_name"] %></h1></div>
+        <button class="slds-button slds-m-left--small" title="<%= session[:email_address] %>" aria-haspopup="true" ng-click="action = true;" tabindex="1" ng-blur="hidePopup();">
+          <span class="slds-avatar slds-avatar--circle slds-avatar--medium">
+            <img src="<%= session[:userProfile]["image"]["url"] %>" alt="<%= session[:email_address] %>"/>
+          </span>
+          <!--          <span class="slds-icon_container slds-icon-standard-user">
+                                        <svg aria-hidden="true" class="slds-icon slds-icon--medium">
+                                          <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#user"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Case icon</span>
+                                      </span>-->
+          <!--                  <span class="slds-avatar slds-avatar--circle slds-avatar--medium">
+                              <abbr class="slds-avatar__initials slds-icon-standard-user" title="person name"><p style="color: white"><%#= session[:email_address].to_s.upcase_first[0] %></p></abbr>
+                            </span>-->
+        </button>
+      </ul>
+    </div>
+    <div class="slds-popover slds-nubbin--top-right" role="dialog" id="popup" ng-if="action" style="margin-left: 75%" tabindex="1">
+      <div class="slds-popover__body slds-grid">
+        <div class="slds-col">
+          <img src="<%= session[:userProfile]["image"]["url"].gsub('50','100') %>">
+        </div>
+        <div class="slds-col">
+          <div class="slds-text-heading--small slds-truncate slds-align-middle slds-m-left--medium" title="<%= session[:userProfile]["display_name"] %>">
+            <b><%= session[:userProfile]["display_name"] %></b></div>
+          <ul>
+            <li>
+              <p class="slds-text-body_small slds-line-height_reset slds-m-top--xx-small"><%= session[:email_address] %></p>
+              <span class="slds-float_right ">
+                <a href="/logout" tabindex="-1">LogOut</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="page-wrap">
+    <!-- Nav -->
+    <nav id="nav" style="">
+      <ul style="top: 18%">
+        <li ng-if="<%= session[:user][0]['admin'] %>">
+          <a href="#!users_view" class="slds-size--1-of-1 ng-class: isActive" title="Users" ng-model="isActive" ng-focus="isActive = 'active'" ng-blur="isActive = ''" ng-mouseover="isActive = 'active'" ng-mouseout="isActive = ''">
+            <i class="fas fa-users"></i></a></li>
+        <li ng-repeat="item in listItems">
+          <a href="{{item.url}}" title="{{item.label}}" class="ng-class: item.isActive" ng-focus="item.isActive = 'active'" ng-blur="item.isActive = ''"><i class="ng-class: item.icon"></i></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <!--
+    <div class="page-header">
+      <ul class="nav nav-pills">
+        <li class="nav-item" data-toggle="pill">
+          <a class="nav-link" href="#!data/profiles" ng-click="getData('profiles');">Setup Profiles</a>
+        </li>
+        <li class="nav-item" data-toggle="pill">
+          <a class="nav-link" href="#!data/User" ng-click="getData('User');">Setup Users</a>
+        </li>
+        <li class="nav-item" data-toggle="pill">
+          <a class="nav-link" href="#!log">Logs</a>
+        </li>
+      </ul>-->
+  <!-- <div class="slds-tabs&#45;&#45;scoped">
+     <ul class="slds-tabs&#45;&#45;scoped__nav" role="tablist">
+       <li class="slds-tabs&#45;&#45;scoped__item slds-text-heading&#45;&#45;label slds-active" title="Item One" role="presentation"><a class="slds-tabs&#45;&#45;scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Item One</a></li>
+       <li class="slds-tabs&#45;&#45;scoped__item slds-text-heading&#45;&#45;label" title="Item Two"
+           role="presentation"><a class="slds-tabs&#45;&#45;scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Item Two</a></li>
+       <li class="slds-tabs&#45;&#45;scoped__item slds-text-heading&#45;&#45;label" title="Item Three"
+           role="presentation"><a class="slds-tabs&#45;&#45;scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Item Three</a></li>
+     </ul>
+   </div>-->
+  <!--  <ul class="slds-tabs&#45;&#45;default__nav" role="tablist">
+      <li class="slds-tabs&#45;&#45;default__item slds-text-title&#45;&#45;caps" title="Setup Profiles" role="presentation"><a class="slds-tabs&#45;&#45;default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">Setup Profiles</a></li>
+      <li class="slds-tabs&#45;&#45;default__item slds-text-title&#45;&#45;caps" title="Setup Users"
+          role="presentation"><a class="slds-tabs&#45;&#45;default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item">Setup Users</a></li>
+    </ul>
+      </div>-->
+  <!--
+    <div class="slds-dropdown-trigger slds-dropdown-trigger&#45;&#45;click slds-is-open">
+      <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger&#45;&#45;click slds-hover">
+        <div class="slds-context-bar__icon-action">
+          <a href="javascript:void(0);" class="slds-icon-waffle_container slds-context-bar__button">
+            <div class="slds-icon-waffle">
+              <div class="slds-r1"></div>
+              <div class="slds-r2"></div>
+              <div class="slds-r3"></div>
+              <div class="slds-r4"></div>
+              <div class="slds-r5"></div>
+              <div class="slds-r6"></div>
+              <div class="slds-r7"></div>
+              <div class="slds-r8"></div>
+              <div class="slds-r9"></div>
+            </div>
+            <span class="slds-assistive-text">Open App Launcher</span>
+          </a>
+        </div>
+        <span class="slds-context-bar__label-action slds-context-bar__app-name">
+          <span class="slds-truncate" title="{ props.appName || &#x27;App Name&#x27; }">App Name</span>
+        </span>
+      </div>
+    </div>
+      <div class="slds-dropdown slds-dropdown&#45;&#45;left slds-dropdown&#45;&#45;small">
+        <ul class="slds-dropdown__list slds-dropdown&#45;&#45;length-with-icon-7" role="menu">
+          <li class="slds-dropdown__item" role="presentation">
+            <a href="javascript:void(0);" role="menuitem" tabindex="0">
+            <span class="slds-truncate">
+              <svg aria-hidden="true" class="slds-icon slds-icon&#45;&#45;small slds-icon-standard-account slds-m-right&#45;&#45;small">
+                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+              </svg>Menu Item One</span>
+            </a>
+          </li>
+          <li class="slds-dropdown__item" role="presentation">
+            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+            <span class="slds-truncate">
+              <svg aria-hidden="true" class="slds-icon slds-icon&#45;&#45;small slds-icon-standard-approval slds-m-right&#45;&#45;small">
+                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#approval"></use>
+              </svg>Menu Item Two</span>
+            </a>
+          </li>
+          <li class="slds-dropdown__item" role="presentation">
+            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+            <span class="slds-truncate">
+              <svg aria-hidden="true" class="slds-icon slds-icon&#45;&#45;small slds-icon-standard-lead slds-m-right&#45;&#45;small">
+                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#lead"></use>
+              </svg>Menu Item Three</span>
+            </a>
+          </li>
+          <li class="slds-dropdown__item" role="presentation">
+            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+            <span class="slds-truncate">
+              <svg aria-hidden="true" class="slds-icon slds-icon&#45;&#45;small slds-icon-standard-opportunity slds-m-right&#45;&#45;small">
+                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use>
+              </svg>Menu Item Four</span>
+            </a>
+          </li>
+          <li class="slds-dropdown__item" role="presentation">
+            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+            <span class="slds-truncate">
+              <svg aria-hidden="true" class="slds-icon slds-icon&#45;&#45;small slds-icon-standard-product slds-m-right&#45;&#45;small">
+                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#product"></use>
+              </svg>Menu Item Five</span>
+            </a>
+          </li>
+
+          <li class="slds-dropdown__item" role="presentation">
+            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+            <span class="slds-truncate">
+              <svg aria-hidden="true" class="slds-icon slds-icon&#45;&#45;small slds-icon-standard-lead slds-m-right&#45;&#45;small">
+                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#lead"></use>
+              </svg>Menu Item Eight</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>-->
+  <!-- <div class="slds-pill_container" style="border: 0px">
+       <span class="slds-pill" ng-repeat="selectedInput in selectedInputs">
+         <span class="slds-icon_container slds-icon-standard-@@users slds-pill__icon_container">
+           <svg aria-hidden="true" class="slds-icon">
+             <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#@@users"></use>
+           </svg>
+         </span>
+         <span class="slds-pill__label" title="Salesforce.com, Inc.">{{selectedInput}}</span>
+         <button class="slds-button slds-button&#45;&#45;icon slds-pill__remove" title="Remove" ng-click="removeSelectedItem($event);" id="{{selectedItems}}">
+           <svg aria-hidden="true" class="slds-button__icon">
+             <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+           </svg>
+           <span class="slds-assistive-text">Remove</span>
+         </button>
+       </span>
+   </div>
+   <div class="slds-form-element slds-lookup slds-is-open slds-m-top&#45;&#45;medium" data-select="multi" data-scope="single" data-typeahead="true" ng-show="tabSelected">
+
+     <label class="slds-form-element__label" for="lookup">{{title}}</label>-->
+  <!--<div class="slds-pill_container slds-grid slds-grid&#45;&#45;pull-padded slds-m-right&#45;&#45;xxx-small slds-m-left&#45;&#45;xxx-small slds-size&#45;&#45;12-of-12" style="overflow-y: auto;border: 0px">
+    <a href="#void" class="slds-pill slds-col&#45;&#45;padded" ng-repeat="selectedItems in selectedInputs">
+      <svg aria-hidden="true" class="slds-icon slds-icon-standard-@@users slds-pill__icon">
+        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#@@users"></use>
+      </svg>
+      <span class="slds-pill__label">{{selectedItems}}</span>
+      <button class="slds-button slds-button&#45;&#45;icon-bare slds-pill__remove" ng-click="removeSelectedItem($event);" id="{{selectedItems}}">
+        <svg aria-hidden="true" class="slds-button__icon">
+          <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+        </svg>
+        <span class="slds-assistive-text">Remove</span>
+      </button>
+    </a>
+  </div>-->
+  <!--
+      <div class="slds-lookup__menu" role="listbox" style="display: block">
+        <div class="slds-lookup__item">
+          <button class="slds-button">
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon&#45;&#45;left">
+            &lt;!&ndash;  <svg aria-hidden="true" class="slds-icon slds-icon-text-default slds-icon&#45;&#45;small">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+              </svg>&ndash;&gt;
+              <input id="lookup" class="slds-input" type="text" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-activedescendant="" ng-model="serachText"/>
+              <svg aria-hidden="true" class="slds-input__icon slds-input__icon_left slds-icon-text-default">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+              </svg>
+            </div>
+          </button>
+
+        </div>
+        <div class="slds-lookup__result-text" ng-class="{'slds-hide': data.length > 1}" data-aura-rendered-by="16:180;a">
+          No records found!
+        </div>
+        <ul class="slds-lookup__list" role="presentation">
+          <li class="slds-lookup__item" ng-repeat="info in data | filter : serachText">
+            <a href="#" role="option" ng-click="addSelectedOptions($event)" id="{{info['Name']}}">
+              <svg aria-hidden="true" class="slds-icon slds-icon-standard-@@users slds-icon&#45;&#45;small">
+                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#@@users"></use>
+              </svg>{{info['Name']}}</a>
+          </li>
+        </ul>
+
+      </div>
+      <div style="margin-top: 30%"><a href="#" class="btn btn-primary" ng-class="{'disabled': selectedInputs.length < 1}" ng-click="runSpec();">Run Test</a></div>
+
+    </div>-->
+  <!--<div class="container" style="margin-top: auto">
+
+    <div class="card ">
+      <div class="card-header">
+       <div class="page-header">
+        <ul class="nav nav-pills">
+          <li class="nav-item" data-toggle="pill">
+            <a class="nav-link" href="#" ng-click="getProfiles();">Setup Profiles</a>
+          </li>
+          <li class="nav-item" data-toggle="pill">
+            <a class="nav-link" href="#" ng-click="getUsers();">Setup Users</a>
+          </li>
+        </ul>
+       </div>
+      </div>
+      <div class="card-body" ng-show="tabSelected" style="margin-top: 5%">
+
+        <div class="panel panel-primary">
+          <div class="panel-heading"><h5>{{title}}</h5></div>
+          <div class="panel-body">
+             <span class = "input-group" style="margin-left: 70%" >
+           <span class = "input-group" style="margin-bottom:5%">
+        <input class="form-control" ng-model="searchText" placeholder="Search" type="search" ng-change="search()"/> <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-search" ></span>
+           </span>
+            <select class="form-control"  style="margin-left: 10%" role = "menu" ng-change="setPagesize();" ng-model="pageSize" ng-options="x for x in pageSizes">
+            </select>
+        </span>
+
+        </span>
+            <table class="col-md-12 table table-responsive table-hover data-table table-bordered myTable">
+              <thead class="thead-dark">
+              <tr>
+                <th scope="col" ng-repeat="header in headers" class="text-center">{{header}}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="info in data | limitTo : pageSize | filter : searchText">
+                <td class="text-center">
+                  <input type="checkbox"  class="custom-control-input" id="{{info[headers[1]]}}" ng-click="addSelectedOptions($event);">
+                  <label for="info"></label>
+                </td>
+                <td>{{info[headers[1]]}}</td>
+                <td>{{info[headers[2]]}}</td>
+
+              </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="col-md-9">Page {{page}} of {{totalPageSize}}</div>
+              <div class="col-md-3">
+                  <nav aria-label="pagination example">
+
+                    <ul class="pagination pagination-circle pg-blue row">
+
+                &lt;!&ndash;First&ndash;&gt;
+                <li class="page-item" ng-class="{'disabled': offset <= pageSize}"><a class="page-link col-md-2" ng-click="offset <= pageSize || first()"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+
+                &lt;!&ndash;Arrow left&ndash;&gt;
+                <li class="page-item col-md-2"  ng-class="{'disabled': offset == 0 || offset <= pageSize }">
+                  <a class="page-link" aria-label="Previous" ng-click="offset == 0 || offset <= pageSize || previous()">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                  </a>
+                </li>
+                &lt;!&ndash;Arrow right&ndash;&gt;
+                <li class="page-item col-md-3" ng-class="{'disabled': (allData.length-pageSize) < offset}">
+                  <a class="page-link" aria-label="Next" ng-click="(allData.length-pageSize) < offset || next()">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                  </a>
+                </li>
+
+                &lt;!&ndash;Last&ndash;&gt;
+                <li class="page-item col-md-3" ng-class="{'disabled': offset >= allData.length}"><a class="page-link" ng-click="  offset >= allData.length || last()"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+
+              </ul>
+            </nav>
+              </div>
+            </div>
+            <div class="panel-footer"><a href="#" class="btn btn-primary" ng-class="{'disabled': selectedInputs.length < 1}" ng-click="runSpec();">Run Test</a></div>
+          </div>
+         &lt;!&ndash; <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>&ndash;&gt;
+          &lt;!&ndash;Pagination &ndash;&gt;
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>-->
+  <div class="slds-size--2.5-of-12">
+    <!--<we-sidebar nodes="listItems" class="slds-m-top--xx-large"></we-sidebar>-->
+    <!--        <article class="slds-card slds-col">
+            <nav id="navigation" role="navigation" tabindex="-1" class="slds-card__body">
+              <div class="site-navigation site-navigation--has-search" style="background: transparent;">
+                <ul class="slds-list--vertical slds-has-block-links slds-text-title--caps ">
+                  <li class="slds-list__item slds-tabs--default__item" ng-if="<%#= session[:user][0]['admin'] %>">
+                    <a href="#!users" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab-default-3__item" class="slds-section-title--divider"><span class="slds-media slds-media--center "><span class="slds-media__body">Users</span></span></a>
+                  </li>
+                  <li class="slds-list__item slds-tabs--default__item"  ng-repeat="item in listItems">
+                    <a href="{{item.url}}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab-default-3__item" class="slds-section-title--divider"><span class="slds-media slds-media--center"><span class="slds-media__body">{{item.label}}</span></span></a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+        </article>-->
+  </div>
+  <!-- <div style="margin-right: 30em">
+        <img class="slds-is-absolute " src="<%= image_path "temp.jpg" %>" style="margin-top: 30%;">
+      </div>-->
+  <div class="slds-col " style="margin-top: 8%">
+    <div ng-view></div>
+  </div>
+</div>
+<img src="<%= image_path "temp2.png" %>" style="margin-left: 70%">
+</body>
+</html>

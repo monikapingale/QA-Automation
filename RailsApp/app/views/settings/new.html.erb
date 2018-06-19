@@ -1,0 +1,7 @@
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<h1>New Setting</h1>
+
+<%= render 'form', setting: @setting %>
+
+<%= link_to 'Back', settings_path %>

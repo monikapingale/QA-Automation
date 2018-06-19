@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'main', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.10/angular-sanitize.js"></script>
+  </head>
+  <body class="landing">
+    <section id="banner" class="inner">
+      <p class="slds-text-title--caps slds-line-height--reset">Enzigma</p>
+      <i class="icon far fa-gem">
+        <!--  <span class="slds-avatar slds-avatar--circle slds-avatar--xx-large">
+            <img src="<%#= image_path "images/logo.png" %>" alt="person name" class="image"/>
+      </span>-->
+      </i>
+      <!--    <i class="icon fa-diamond"></i>-->
+      <header class="major narrow">
+        <h2>Welcome</h2>
+        <p>START YOUR AUTOMATION TESTING WITH QAAUTOMATION APPLICATION</p>
+      </header>
+      <h2></h2>
+      <ul class="actions">
+        <li>
+          <a href="/autherize" class="slds-media__figure "><img class="slds-m-top--medium slds-m-bottom--medium" style="height: 10%; width: 70%" src="<%= image_path "googlelogin.png" %>" alt="Sign in"/></a>
+        </li>
+      </ul>
+    </section>
+  </body>
+</html>

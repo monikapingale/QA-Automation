@@ -1,0 +1,25 @@
+<div>
+<div role="alertdialog" tabindex="0" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal  slds-modal--prompt ng-class: terminate">
+    <div class="slds-modal__container">
+        <div class="slds-modal__header slds-theme--error slds-theme--alert-texture">
+            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close">
+                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 class="slds-text-heading--medium" id="prompt-heading-id">{{header}}</h2>
+        </div>
+        <div class="slds-modal__content slds-p-around--medium">
+            <div>
+                <p>{{message}}</p>
+            </div>
+        </div>
+        <div class="slds-modal__footer slds-theme--default">
+            <button class="slds-button slds-button--neutral" ng-click="takeAction(); terminate = 'slds-slide-up-close slds-backdrop--close'; ">Okay</button>
+            <button class="slds-button slds-button--neutral" ng-click="terminate = 'slds-slide-up-close slds-backdrop--close'; ">Cancel</button>
+        </div>
+    </div>
+</div>
+<div class="slds-backdrop ng-class:terminate"></div>
+</div>

@@ -1,0 +1,13 @@
+﻿<div class="slds-notify_container">
+    <div class="slds-notify slds-notify_toast slds-theme_{{type}}" role="alert">
+        <span class="slds-assistive-text">{{type}}</span>
+        <we-icon icon="utility:{{type}}"></we-icon>
+        <div class="slds-notify__content" style="margin-left:10px">
+            <h2 class="slds-text-heading_small ">{{messege}}</h2>
+        </div>
+        <button class="slds-button slds-button_icon slds-notify__close" title="Close" ng-click="removeToaster()">
+            <we-icon icon="utility:close"></we-icon>
+            <span class="slds-assistive-text">Close</span>
+        </button>
+    </div>
+</div>
